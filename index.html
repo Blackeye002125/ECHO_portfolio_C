@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Echo Portfolio · file upload</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Echo Portfolio · smart upload</title>
   <!-- Font Awesome 6 (free) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -20,19 +20,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.8rem;
+      padding: 1.2rem;
       margin: 0;
     }
     .app-wrapper {
       max-width: 1400px;
       width: 100%;
-      background: rgba(255, 248, 240, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-radius: 4rem;
-      padding: 2rem 2.2rem 2.8rem;
-      box-shadow: 0 40px 80px rgba(30, 40, 50, 0.25), 0 10px 30px rgba(0,0,0,0.05);
-      border: 1px solid rgba(255, 245, 235, 0.6);
+      background: rgba(255, 248, 240, 0.55);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 3.5rem;
+      padding: 1.8rem 1.8rem 2.5rem;
+      box-shadow: 0 40px 80px rgba(30, 40, 50, 0.2), 0 10px 30px rgba(0,0,0,0.04);
+      border: 1px solid rgba(255, 245, 235, 0.5);
+      transition: all 0.2s;
     }
     h1, h2, h3 {
       font-weight: 600;
@@ -43,46 +44,50 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.7rem;
     }
     .flex-between {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      gap: 0.7rem;
     }
     .badge-soft {
       background: #1e2b3a;
       color: #f5efe8;
-      padding: 0.3rem 1.2rem;
+      padding: 0.2rem 1.2rem;
       border-radius: 60px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 500;
       letter-spacing: 0.4px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      white-space: nowrap;
     }
     .badge-light {
       background: rgba(30, 43, 58, 0.08);
       color: #1e2b3a;
-      padding: 0.2rem 1rem;
+      padding: 0.15rem 1rem;
       border-radius: 60px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      white-space: nowrap;
     }
     .btn {
       background: white;
       border: none;
-      padding: 0.6rem 1.6rem;
+      padding: 0.5rem 1.2rem;
       border-radius: 80px;
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.02);
       border: 1px solid rgba(0,0,0,0.04);
       transition: all 0.15s ease;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       color: #1a2634;
+      white-space: nowrap;
     }
     .btn-primary {
       background: #1e2b3a;
@@ -135,32 +140,37 @@
     .btn-ghost:hover {
       background: rgba(0,0,0,0.02);
     }
+    .btn-sm {
+      padding: 0.2rem 0.9rem;
+      font-size: 0.75rem;
+    }
     .card-glass {
-      background: rgba(255, 250, 245, 0.6);
+      background: rgba(255, 250, 245, 0.5);
       backdrop-filter: blur(4px);
-      border-radius: 2.8rem;
-      padding: 1.8rem;
+      border-radius: 2.5rem;
+      padding: 1.5rem;
       box-shadow: 0 8px 28px rgba(0,0,0,0.02);
-      border: 1px solid rgba(255, 245, 235, 0.7);
-      margin-top: 1.5rem;
+      border: 1px solid rgba(255, 245, 235, 0.6);
+      margin-top: 1.2rem;
     }
     .input-group {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 0.5rem;
-      margin: 0.5rem 0;
+      margin: 0.4rem 0;
     }
     .input-group input, .input-group select {
-      padding: 0.7rem 1.4rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 80px;
       border: 1px solid #dce5ef;
       background: white;
-      font-size: 0.95rem;
-      flex: 1 1 180px;
+      font-size: 0.9rem;
+      flex: 1 1 160px;
       outline: none;
       transition: 0.15s;
       box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+      min-width: 120px;
     }
     .input-group input:focus {
       border-color: #1e2b3a;
@@ -168,22 +178,24 @@
     }
     .unit-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin: 1.8rem 0 0.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0 0.3rem;
     }
     .unit-card {
       background: white;
-      border-radius: 2.5rem;
-      padding: 1.4rem 1.4rem 1.2rem;
+      border-radius: 2.2rem;
+      padding: 1.2rem 1.2rem 1rem;
       box-shadow: 0 8px 22px rgba(0,0,0,0.02);
       border: 1px solid #ecf2f9;
       transition: 0.2s;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
     .unit-card:hover {
       border-color: #c8d9ea;
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 16px 32px rgba(30, 43, 58, 0.06);
     }
     .unit-header {
@@ -192,68 +204,61 @@
       font-weight: 600;
       color: #1a2b3e;
       border-bottom: 1px dashed #dee9f2;
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.7rem;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 0.3rem;
     }
     .item-list {
       list-style: none;
-      margin: 0.5rem 0 0.2rem;
-      font-size: 0.9rem;
+      margin: 0.3rem 0 0.2rem;
+      font-size: 0.85rem;
+      flex: 1;
     }
     .item-list li {
-      padding: 0.3rem 0;
+      padding: 0.25rem 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #f2f7fc;
+      gap: 0.3rem;
+      flex-wrap: wrap;
     }
     .item-list li:last-child { border: none; }
     .item-count-badge {
       background: #eef3f8;
       border-radius: 60px;
-      padding: 0.1rem 0.9rem;
-      font-size: 0.7rem;
+      padding: 0.05rem 0.8rem;
+      font-size: 0.65rem;
       font-weight: 500;
     }
     .admin-section {
       background: #e4eef9;
-      border-radius: 3rem;
-      padding: 1.8rem;
-      margin-top: 2.2rem;
+      border-radius: 2.8rem;
+      padding: 1.5rem;
+      margin-top: 1.8rem;
       border: 1px solid #bdd2e6;
     }
     .flash-message {
       background: #1e2b3a;
       color: white;
-      padding: 0.7rem 1.8rem;
+      padding: 0.6rem 1.5rem;
       border-radius: 80px;
-      margin: 0.6rem 0;
+      margin: 0.5rem 0;
       font-weight: 450;
+      font-size: 0.9rem;
     }
     .hidden { display: none !important; }
-    .muted { color: #4f677b; font-size: 0.85rem; }
-    .flex-gap { gap: 0.8rem; }
+    .muted { color: #4f677b; font-size: 0.8rem; }
+    .flex-gap { gap: 0.6rem; }
     .flex-wrap { flex-wrap: wrap; }
-    i { width: 1.2rem; }
-    hr { border: none; border-top: 1px solid rgba(0,0,0,0.04); margin: 1.8rem 0 0.5rem; }
-    .avatar {
-      background: #1e2b3a;
-      color: white;
-      border-radius: 60px;
-      padding: 0.2rem 0.9rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-    }
+    i { width: 1.1rem; }
+    hr { border: none; border-top: 1px solid rgba(0,0,0,0.04); margin: 1.5rem 0 0.3rem; }
     .gradient-text {
       background: linear-gradient(135deg, #1e2b3a, #3b5a78);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-    }
-    .pill-icon {
-      background: #eef4fa;
-      border-radius: 40px;
-      padding: 0.2rem 1rem;
     }
     /* file upload & preview */
     .file-preview {
@@ -261,18 +266,20 @@
       flex-wrap: wrap;
       gap: 0.5rem;
       margin-top: 0.4rem;
+      align-items: center;
     }
     .file-preview-item {
       position: relative;
-      width: 60px;
-      height: 60px;
-      border-radius: 16px;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
       overflow: hidden;
       border: 1px solid #e2eaf2;
       background: #f8faff;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
     .file-preview-item img {
       width: 100%;
@@ -280,7 +287,7 @@
       object-fit: cover;
     }
     .file-preview-item i {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       color: #3b5a78;
     }
     .file-preview-item .file-name {
@@ -288,10 +295,10 @@
       bottom: 0;
       background: rgba(0,0,0,0.5);
       color: white;
-      font-size: 0.5rem;
+      font-size: 0.45rem;
       width: 100%;
       text-align: center;
-      padding: 0.1rem 0;
+      padding: 0.05rem 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -306,6 +313,8 @@
       align-items: center;
       gap: 0.4rem;
       border: 1px solid #cbd8e6;
+      transition: 0.15s;
+      white-space: nowrap;
     }
     .file-upload-label:hover {
       background: #dfe9f3;
@@ -313,9 +322,44 @@
     .item-file-upload {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       flex-wrap: wrap;
     }
+    .item-preview-inline {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .item-preview-inline img {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #e2eaf2;
+    }
+    .item-preview-inline i {
+      font-size: 1rem;
+    }
+    /* responsive tweaks */
+    @media (max-width: 600px) {
+      .app-wrapper { padding: 1.2rem; border-radius: 2.5rem; }
+      .unit-grid { grid-template-columns: 1fr; }
+      .btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
+      .card-glass { padding: 1rem; }
+      .input-group input { min-width: 100px; }
+      .flex-between { flex-direction: column; align-items: stretch; }
+    }
+    @media (min-width: 601px) and (max-width: 900px) {
+      .unit-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    /* scroll */
+    .scrollable-list {
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .scrollable-list::-webkit-scrollbar { width: 4px; }
+    .scrollable-list::-webkit-scrollbar-thumb { background: #b0c8dc; border-radius: 10px; }
   </style>
 </head>
 <body>
@@ -323,51 +367,51 @@
   <!-- header -->
   <div class="flex-between">
     <div class="flex-row">
-      <i class="fas fa-echo" style="font-size: 2.2rem; color: #1e2b3a;"></i>
-      <h1 class="gradient-text" style="font-weight: 700;">Echo Portfolio</h1>
+      <i class="fas fa-echo" style="font-size: 2rem; color: #1e2b3a;"></i>
+      <h1 class="gradient-text" style="font-weight: 700; font-size: 1.6rem;">Echo Portfolio</h1>
       <span class="badge-soft"><i class="fas fa-shield-alt"></i> pro</span>
-      <span class="badge-light"><i class="fas fa-cloud-upload-alt"></i> file upload</span>
+      <span class="badge-light"><i class="fas fa-cloud-upload-alt"></i> any file</span>
     </div>
     <div>
-      <span id="userDisplay" class="muted" style="margin-right: 1rem;"><i class="fas fa-user-circle"></i> guest</span>
-      <button class="btn btn-outline" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> exit</button>
+      <span id="userDisplay" class="muted" style="margin-right: 0.6rem;"><i class="fas fa-user-circle"></i> guest</span>
+      <button class="btn btn-outline btn-sm" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> exit</button>
     </div>
   </div>
 
   <!-- auth -->
   <div id="authSection" class="card-glass">
     <div class="flex-row flex-wrap" style="justify-content: center;">
-      <div class="input-group" style="flex: 2 1 320px;">
+      <div class="input-group" style="flex: 2 1 280px;">
         <input type="text" id="authUsername" placeholder="username" value="demo">
         <input type="password" id="authPassword" placeholder="password" value="demo123">
         <button class="btn btn-primary" id="loginBtn"><i class="fas fa-sign-in-alt"></i> sign in</button>
         <button class="btn btn-success" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
       </div>
-      <span class="muted" style="font-size:0.8rem;"><i class="fas fa-info-circle"></i> demo: demo / demo123</span>
+      <span class="muted" style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> demo: demo / demo123</span>
     </div>
     <div id="authMessage" class="flash-message hidden"></div>
   </div>
 
   <!-- main user area -->
   <div id="userArea" class="hidden">
-    <div class="flex-between" style="margin-top: 0.5rem;">
+    <div class="flex-between" style="margin-top: 0.3rem;">
       <div class="flex-row">
-        <h3><i class="fas fa-cubes"></i> your units</h3>
+        <h3 style="font-size: 1.2rem;"><i class="fas fa-cubes"></i> units</h3>
         <span class="badge-soft" id="unitCounter">0 / 40</span>
-        <span class="badge-light"><i class="fas fa-database"></i> <span id="totalItemsCount">0</span> items</span>
+        <span class="badge-light"><i class="fas fa-database"></i> <span id="totalItemsCount">0</span></span>
       </div>
       <div class="flex-row flex-gap">
-        <button class="btn btn-primary" id="addUnitBtn"><i class="fas fa-plus-circle"></i> new unit</button>
-        <button class="btn btn-outline" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
+        <button class="btn btn-primary btn-sm" id="addUnitBtn"><i class="fas fa-plus-circle"></i> new unit</button>
+        <button class="btn btn-outline btn-sm" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
       </div>
     </div>
 
     <!-- add unit inline -->
-    <div id="addUnitForm" class="hidden card-glass" style="padding: 1rem 1.8rem; margin-top: 0.5rem;">
+    <div id="addUnitForm" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.3rem;">
       <div class="input-group">
-        <input type="text" id="newUnitName" placeholder="unit name (e.g. 'Design')">
-        <button class="btn btn-success" id="confirmAddUnit"><i class="fas fa-check"></i> create</button>
-        <button class="btn btn-ghost" id="cancelAddUnit">cancel</button>
+        <input type="text" id="newUnitName" placeholder="unit name">
+        <button class="btn btn-success btn-sm" id="confirmAddUnit"><i class="fas fa-check"></i> create</button>
+        <button class="btn btn-ghost btn-sm" id="cancelAddUnit">cancel</button>
       </div>
     </div>
 
@@ -375,28 +419,27 @@
     <div id="unitsContainer" class="unit-grid"></div>
 
     <!-- add item panel with file upload -->
-    <div id="addItemPanel" class="hidden card-glass" style="padding: 1rem 1.8rem; margin-top: 0.5rem; background: rgba(235, 245, 255, 0.5);">
-      <div class="flex-between" style="flex-wrap: wrap; gap: 0.5rem;">
-        <span><i class="fas fa-pen-fancy"></i> add item to <strong id="itemUnitNameDisplay"></strong> <span class="item-count-badge" id="itemCountDisplay">0/10</span></span>
+    <div id="addItemPanel" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.5rem; background: rgba(235, 245, 255, 0.4);">
+      <div class="flex-between" style="gap: 0.5rem;">
+        <span style="font-size:0.9rem;"><i class="fas fa-pen-fancy"></i> add to <strong id="itemUnitNameDisplay"></strong> <span class="item-count-badge" id="itemCountDisplay">0/10</span></span>
         <div class="flex-row flex-gap" style="flex-wrap: wrap;">
-          <input type="text" id="newItemInput" placeholder="item name" style="flex:1; min-width:120px;">
-          <label class="file-upload-label"><i class="fas fa-file-upload"></i> file <input type="file" id="fileUploadInput" style="display:none;" accept="image/*,.pdf,.doc,.docx,.txt,.zip,.png,.jpg,.jpeg,.gif,.svg"></label>
-          <button class="btn btn-success" id="confirmAddItem"><i class="fas fa-save"></i> add</button>
-          <button class="btn btn-ghost" id="cancelAddItem">cancel</button>
+          <input type="text" id="newItemInput" placeholder="item name" style="flex:1; min-width:100px; padding:0.4rem 1rem; font-size:0.85rem;">
+          <label class="file-upload-label" style="font-size:0.7rem; padding:0.15rem 0.8rem;"><i class="fas fa-file-upload"></i> file <input type="file" id="fileUploadInput" style="display:none;"></label>
+          <button class="btn btn-success btn-sm" id="confirmAddItem"><i class="fas fa-save"></i> add</button>
+          <button class="btn btn-ghost btn-sm" id="cancelAddItem">cancel</button>
         </div>
       </div>
-      <!-- preview area -->
-      <div id="filePreviewContainer" class="file-preview" style="margin-top: 0.6rem;"></div>
+      <div id="filePreviewContainer" class="file-preview" style="margin-top: 0.4rem;"></div>
     </div>
 
     <!-- admin panel -->
     <div id="adminPanel" class="admin-section hidden">
-      <h3><i class="fas fa-user-shield"></i> admin · all users <span class="badge-light" id="adminUserCount">0</span></h3>
-      <div id="adminUserList" style="margin-top: 0.8rem; max-height: 220px; overflow-y: auto;"></div>
+      <h3 style="font-size:1.1rem;"><i class="fas fa-user-shield"></i> admin · all users <span class="badge-light" id="adminUserCount">0</span></h3>
+      <div id="adminUserList" class="scrollable-list" style="margin-top: 0.6rem;"></div>
     </div>
   </div>
 
-  <div id="globalMessage" class="flash-message hidden" style="margin-top: 1.5rem;"></div>
+  <div id="globalMessage" class="flash-message hidden" style="margin-top: 1.2rem;"></div>
 </div>
 
 <script>
@@ -410,7 +453,6 @@
       maxUnits: 40,
       maxItemsPerUnit: 10,
       selectedUnitForItem: null,
-      // temp file for new item
       pendingFile: null,   // { name, dataURL, type }
     };
 
@@ -427,7 +469,7 @@
     }
     function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 8); }
 
-    // ---------- persistence (localStorage) ----------
+    // ---------- persistence ----------
     function saveState() {
       try { localStorage.setItem('echoPortfolioData', JSON.stringify(STATE.users)); } catch (e) {}
     }
@@ -553,7 +595,6 @@
           document.getElementById('addItemPanel').classList.remove('hidden');
           document.getElementById('itemUnitNameDisplay').textContent = unit.unitName;
           document.getElementById('itemCountDisplay').textContent = `${unit.items.length}/${STATE.maxItemsPerUnit}`;
-          // show file preview if any
           updateFilePreview();
         }
       }
@@ -563,19 +604,23 @@
     function renderUnits(user) {
       const container = document.getElementById('unitsContainer');
       if (!user || user.units.length === 0) {
-        container.innerHTML = `<div class="muted" style="grid-column:1/-1; padding: 2.5rem 0; text-align:center; background: rgba(255,255,240,0.3); border-radius: 4rem;"><i class="fas fa-box-open fa-2x" style="opacity:0.5;"></i><br>no units — create your first</div>`;
+        container.innerHTML = `<div class="muted" style="grid-column:1/-1; padding: 2rem 0; text-align:center; background: rgba(255,255,240,0.3); border-radius: 3rem;"><i class="fas fa-box-open fa-2x" style="opacity:0.4;"></i><br>no units — create your first</div>`;
         return;
       }
       container.innerHTML = user.units.map(unit => {
         const itemsHtml = unit.items.map(item => {
-          const fileHtml = item.file ? 
-            (item.file.type && item.file.type.startsWith('image/') ? 
-              `<img src="${item.file.dataURL}" style="width:28px; height:28px; object-fit:cover; border-radius:8px; margin-right:4px;">` : 
-              `<i class="fas fa-file" style="margin-right:4px;"></i>`) : '';
+          let preview = '';
+          if (item.file) {
+            if (item.file.type && item.file.type.startsWith('image/')) {
+              preview = `<img src="${item.file.dataURL}" alt="file" style="width:24px;height:24px;object-fit:cover;border-radius:6px;border:1px solid #e2eaf2;">`;
+            } else {
+              preview = `<i class="fas fa-file" style="font-size:1rem;color:#3b5a78;"></i>`;
+            }
+          }
           return `
             <li>
-              <span style="display:flex; align-items:center; gap:4px;">${fileHtml} ${item.name}</span>
-              <button class="btn btn-danger" style="padding: 0.1rem 0.7rem; font-size: 0.7rem;" data-unit="${unit.unitName}" data-itemid="${item.id}"><i class="fas fa-trash-alt"></i></button>
+              <span class="item-preview-inline">${preview} ${item.name}</span>
+              <button class="btn btn-danger btn-sm" style="padding: 0.05rem 0.6rem; font-size: 0.65rem;" data-unit="${unit.unitName}" data-itemid="${item.id}"><i class="fas fa-trash-alt"></i></button>
             </li>
           `;
         }).join('');
@@ -585,16 +630,15 @@
               <span><i class="fas fa-folder-open" style="color:#3a5a78;"></i> ${unit.unitName}</span>
               <span class="item-count-badge">${unit.items.length}/${STATE.maxItemsPerUnit}</span>
             </div>
-            <ul class="item-list">${itemsHtml || '<li class="muted" style="border:none; padding:0.3rem 0;">empty</li>'}</ul>
-            <div style="display:flex; gap:0.4rem; margin-top:0.8rem; flex-wrap:wrap;">
-              <button class="btn btn-primary" style="padding:0.2rem 1rem; font-size:0.75rem;" data-unit-additem="${unit.unitName}"><i class="fas fa-plus"></i> item</button>
-              <button class="btn btn-warning" style="padding:0.2rem 1rem; font-size:0.75rem;" data-unit-remove="${unit.unitName}"><i class="fas fa-times"></i> unit</button>
+            <ul class="item-list">${itemsHtml || '<li class="muted" style="border:none; padding:0.2rem 0;">empty</li>'}</ul>
+            <div style="display:flex; gap:0.3rem; margin-top:0.6rem; flex-wrap:wrap;">
+              <button class="btn btn-primary btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-additem="${unit.unitName}"><i class="fas fa-plus"></i> item</button>
+              <button class="btn btn-warning btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-remove="${unit.unitName}"><i class="fas fa-times"></i> unit</button>
             </div>
           </div>
         `;
       }).join('');
 
-      // event listeners
       container.querySelectorAll('[data-unit-remove]').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const unitName = e.currentTarget.dataset.unitRemove;
@@ -633,14 +677,13 @@
       document.getElementById('adminUserCount').textContent = all.length;
       if (all.length === 0) { container.innerHTML = '<div class="muted">no users</div>'; return; }
       container.innerHTML = all.map(u => `
-        <div style="background:white; border-radius:3rem; padding:0.5rem 1.5rem; margin-bottom:0.4rem; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+        <div style="background:white; border-radius:2.5rem; padding:0.4rem 1.2rem; margin-bottom:0.3rem; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 6px rgba(0,0,0,0.02); flex-wrap:wrap; gap:0.3rem;">
           <span><i class="fas fa-user-astronaut"></i> ${u.username}</span>
           <span class="badge-light">${u.unitCount} units · ${u.totalItems} items</span>
         </div>
       `).join('');
     }
 
-    // file preview
     function updateFilePreview() {
       const container = document.getElementById('filePreviewContainer');
       if (!STATE.pendingFile) {
@@ -654,8 +697,14 @@
           ${isImage ? `<img src="${f.dataURL}" alt="preview">` : `<i class="fas fa-file-alt"></i>`}
           <div class="file-name">${f.name}</div>
         </div>
-        <span style="font-size:0.75rem; color:#3b5a78;"><i class="fas fa-check-circle"></i> ready</span>
+        <span style="font-size:0.7rem; color:#3b5a78;"><i class="fas fa-check-circle"></i> ready</span>
+        <button class="btn btn-ghost btn-sm" id="clearFileBtn" style="padding:0.1rem 0.5rem; font-size:0.6rem;"><i class="fas fa-times"></i></button>
       `;
+      document.getElementById('clearFileBtn')?.addEventListener('click', () => {
+        STATE.pendingFile = null;
+        document.getElementById('fileUploadInput').value = '';
+        updateFilePreview();
+      });
     }
 
     // ---------- UI messages ----------
@@ -727,11 +776,11 @@
         } else renderAll();
       });
 
-      // file upload
+      // file upload - supports any file type
       document.getElementById('fileUploadInput').addEventListener('change', function(e) {
         const file = this.files[0];
         if (!file) { STATE.pendingFile = null; updateFilePreview(); return; }
-        // check size (max 5MB)
+        // size limit 5MB
         if (file.size > 5 * 1024 * 1024) {
           showGlobalMessage('file too large (max 5MB)', 'error');
           this.value = '';
