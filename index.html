@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Echo Portfolio · video & 10MB</title>
+    <title>Echo Portfolio · Full View + Admissions</title>
     <!-- Font Awesome 6 (free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -24,7 +24,7 @@
             margin: 0;
         }
         .app-wrapper {
-            max-width: 1400px;
+            max-width: 1450px;
             width: 100%;
             background: rgba(255, 248, 240, 0.55);
             backdrop-filter: blur(18px);
@@ -35,7 +35,9 @@
             border: 1px solid rgba(255, 245, 235, 0.5);
             transition: all 0.2s;
         }
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             font-weight: 600;
             letter-spacing: -0.02em;
             color: #1e2b3a;
@@ -61,7 +63,7 @@
             font-size: 0.7rem;
             font-weight: 500;
             letter-spacing: 0.4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             white-space: nowrap;
         }
         .badge-light {
@@ -79,8 +81,8 @@
             border-radius: 80px;
             font-weight: 500;
             font-size: 0.85rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.04);
             transition: all 0.15s ease;
             cursor: pointer;
             display: inline-flex;
@@ -138,7 +140,7 @@
             border: 1px solid transparent;
         }
         .btn-ghost:hover {
-            background: rgba(0,0,0,0.02);
+            background: rgba(0, 0, 0, 0.02);
         }
         .btn-sm {
             padding: 0.2rem 0.9rem;
@@ -149,7 +151,7 @@
             backdrop-filter: blur(4px);
             border-radius: 2.5rem;
             padding: 1.5rem;
-            box-shadow: 0 8px 28px rgba(0,0,0,0.02);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.02);
             border: 1px solid rgba(255, 245, 235, 0.6);
             margin-top: 1.2rem;
         }
@@ -161,7 +163,8 @@
             margin: 0.4rem 0;
         }
         .input-group input,
-        .input-group select {
+        .input-group select,
+        .input-group textarea {
             padding: 0.6rem 1.2rem;
             border-radius: 80px;
             border: 1px solid #dce5ef;
@@ -170,12 +173,20 @@
             flex: 1 1 160px;
             outline: none;
             transition: 0.15s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
             min-width: 120px;
         }
-        .input-group input:focus {
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
             border-color: #1e2b3a;
             box-shadow: 0 0 0 4px rgba(30, 43, 58, 0.12);
+        }
+        .input-group textarea {
+            border-radius: 20px;
+            min-height: 60px;
+            resize: vertical;
+            flex: 1 1 300px;
         }
         .unit-grid {
             display: grid;
@@ -187,7 +198,7 @@
             background: white;
             border-radius: 2.2rem;
             padding: 1.2rem 1.2rem 1rem;
-            box-shadow: 0 8px 22px rgba(0,0,0,0.02);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.02);
             border: 1px solid #ecf2f9;
             transition: 0.2s;
             position: relative;
@@ -289,8 +300,8 @@
         }
         .file-preview-item {
             position: relative;
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 14px;
             overflow: hidden;
             border: 1px solid #e2eaf2;
@@ -310,9 +321,10 @@
             height: 100%;
             object-fit: cover;
         }
-        .file-preview-item i {
-            font-size: 2rem;
-            color: #3b5a78;
+        .file-preview-item iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
         .file-preview-item .file-name {
             position: absolute;
@@ -326,6 +338,22 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        .file-preview-item .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            pointer-events: none;
         }
         .file-upload-label {
             background: #eef4fa;
@@ -347,6 +375,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            cursor: pointer;
         }
         .item-preview-inline img {
             width: 30px;
@@ -367,21 +396,98 @@
             font-size: 1.2rem;
             color: #3b5a78;
         }
-        .file-preview-item .play-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
+
+        /* modal for full view */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
-            pointer-events: none;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            background: white;
+            border-radius: 2.5rem;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+        }
+        .modal-content video,
+        .modal-content img,
+        .modal-content iframe {
+            max-width: 100%;
+            max-height: 75vh;
+            border-radius: 1.5rem;
+        }
+        .modal-content iframe {
+            width: 800px;
+            height: 600px;
+            border: none;
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 1.2rem;
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #1e2b3a;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.2);
+            transform: rotate(90deg);
+        }
+        .modal-content .file-name-display {
+            font-weight: 500;
+            margin-top: 0.8rem;
+            color: #1e2b3a;
+            font-size: 0.9rem;
+        }
+
+        /* admissions */
+        .admission-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.2rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #ecf2f9;
+            transition: 0.15s;
+        }
+        .admission-card:hover {
+            border-color: #c8d9ea;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         /* responsive */
@@ -408,8 +514,16 @@
                 align-items: stretch;
             }
             .file-preview-item {
-                width: 64px;
-                height: 64px;
+                width: 70px;
+                height: 70px;
+            }
+            .modal-content {
+                padding: 1rem;
+                max-width: 95vw;
+            }
+            .modal-content iframe {
+                width: 100%;
+                height: 400px;
             }
         }
         @media (min-width: 601px) and (max-width: 900px) {
@@ -439,7 +553,7 @@
                 <i class="fas fa-echo" style="font-size: 2rem; color: #1e2b3a;"></i>
                 <h1 class="gradient-text" style="font-weight: 700; font-size: 1.6rem;">Echo Portfolio</h1>
                 <span class="badge-soft"><i class="fas fa-shield-alt"></i> pro</span>
-                <span class="badge-light"><i class="fas fa-video"></i> video</span>
+                <span class="badge-light"><i class="fas fa-play"></i> view</span>
                 <span class="badge-light"><i class="fas fa-arrow-up"></i> 10MB</span>
             </div>
             <div>
@@ -502,6 +616,15 @@
                 <div id="filePreviewContainer" class="file-preview" style="margin-top: 0.4rem;"></div>
             </div>
 
+            <!-- ADMISSIONS SECTION -->
+            <div class="card-glass" style="margin-top: 1.8rem; background: rgba(235, 245, 255, 0.3);">
+                <div class="flex-between">
+                    <h3 style="font-size:1.1rem;"><i class="fas fa-graduation-cap"></i> Admissions</h3>
+                    <button class="btn btn-primary btn-sm" id="addAdmissionBtn"><i class="fas fa-plus"></i> new admission</button>
+                </div>
+                <div id="admissionsContainer" style="margin-top: 0.8rem;"></div>
+            </div>
+
             <!-- admin panel -->
             <div id="adminPanel" class="admin-section hidden">
                 <h3 style="font-size:1.1rem;"><i class="fas fa-user-shield"></i> admin · all users <span class="badge-light" id="adminUserCount">0</span></h3>
@@ -510,6 +633,15 @@
         </div>
 
         <div id="globalMessage" class="flash-message hidden" style="margin-top: 1.2rem;"></div>
+    </div>
+
+    <!-- Modal for full view -->
+    <div id="fileModal" class="modal-overlay hidden" onclick="if(event.target===this) closeModal()">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modalBody"></div>
+            <div class="file-name-display" id="modalFileName"></div>
+        </div>
     </div>
 
     <script>
@@ -524,6 +656,7 @@
                 maxItemsPerUnit: 10,
                 selectedUnitForItem: null,
                 pendingFile: null, // { name, dataURL, type }
+                admissions: [], // { id, title, description, date, status }
             };
 
             // ---------- helpers ----------
@@ -544,13 +677,23 @@
 
             // ---------- persistence ----------
             function saveState() {
-                try { localStorage.setItem('echoPortfolioData', JSON.stringify(STATE.users)); } catch (e) {}
+                try {
+                    const data = {
+                        users: STATE.users,
+                        admissions: STATE.admissions
+                    };
+                    localStorage.setItem('echoPortfolioData', JSON.stringify(data));
+                } catch (e) {}
             }
 
             function loadState() {
                 try {
                     const raw = localStorage.getItem('echoPortfolioData');
-                    if (raw) { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) STATE.users = parsed; }
+                    if (raw) {
+                        const parsed = JSON.parse(raw);
+                        if (Array.isArray(parsed.users)) STATE.users = parsed.users;
+                        if (Array.isArray(parsed.admissions)) STATE.admissions = parsed.admissions;
+                    }
                 } catch (e) {}
             }
 
@@ -630,6 +773,28 @@
                 return { success: true, msg: 'unit removed' };
             }
 
+            // ---------- admissions ----------
+            function addAdmission(title, description, date, status) {
+                if (!title) return { success: false, msg: 'title required' };
+                STATE.admissions.push({
+                    id: genId(),
+                    title: title,
+                    description: description || '',
+                    date: date || new Date().toISOString().split('T')[0],
+                    status: status || 'pending'
+                });
+                saveState();
+                return { success: true, msg: 'admission added' };
+            }
+
+            function removeAdmission(id) {
+                const idx = STATE.admissions.findIndex(a => a.id === id);
+                if (idx === -1) return { success: false, msg: 'not found' };
+                STATE.admissions.splice(idx, 1);
+                saveState();
+                return { success: true, msg: 'admission removed' };
+            }
+
             function adminGetAllUsers() {
                 if (!isAdmin()) return [];
                 return STATE.users.map(u => ({ username: u.username, unitCount: u.units.length, totalItems: u.units.reduce((acc,
@@ -660,6 +825,7 @@
                     const totalItems = user.units.reduce((acc, u) => acc + u.items.length, 0);
                     document.getElementById('totalItemsCount').textContent = totalItems;
                     renderUnits(user);
+                    renderAdmissions();
                 }
 
                 // item panel
@@ -694,17 +860,19 @@
                             const isVideo = item.file.type && item.file.type.startsWith('video/');
                             if (isImage) {
                                 preview =
-                                    `<img src="${item.file.dataURL}" alt="file" style="width:30px;height:30px;object-fit:cover;border-radius:8px;border:1px solid #e2eaf2;">`;
+                                    `<img src="${item.file.dataURL}" alt="file">`;
                             } else if (isVideo) {
                                 preview =
-                                    `<video src="${item.file.dataURL}" style="width:30px;height:30px;object-fit:cover;border-radius:8px;border:1px solid #e2eaf2;" muted></video>`;
+                                    `<video src="${item.file.dataURL}" muted></video>`;
                             } else {
-                                preview = `<i class="fas fa-file" style="font-size:1.2rem;color:#3b5a78;"></i>`;
+                                preview = `<i class="fas fa-file"></i>`;
                             }
                         }
                         return `
                                 <li>
-                                    <span class="item-preview-inline">${preview} ${item.name}</span>
+                                    <span class="item-preview-inline" data-itemid="${item.id}" data-unitname="${unit.unitName}" onclick="viewFile('${unit.unitName}','${item.id}')">
+                                        ${preview} ${item.name}
+                                    </span>
                                     <button class="btn btn-danger btn-sm" style="padding: 0.05rem 0.6rem; font-size: 0.65rem;" data-unit="${unit.unitName}" data-itemid="${item.id}"><i class="fas fa-trash-alt"></i></button>
                                 </li>
                             `;
@@ -756,6 +924,38 @@
                 });
             }
 
+            function renderAdmissions() {
+                const container = document.getElementById('admissionsContainer');
+                if (STATE.admissions.length === 0) {
+                    container.innerHTML = `<div class="muted" style="padding:0.8rem 0;">no admissions yet</div>`;
+                    return;
+                }
+                container.innerHTML = STATE.admissions.map(a => `
+                        <div class="admission-card">
+                            <div class="flex-between">
+                                <div>
+                                    <strong>${a.title}</strong>
+                                    <span class="badge-light" style="margin-left:0.5rem;">${a.status}</span>
+                                    <div class="muted" style="font-size:0.8rem; margin-top:0.2rem;">${a.description || 'No description'}</div>
+                                    <div class="muted" style="font-size:0.7rem;">${a.date}</div>
+                                </div>
+                                <button class="btn btn-danger btn-sm" data-admission-id="${a.id}"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    `).join('');
+
+                container.querySelectorAll('[data-admission-id]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.dataset.admissionId;
+                        if (confirm('remove this admission?')) {
+                            const res = removeAdmission(id);
+                            showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                            renderAll();
+                        }
+                    });
+                });
+            }
+
             function renderAdminPanel() {
                 const container = document.getElementById('adminUserList');
                 const all = adminGetAllUsers();
@@ -779,6 +979,7 @@
                 const f = STATE.pendingFile;
                 const isImage = f.type && f.type.startsWith('image/');
                 const isVideo = f.type && f.type.startsWith('video/');
+                const isPDF = f.type === 'application/pdf';
 
                 let previewHtml = '';
                 if (isImage) {
@@ -788,8 +989,10 @@
                             <video src="${f.dataURL}" muted style="width:100%;height:100%;object-fit:cover;"></video>
                             <div class="play-overlay"><i class="fas fa-play"></i></div>
                         `;
+                } else if (isPDF) {
+                    previewHtml = `<i class="fas fa-file-pdf" style="font-size:2.5rem;color:#c24b5a;"></i>`;
                 } else {
-                    previewHtml = `<i class="fas fa-file-alt"></i>`;
+                    previewHtml = `<i class="fas fa-file-alt" style="font-size:2.5rem;color:#3b5a78;"></i>`;
                 }
 
                 container.innerHTML = `
@@ -807,13 +1010,73 @@
                 });
             }
 
+            // ----- file viewer modal -----
+            window.viewFile = function(unitName, itemId) {
+                const user = getCurrentUserData();
+                if (!user) return;
+                const unit = user.units.find(u => u.unitName === unitName);
+                if (!unit) return;
+                const item = unit.items.find(it => it.id === itemId);
+                if (!item || !item.file) {
+                    showGlobalMessage('no file attached', 'error');
+                    return;
+                }
+
+                const modal = document.getElementById('fileModal');
+                const body = document.getElementById('modalBody');
+                const nameDisplay = document.getElementById('modalFileName');
+                const f = item.file;
+                const isImage = f.type && f.type.startsWith('image/');
+                const isVideo = f.type && f.type.startsWith('video/');
+                const isPDF = f.type === 'application/pdf';
+
+                let content = '';
+                if (isImage) {
+                    content = `<img src="${f.dataURL}" alt="${f.name}">`;
+                } else if (isVideo) {
+                    content = `<video src="${f.dataURL}" controls autoplay style="max-width:100%;max-height:75vh;border-radius:1.5rem;"></video>`;
+                } else if (isPDF) {
+                    content = `<iframe src="${f.dataURL}" style="width:100%;height:600px;border:none;"></iframe>`;
+                } else {
+                    // For text files, documents, etc. - show as embed or download
+                    const isText = f.type && (f.type.includes('text') || f.type.includes('json') || f.type.includes('javascript'));
+                    if (isText) {
+                        try {
+                            const text = atob(f.dataURL.split(',')[1] || '');
+                            content =
+                                `<pre style="max-width:100%;max-height:70vh;overflow:auto;padding:1rem;background:#f5f8fc;border-radius:1rem;font-size:0.85rem;white-space:pre-wrap;word-break:break-all;">${text.substring(0, 50000)}${text.length > 50000 ? '\n... (truncated)' : ''}</pre>`;
+                        } catch (e) {
+                            content = `<div style="padding:2rem;text-align:center;"><i class="fas fa-file" style="font-size:3rem;color:#3b5a78;"></i><p>${f.name}</p><p class="muted">preview not available</p></div>`;
+                        }
+                    } else {
+                        content =
+                            `<div style="padding:2rem;text-align:center;"><i class="fas fa-file" style="font-size:4rem;color:#3b5a78;"></i><p style="margin-top:1rem;font-weight:500;">${f.name}</p><p class="muted">file preview not available for this type</p></div>`;
+                    }
+                }
+
+                body.innerHTML = content;
+                nameDisplay.textContent = f.name;
+                modal.classList.remove('hidden');
+            };
+
+            window.closeModal = function() {
+                document.getElementById('fileModal').classList.add('hidden');
+                const video = document.querySelector('#modalBody video');
+                if (video) video.pause();
+            };
+
+            // close modal with escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+
             // ---------- UI messages ----------
             function showGlobalMessage(msg, type = 'info') {
                 const el = document.getElementById('globalMessage');
                 el.textContent = msg;
                 el.classList.remove('hidden');
                 el.style.background = type === 'error' ? '#c24b5a' : '#1e2b3a';
-                setTimeout(() => el.classList.add('hidden'), 3500);
+                setTimeout(() => el.classList.add('hidden'), 4000);
             }
 
             function showAuthMessage(msg, type = 'info') {
@@ -881,12 +1144,11 @@
                     } else renderAll();
                 });
 
-                // file upload - supports any file, 10MB limit
+                // file upload - 10MB limit
                 document.getElementById('fileUploadInput').addEventListener('change', function(e) {
                     const file = this.files[0];
                     if (!file) { STATE.pendingFile = null;
                         updateFilePreview(); return; }
-                    // 10MB limit
                     if (file.size > 10 * 1024 * 1024) {
                         showGlobalMessage('file too large (max 10MB)', 'error');
                         this.value = '';
@@ -906,6 +1168,19 @@
                     reader.readAsDataURL(file);
                 });
 
+                // Admissions
+                document.getElementById('addAdmissionBtn').addEventListener('click', () => {
+                    const title = prompt('Admission title:');
+                    if (!title) return;
+                    const description = prompt('Description (optional):') || '';
+                    const date = prompt('Date (YYYY-MM-DD):') || new Date().toISOString().split('T')[0];
+                    const statuses = ['pending', 'accepted', 'rejected', 'waitlist'];
+                    const status = prompt(`Status (${statuses.join(', ')}):`) || 'pending';
+                    const res = addAdmission(title, description, date, status);
+                    showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                    renderAll();
+                });
+
                 // keyboard shortcuts
                 document.getElementById('newUnitName').addEventListener('keypress', (e) => { if (e.key === 'Enter') document
                         .getElementById('confirmAddUnit').click(); });
@@ -920,6 +1195,17 @@
                 loadState();
                 if (!findUser(STATE.adminUser)) {
                     STATE.users.push({ username: STATE.adminUser, password: STATE.adminPass, units: [] });
+                    saveState();
+                }
+                // Sample admissions if empty
+                if (STATE.admissions.length === 0) {
+                    STATE.admissions.push({
+                        id: genId(),
+                        title: 'Fall 2026 Intake',
+                        description: 'Applications open for all programs',
+                        date: '2026-08-15',
+                        status: 'open'
+                    });
                     saveState();
                 }
                 initEvents();
