@@ -1,825 +1,934 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>Echo Portfolio · smart upload</title>
-  <!-- Font Awesome 6 (free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    /* ----- global reset & fonts ----- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-    body {
-      background: radial-gradient(circle at 10% 20%, #f9f3e8 0%, #e8eef5 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.2rem;
-      margin: 0;
-    }
-    .app-wrapper {
-      max-width: 1400px;
-      width: 100%;
-      background: rgba(255, 248, 240, 0.55);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-radius: 3.5rem;
-      padding: 1.8rem 1.8rem 2.5rem;
-      box-shadow: 0 40px 80px rgba(30, 40, 50, 0.2), 0 10px 30px rgba(0,0,0,0.04);
-      border: 1px solid rgba(255, 245, 235, 0.5);
-      transition: all 0.2s;
-    }
-    h1, h2, h3 {
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: #1e2b3a;
-    }
-    .flex-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.7rem;
-    }
-    .flex-between {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-    }
-    .badge-soft {
-      background: #1e2b3a;
-      color: #f5efe8;
-      padding: 0.2rem 1.2rem;
-      border-radius: 60px;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      white-space: nowrap;
-    }
-    .badge-light {
-      background: rgba(30, 43, 58, 0.08);
-      color: #1e2b3a;
-      padding: 0.15rem 1rem;
-      border-radius: 60px;
-      font-size: 0.7rem;
-      white-space: nowrap;
-    }
-    .btn {
-      background: white;
-      border: none;
-      padding: 0.5rem 1.2rem;
-      border-radius: 80px;
-      font-weight: 500;
-      font-size: 0.85rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-      border: 1px solid rgba(0,0,0,0.04);
-      transition: all 0.15s ease;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #1a2634;
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: #1e2b3a;
-      color: white;
-      border: 1px solid #1e2b3a;
-      box-shadow: 0 8px 18px rgba(26, 43, 62, 0.15);
-    }
-    .btn-primary:hover {
-      background: #0f1d2c;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px rgba(26, 43, 62, 0.25);
-    }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #cbd8e6;
-    }
-    .btn-outline:hover {
-      background: #eef4fa;
-      border-color: #a0b8cc;
-    }
-    .btn-success {
-      background: #1d7a4a;
-      color: white;
-      border-color: #1d7a4a;
-    }
-    .btn-success:hover {
-      background: #13613a;
-      transform: scale(0.97);
-    }
-    .btn-danger {
-      background: #c24b5a;
-      color: white;
-      border-color: #c24b5a;
-    }
-    .btn-danger:hover {
-      background: #a23a47;
-    }
-    .btn-warning {
-      background: #d48c3b;
-      color: white;
-      border-color: #d48c3b;
-    }
-    .btn-warning:hover {
-      background: #b8752d;
-    }
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid transparent;
-    }
-    .btn-ghost:hover {
-      background: rgba(0,0,0,0.02);
-    }
-    .btn-sm {
-      padding: 0.2rem 0.9rem;
-      font-size: 0.75rem;
-    }
-    .card-glass {
-      background: rgba(255, 250, 245, 0.5);
-      backdrop-filter: blur(4px);
-      border-radius: 2.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.02);
-      border: 1px solid rgba(255, 245, 235, 0.6);
-      margin-top: 1.2rem;
-    }
-    .input-group {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.5rem;
-      margin: 0.4rem 0;
-    }
-    .input-group input, .input-group select {
-      padding: 0.6rem 1.2rem;
-      border-radius: 80px;
-      border: 1px solid #dce5ef;
-      background: white;
-      font-size: 0.9rem;
-      flex: 1 1 160px;
-      outline: none;
-      transition: 0.15s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.01);
-      min-width: 120px;
-    }
-    .input-group input:focus {
-      border-color: #1e2b3a;
-      box-shadow: 0 0 0 4px rgba(30, 43, 58, 0.12);
-    }
-    .unit-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.2rem;
-      margin: 1.5rem 0 0.3rem;
-    }
-    .unit-card {
-      background: white;
-      border-radius: 2.2rem;
-      padding: 1.2rem 1.2rem 1rem;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.02);
-      border: 1px solid #ecf2f9;
-      transition: 0.2s;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-    .unit-card:hover {
-      border-color: #c8d9ea;
-      transform: translateY(-3px);
-      box-shadow: 0 16px 32px rgba(30, 43, 58, 0.06);
-    }
-    .unit-header {
-      display: flex;
-      justify-content: space-between;
-      font-weight: 600;
-      color: #1a2b3e;
-      border-bottom: 1px dashed #dee9f2;
-      padding-bottom: 0.4rem;
-      margin-bottom: 0.5rem;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-    }
-    .item-list {
-      list-style: none;
-      margin: 0.3rem 0 0.2rem;
-      font-size: 0.85rem;
-      flex: 1;
-    }
-    .item-list li {
-      padding: 0.25rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #f2f7fc;
-      gap: 0.3rem;
-      flex-wrap: wrap;
-    }
-    .item-list li:last-child { border: none; }
-    .item-count-badge {
-      background: #eef3f8;
-      border-radius: 60px;
-      padding: 0.05rem 0.8rem;
-      font-size: 0.65rem;
-      font-weight: 500;
-    }
-    .admin-section {
-      background: #e4eef9;
-      border-radius: 2.8rem;
-      padding: 1.5rem;
-      margin-top: 1.8rem;
-      border: 1px solid #bdd2e6;
-    }
-    .flash-message {
-      background: #1e2b3a;
-      color: white;
-      padding: 0.6rem 1.5rem;
-      border-radius: 80px;
-      margin: 0.5rem 0;
-      font-weight: 450;
-      font-size: 0.9rem;
-    }
-    .hidden { display: none !important; }
-    .muted { color: #4f677b; font-size: 0.8rem; }
-    .flex-gap { gap: 0.6rem; }
-    .flex-wrap { flex-wrap: wrap; }
-    i { width: 1.1rem; }
-    hr { border: none; border-top: 1px solid rgba(0,0,0,0.04); margin: 1.5rem 0 0.3rem; }
-    .gradient-text {
-      background: linear-gradient(135deg, #1e2b3a, #3b5a78);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    /* file upload & preview */
-    .file-preview {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.4rem;
-      align-items: center;
-    }
-    .file-preview-item {
-      position: relative;
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid #e2eaf2;
-      background: #f8faff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .file-preview-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .file-preview-item i {
-      font-size: 1.5rem;
-      color: #3b5a78;
-    }
-    .file-preview-item .file-name {
-      position: absolute;
-      bottom: 0;
-      background: rgba(0,0,0,0.5);
-      color: white;
-      font-size: 0.45rem;
-      width: 100%;
-      text-align: center;
-      padding: 0.05rem 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .file-upload-label {
-      background: #eef4fa;
-      padding: 0.2rem 1rem;
-      border-radius: 60px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      border: 1px solid #cbd8e6;
-      transition: 0.15s;
-      white-space: nowrap;
-    }
-    .file-upload-label:hover {
-      background: #dfe9f3;
-    }
-    .item-file-upload {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-    .item-preview-inline {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .item-preview-inline img {
-      width: 24px;
-      height: 24px;
-      object-fit: cover;
-      border-radius: 6px;
-      border: 1px solid #e2eaf2;
-    }
-    .item-preview-inline i {
-      font-size: 1rem;
-    }
-    /* responsive tweaks */
-    @media (max-width: 600px) {
-      .app-wrapper { padding: 1.2rem; border-radius: 2.5rem; }
-      .unit-grid { grid-template-columns: 1fr; }
-      .btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
-      .card-glass { padding: 1rem; }
-      .input-group input { min-width: 100px; }
-      .flex-between { flex-direction: column; align-items: stretch; }
-    }
-    @media (min-width: 601px) and (max-width: 900px) {
-      .unit-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    /* scroll */
-    .scrollable-list {
-      max-height: 200px;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-    .scrollable-list::-webkit-scrollbar { width: 4px; }
-    .scrollable-list::-webkit-scrollbar-thumb { background: #b0c8dc; border-radius: 10px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Echo Portfolio · video & 10MB</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ----- global reset & fonts ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background: radial-gradient(circle at 10% 20%, #f9f3e8 0%, #e8eef5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            margin: 0;
+        }
+        .app-wrapper {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 248, 240, 0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 3.5rem;
+            padding: 1.8rem 1.8rem 2.5rem;
+            box-shadow: 0 40px 80px rgba(30, 40, 50, 0.2), 0 10px 30px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255, 245, 235, 0.5);
+            transition: all 0.2s;
+        }
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #1e2b3a;
+        }
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+        .badge-soft {
+            background: #1e2b3a;
+            color: #f5efe8;
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            white-space: nowrap;
+        }
+        .badge-light {
+            background: rgba(30, 43, 58, 0.08);
+            color: #1e2b3a;
+            padding: 0.15rem 1rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .btn {
+            background: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 80px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.15s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1a2634;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: #1e2b3a;
+            color: white;
+            border: 1px solid #1e2b3a;
+            box-shadow: 0 8px 18px rgba(26, 43, 62, 0.15);
+        }
+        .btn-primary:hover {
+            background: #0f1d2c;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(26, 43, 62, 0.25);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #cbd8e6;
+        }
+        .btn-outline:hover {
+            background: #eef4fa;
+            border-color: #a0b8cc;
+        }
+        .btn-success {
+            background: #1d7a4a;
+            color: white;
+            border-color: #1d7a4a;
+        }
+        .btn-success:hover {
+            background: #13613a;
+            transform: scale(0.97);
+        }
+        .btn-danger {
+            background: #c24b5a;
+            color: white;
+            border-color: #c24b5a;
+        }
+        .btn-danger:hover {
+            background: #a23a47;
+        }
+        .btn-warning {
+            background: #d48c3b;
+            color: white;
+            border-color: #d48c3b;
+        }
+        .btn-warning:hover {
+            background: #b8752d;
+        }
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid transparent;
+        }
+        .btn-ghost:hover {
+            background: rgba(0,0,0,0.02);
+        }
+        .btn-sm {
+            padding: 0.2rem 0.9rem;
+            font-size: 0.75rem;
+        }
+        .card-glass {
+            background: rgba(255, 250, 245, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 2.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255, 245, 235, 0.6);
+            margin-top: 1.2rem;
+        }
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.4rem 0;
+        }
+        .input-group input,
+        .input-group select {
+            padding: 0.6rem 1.2rem;
+            border-radius: 80px;
+            border: 1px solid #dce5ef;
+            background: white;
+            font-size: 0.9rem;
+            flex: 1 1 160px;
+            outline: none;
+            transition: 0.15s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+            min-width: 120px;
+        }
+        .input-group input:focus {
+            border-color: #1e2b3a;
+            box-shadow: 0 0 0 4px rgba(30, 43, 58, 0.12);
+        }
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0 0.3rem;
+        }
+        .unit-card {
+            background: white;
+            border-radius: 2.2rem;
+            padding: 1.2rem 1.2rem 1rem;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.02);
+            border: 1px solid #ecf2f9;
+            transition: 0.2s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .unit-card:hover {
+            border-color: #c8d9ea;
+            transform: translateY(-3px);
+            box-shadow: 0 16px 32px rgba(30, 43, 58, 0.06);
+        }
+        .unit-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            color: #1a2b3e;
+            border-bottom: 1px dashed #dee9f2;
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .item-list {
+            list-style: none;
+            margin: 0.3rem 0 0.2rem;
+            font-size: 0.85rem;
+            flex: 1;
+        }
+        .item-list li {
+            padding: 0.25rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f2f7fc;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .item-list li:last-child {
+            border: none;
+        }
+        .item-count-badge {
+            background: #eef3f8;
+            border-radius: 60px;
+            padding: 0.05rem 0.8rem;
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+        .admin-section {
+            background: #e4eef9;
+            border-radius: 2.8rem;
+            padding: 1.5rem;
+            margin-top: 1.8rem;
+            border: 1px solid #bdd2e6;
+        }
+        .flash-message {
+            background: #1e2b3a;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 80px;
+            margin: 0.5rem 0;
+            font-weight: 450;
+            font-size: 0.9rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .muted {
+            color: #4f677b;
+            font-size: 0.8rem;
+        }
+        .flex-gap {
+            gap: 0.6rem;
+        }
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+        i {
+            width: 1.1rem;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            margin: 1.5rem 0 0.3rem;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1e2b3a, #3b5a78);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ----- file & video preview ----- */
+        .file-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 0.5rem;
+            align-items: center;
+        }
+        .file-preview-item {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e2eaf2;
+            background: #f8faff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .file-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .file-preview-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .file-preview-item i {
+            font-size: 2rem;
+            color: #3b5a78;
+        }
+        .file-preview-item .file-name {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 0.5rem;
+            width: 100%;
+            text-align: center;
+            padding: 0.05rem 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .file-upload-label {
+            background: #eef4fa;
+            padding: 0.2rem 1rem;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid #cbd8e6;
+            transition: 0.15s;
+            white-space: nowrap;
+        }
+        .file-upload-label:hover {
+            background: #dfe9f3;
+        }
+        .item-preview-inline {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .item-preview-inline img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e2eaf2;
+        }
+        .item-preview-inline video {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e2eaf2;
+            background: #000;
+        }
+        .item-preview-inline i {
+            font-size: 1.2rem;
+            color: #3b5a78;
+        }
+        .file-preview-item .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+
+        /* responsive */
+        @media (max-width: 600px) {
+            .app-wrapper {
+                padding: 1.2rem;
+                border-radius: 2.5rem;
+            }
+            .unit-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn {
+                padding: 0.4rem 0.9rem;
+                font-size: 0.8rem;
+            }
+            .card-glass {
+                padding: 1rem;
+            }
+            .input-group input {
+                min-width: 100px;
+            }
+            .flex-between {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .file-preview-item {
+                width: 64px;
+                height: 64px;
+            }
+        }
+        @media (min-width: 601px) and (max-width: 900px) {
+            .unit-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .scrollable-list {
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .scrollable-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scrollable-list::-webkit-scrollbar-thumb {
+            background: #b0c8dc;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="app-wrapper" id="app">
-  <!-- header -->
-  <div class="flex-between">
-    <div class="flex-row">
-      <i class="fas fa-echo" style="font-size: 2rem; color: #1e2b3a;"></i>
-      <h1 class="gradient-text" style="font-weight: 700; font-size: 1.6rem;">Echo Portfolio</h1>
-      <span class="badge-soft"><i class="fas fa-shield-alt"></i> pro</span>
-      <span class="badge-light"><i class="fas fa-cloud-upload-alt"></i> any file</span>
-    </div>
-    <div>
-      <span id="userDisplay" class="muted" style="margin-right: 0.6rem;"><i class="fas fa-user-circle"></i> guest</span>
-      <button class="btn btn-outline btn-sm" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> exit</button>
-    </div>
-  </div>
-
-  <!-- auth -->
-  <div id="authSection" class="card-glass">
-    <div class="flex-row flex-wrap" style="justify-content: center;">
-      <div class="input-group" style="flex: 2 1 280px;">
-        <input type="text" id="authUsername" placeholder="username" value="demo">
-        <input type="password" id="authPassword" placeholder="password" value="demo123">
-        <button class="btn btn-primary" id="loginBtn"><i class="fas fa-sign-in-alt"></i> sign in</button>
-        <button class="btn btn-success" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
-      </div>
-      <span class="muted" style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> demo: demo / demo123</span>
-    </div>
-    <div id="authMessage" class="flash-message hidden"></div>
-  </div>
-
-  <!-- main user area -->
-  <div id="userArea" class="hidden">
-    <div class="flex-between" style="margin-top: 0.3rem;">
-      <div class="flex-row">
-        <h3 style="font-size: 1.2rem;"><i class="fas fa-cubes"></i> units</h3>
-        <span class="badge-soft" id="unitCounter">0 / 40</span>
-        <span class="badge-light"><i class="fas fa-database"></i> <span id="totalItemsCount">0</span></span>
-      </div>
-      <div class="flex-row flex-gap">
-        <button class="btn btn-primary btn-sm" id="addUnitBtn"><i class="fas fa-plus-circle"></i> new unit</button>
-        <button class="btn btn-outline btn-sm" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
-      </div>
-    </div>
-
-    <!-- add unit inline -->
-    <div id="addUnitForm" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.3rem;">
-      <div class="input-group">
-        <input type="text" id="newUnitName" placeholder="unit name">
-        <button class="btn btn-success btn-sm" id="confirmAddUnit"><i class="fas fa-check"></i> create</button>
-        <button class="btn btn-ghost btn-sm" id="cancelAddUnit">cancel</button>
-      </div>
-    </div>
-
-    <!-- units grid -->
-    <div id="unitsContainer" class="unit-grid"></div>
-
-    <!-- add item panel with file upload -->
-    <div id="addItemPanel" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.5rem; background: rgba(235, 245, 255, 0.4);">
-      <div class="flex-between" style="gap: 0.5rem;">
-        <span style="font-size:0.9rem;"><i class="fas fa-pen-fancy"></i> add to <strong id="itemUnitNameDisplay"></strong> <span class="item-count-badge" id="itemCountDisplay">0/10</span></span>
-        <div class="flex-row flex-gap" style="flex-wrap: wrap;">
-          <input type="text" id="newItemInput" placeholder="item name" style="flex:1; min-width:100px; padding:0.4rem 1rem; font-size:0.85rem;">
-          <label class="file-upload-label" style="font-size:0.7rem; padding:0.15rem 0.8rem;"><i class="fas fa-file-upload"></i> file <input type="file" id="fileUploadInput" style="display:none;"></label>
-          <button class="btn btn-success btn-sm" id="confirmAddItem"><i class="fas fa-save"></i> add</button>
-          <button class="btn btn-ghost btn-sm" id="cancelAddItem">cancel</button>
+    <div class="app-wrapper" id="app">
+        <!-- header -->
+        <div class="flex-between">
+            <div class="flex-row">
+                <i class="fas fa-echo" style="font-size: 2rem; color: #1e2b3a;"></i>
+                <h1 class="gradient-text" style="font-weight: 700; font-size: 1.6rem;">Echo Portfolio</h1>
+                <span class="badge-soft"><i class="fas fa-shield-alt"></i> pro</span>
+                <span class="badge-light"><i class="fas fa-video"></i> video</span>
+                <span class="badge-light"><i class="fas fa-arrow-up"></i> 10MB</span>
+            </div>
+            <div>
+                <span id="userDisplay" class="muted" style="margin-right: 0.6rem;"><i class="fas fa-user-circle"></i> guest</span>
+                <button class="btn btn-outline btn-sm" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> exit</button>
+            </div>
         </div>
-      </div>
-      <div id="filePreviewContainer" class="file-preview" style="margin-top: 0.4rem;"></div>
+
+        <!-- auth -->
+        <div id="authSection" class="card-glass">
+            <div class="flex-row flex-wrap" style="justify-content: center;">
+                <div class="input-group" style="flex: 2 1 280px;">
+                    <input type="text" id="authUsername" placeholder="username" value="demo">
+                    <input type="password" id="authPassword" placeholder="password" value="demo123">
+                    <button class="btn btn-primary" id="loginBtn"><i class="fas fa-sign-in-alt"></i> sign in</button>
+                    <button class="btn btn-success" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
+                </div>
+                <span class="muted" style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> demo: demo / demo123</span>
+            </div>
+            <div id="authMessage" class="flash-message hidden"></div>
+        </div>
+
+        <!-- main user area -->
+        <div id="userArea" class="hidden">
+            <div class="flex-between" style="margin-top: 0.3rem;">
+                <div class="flex-row">
+                    <h3 style="font-size: 1.2rem;"><i class="fas fa-cubes"></i> units</h3>
+                    <span class="badge-soft" id="unitCounter">0 / 40</span>
+                    <span class="badge-light"><i class="fas fa-database"></i> <span id="totalItemsCount">0</span></span>
+                </div>
+                <div class="flex-row flex-gap">
+                    <button class="btn btn-primary btn-sm" id="addUnitBtn"><i class="fas fa-plus-circle"></i> new unit</button>
+                    <button class="btn btn-outline btn-sm" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
+                </div>
+            </div>
+
+            <!-- add unit inline -->
+            <div id="addUnitForm" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.3rem;">
+                <div class="input-group">
+                    <input type="text" id="newUnitName" placeholder="unit name">
+                    <button class="btn btn-success btn-sm" id="confirmAddUnit"><i class="fas fa-check"></i> create</button>
+                    <button class="btn btn-ghost btn-sm" id="cancelAddUnit">cancel</button>
+                </div>
+            </div>
+
+            <!-- units grid -->
+            <div id="unitsContainer" class="unit-grid"></div>
+
+            <!-- add item panel with file upload -->
+            <div id="addItemPanel" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.5rem; background: rgba(235, 245, 255, 0.4);">
+                <div class="flex-between" style="gap: 0.5rem;">
+                    <span style="font-size:0.9rem;"><i class="fas fa-pen-fancy"></i> add to <strong id="itemUnitNameDisplay"></strong> <span class="item-count-badge" id="itemCountDisplay">0/10</span></span>
+                    <div class="flex-row flex-gap" style="flex-wrap: wrap;">
+                        <input type="text" id="newItemInput" placeholder="item name" style="flex:1; min-width:100px; padding:0.4rem 1rem; font-size:0.85rem;">
+                        <label class="file-upload-label" style="font-size:0.7rem; padding:0.15rem 0.8rem;"><i class="fas fa-file-upload"></i> file <input type="file" id="fileUploadInput" style="display:none;"></label>
+                        <button class="btn btn-success btn-sm" id="confirmAddItem"><i class="fas fa-save"></i> add</button>
+                        <button class="btn btn-ghost btn-sm" id="cancelAddItem">cancel</button>
+                    </div>
+                </div>
+                <div id="filePreviewContainer" class="file-preview" style="margin-top: 0.4rem;"></div>
+            </div>
+
+            <!-- admin panel -->
+            <div id="adminPanel" class="admin-section hidden">
+                <h3 style="font-size:1.1rem;"><i class="fas fa-user-shield"></i> admin · all users <span class="badge-light" id="adminUserCount">0</span></h3>
+                <div id="adminUserList" class="scrollable-list" style="margin-top: 0.6rem;"></div>
+            </div>
+        </div>
+
+        <div id="globalMessage" class="flash-message hidden" style="margin-top: 1.2rem;"></div>
     </div>
 
-    <!-- admin panel -->
-    <div id="adminPanel" class="admin-section hidden">
-      <h3 style="font-size:1.1rem;"><i class="fas fa-user-shield"></i> admin · all users <span class="badge-light" id="adminUserCount">0</span></h3>
-      <div id="adminUserList" class="scrollable-list" style="margin-top: 0.6rem;"></div>
-    </div>
-  </div>
+    <script>
+        (function() {
+            // ---------- STATE ----------
+            const STATE = {
+                users: [],
+                currentUser: null,
+                adminUser: 'admin',
+                adminPass: 'admin123',
+                maxUnits: 40,
+                maxItemsPerUnit: 10,
+                selectedUnitForItem: null,
+                pendingFile: null, // { name, dataURL, type }
+            };
 
-  <div id="globalMessage" class="flash-message hidden" style="margin-top: 1.2rem;"></div>
-</div>
-
-<script>
-  (function() {
-    // ---------- STATE ----------
-    const STATE = {
-      users: [],
-      currentUser: null,
-      adminUser: 'admin',
-      adminPass: 'admin123',
-      maxUnits: 40,
-      maxItemsPerUnit: 10,
-      selectedUnitForItem: null,
-      pendingFile: null,   // { name, dataURL, type }
-    };
-
-    // ---------- helpers ----------
-    function findUser(username) {
-      return STATE.users.find(u => u.username === username);
-    }
-    function getCurrentUserData() {
-      if (!STATE.currentUser) return null;
-      return findUser(STATE.currentUser);
-    }
-    function isAdmin() {
-      return STATE.currentUser === STATE.adminUser;
-    }
-    function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 8); }
-
-    // ---------- persistence ----------
-    function saveState() {
-      try { localStorage.setItem('echoPortfolioData', JSON.stringify(STATE.users)); } catch (e) {}
-    }
-    function loadState() {
-      try {
-        const raw = localStorage.getItem('echoPortfolioData');
-        if (raw) { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) STATE.users = parsed; }
-      } catch (e) {}
-    }
-
-    // ---------- auth ----------
-    function loginUser(username, password) {
-      if (!username || !password) return { success: false, msg: 'credentials required' };
-      const user = findUser(username);
-      if (!user) return { success: false, msg: 'user not found' };
-      if (user.password !== password) return { success: false, msg: 'wrong password' };
-      STATE.currentUser = username;
-      saveState();
-      return { success: true, msg: `welcome, ${username}` };
-    }
-    function signupUser(username, password) {
-      if (!username || !password) return { success: false, msg: 'credentials required' };
-      if (username === STATE.adminUser) return { success: false, msg: 'reserved name' };
-      if (findUser(username)) return { success: false, msg: 'already exists' };
-      STATE.users.push({ username, password, units: [] });
-      STATE.currentUser = username;
-      saveState();
-      return { success: true, msg: `account created, ${username}` };
-    }
-    function logout() {
-      STATE.currentUser = null;
-      STATE.selectedUnitForItem = null;
-      STATE.pendingFile = null;
-      renderAll();
-    }
-
-    // ---------- operations with file support ----------
-    function addUnit(unitName) {
-      const user = getCurrentUserData();
-      if (!user) return { success: false, msg: 'not logged in' };
-      if (user.units.length >= STATE.maxUnits) return { success: false, msg: `max ${STATE.maxUnits} units` };
-      if (user.units.some(u => u.unitName === unitName)) return { success: false, msg: 'unit exists' };
-      user.units.push({ unitName, items: [] });
-      saveState();
-      return { success: true, msg: `unit "${unitName}" added` };
-    }
-
-    function addItemToUnit(unitName, itemName, fileData) {
-      const user = getCurrentUserData();
-      if (!user) return { success: false, msg: 'not logged in' };
-      const unit = user.units.find(u => u.unitName === unitName);
-      if (!unit) return { success: false, msg: 'unit not found' };
-      if (unit.items.length >= STATE.maxItemsPerUnit) return { success: false, msg: `max ${STATE.maxItemsPerUnit} items` };
-      const newItem = { id: genId(), name: itemName || 'file' };
-      if (fileData) {
-        newItem.file = { name: fileData.name, dataURL: fileData.dataURL, type: fileData.type };
-      }
-      unit.items.push(newItem);
-      saveState();
-      return { success: true, msg: `item added to ${unitName}` };
-    }
-
-    function removeItemFromUnit(unitName, itemId) {
-      const user = getCurrentUserData();
-      if (!user) return { success: false, msg: 'not logged in' };
-      const unit = user.units.find(u => u.unitName === unitName);
-      if (!unit) return { success: false, msg: 'unit not found' };
-      const idx = unit.items.findIndex(it => it.id === itemId);
-      if (idx === -1) return { success: false, msg: 'item not found' };
-      unit.items.splice(idx, 1);
-      saveState();
-      return { success: true, msg: 'item removed' };
-    }
-
-    function removeUnit(unitName) {
-      const user = getCurrentUserData();
-      if (!user) return { success: false, msg: 'not logged in' };
-      const idx = user.units.findIndex(u => u.unitName === unitName);
-      if (idx === -1) return { success: false, msg: 'unit not found' };
-      user.units.splice(idx, 1);
-      saveState();
-      return { success: true, msg: 'unit removed' };
-    }
-
-    function adminGetAllUsers() {
-      if (!isAdmin()) return [];
-      return STATE.users.map(u => ({ username: u.username, unitCount: u.units.length, totalItems: u.units.reduce((acc, unit) => acc + unit.items.length, 0) }));
-    }
-
-    // ---------- render ----------
-    function renderAll() {
-      const isLoggedIn = !!STATE.currentUser;
-      const user = getCurrentUserData();
-
-      document.getElementById('authSection').classList.toggle('hidden', isLoggedIn);
-      document.getElementById('userArea').classList.toggle('hidden', !isLoggedIn);
-      document.getElementById('logoutBtn').style.display = isLoggedIn ? 'inline-flex' : 'none';
-      document.getElementById('userDisplay').innerHTML = isLoggedIn ? `<i class="fas fa-user-circle"></i> ${STATE.currentUser}` : '<i class="fas fa-user-circle"></i> guest';
-
-      const adminPanel = document.getElementById('adminPanel');
-      if (isLoggedIn && isAdmin()) {
-        adminPanel.classList.remove('hidden');
-        renderAdminPanel();
-      } else {
-        adminPanel.classList.add('hidden');
-      }
-
-      if (isLoggedIn && user) {
-        document.getElementById('unitCounter').textContent = `${user.units.length} / ${STATE.maxUnits}`;
-        const totalItems = user.units.reduce((acc, u) => acc + u.items.length, 0);
-        document.getElementById('totalItemsCount').textContent = totalItems;
-        renderUnits(user);
-      }
-
-      // item panel
-      if (!STATE.selectedUnitForItem) {
-        document.getElementById('addItemPanel').classList.add('hidden');
-        document.getElementById('filePreviewContainer').innerHTML = '';
-      } else {
-        const unit = user ? user.units.find(u => u.unitName === STATE.selectedUnitForItem) : null;
-        if (!unit) { STATE.selectedUnitForItem = null; document.getElementById('addItemPanel').classList.add('hidden'); }
-        else {
-          document.getElementById('addItemPanel').classList.remove('hidden');
-          document.getElementById('itemUnitNameDisplay').textContent = unit.unitName;
-          document.getElementById('itemCountDisplay').textContent = `${unit.items.length}/${STATE.maxItemsPerUnit}`;
-          updateFilePreview();
-        }
-      }
-      document.getElementById('addUnitForm').classList.add('hidden');
-    }
-
-    function renderUnits(user) {
-      const container = document.getElementById('unitsContainer');
-      if (!user || user.units.length === 0) {
-        container.innerHTML = `<div class="muted" style="grid-column:1/-1; padding: 2rem 0; text-align:center; background: rgba(255,255,240,0.3); border-radius: 3rem;"><i class="fas fa-box-open fa-2x" style="opacity:0.4;"></i><br>no units — create your first</div>`;
-        return;
-      }
-      container.innerHTML = user.units.map(unit => {
-        const itemsHtml = unit.items.map(item => {
-          let preview = '';
-          if (item.file) {
-            if (item.file.type && item.file.type.startsWith('image/')) {
-              preview = `<img src="${item.file.dataURL}" alt="file" style="width:24px;height:24px;object-fit:cover;border-radius:6px;border:1px solid #e2eaf2;">`;
-            } else {
-              preview = `<i class="fas fa-file" style="font-size:1rem;color:#3b5a78;"></i>`;
+            // ---------- helpers ----------
+            function findUser(username) {
+                return STATE.users.find(u => u.username === username);
             }
-          }
-          return `
-            <li>
-              <span class="item-preview-inline">${preview} ${item.name}</span>
-              <button class="btn btn-danger btn-sm" style="padding: 0.05rem 0.6rem; font-size: 0.65rem;" data-unit="${unit.unitName}" data-itemid="${item.id}"><i class="fas fa-trash-alt"></i></button>
-            </li>
-          `;
-        }).join('');
-        return `
-          <div class="unit-card">
-            <div class="unit-header">
-              <span><i class="fas fa-folder-open" style="color:#3a5a78;"></i> ${unit.unitName}</span>
-              <span class="item-count-badge">${unit.items.length}/${STATE.maxItemsPerUnit}</span>
-            </div>
-            <ul class="item-list">${itemsHtml || '<li class="muted" style="border:none; padding:0.2rem 0;">empty</li>'}</ul>
-            <div style="display:flex; gap:0.3rem; margin-top:0.6rem; flex-wrap:wrap;">
-              <button class="btn btn-primary btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-additem="${unit.unitName}"><i class="fas fa-plus"></i> item</button>
-              <button class="btn btn-warning btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-remove="${unit.unitName}"><i class="fas fa-times"></i> unit</button>
-            </div>
-          </div>
-        `;
-      }).join('');
 
-      container.querySelectorAll('[data-unit-remove]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const unitName = e.currentTarget.dataset.unitRemove;
-          if (confirm(`remove unit "${unitName}" ?`)) {
-            const res = removeUnit(unitName);
-            showGlobalMessage(res.msg, res.success ? 'success' : 'error');
-            renderAll();
-          }
-        });
-      });
-      container.querySelectorAll('[data-unit-additem]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const unitName = e.currentTarget.dataset.unitAdditem;
-          STATE.selectedUnitForItem = unitName;
-          STATE.pendingFile = null;
-          document.getElementById('fileUploadInput').value = '';
-          document.getElementById('newItemInput').value = '';
-          renderAll();
-          document.getElementById('newItemInput').focus();
-        });
-      });
-      container.querySelectorAll('[data-itemid]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const unitName = e.currentTarget.dataset.unit;
-          const itemId = e.currentTarget.dataset.itemid;
-          const res = removeItemFromUnit(unitName, itemId);
-          showGlobalMessage(res.msg, res.success ? 'success' : 'error');
-          renderAll();
-        });
-      });
-    }
+            function getCurrentUserData() {
+                if (!STATE.currentUser) return null;
+                return findUser(STATE.currentUser);
+            }
 
-    function renderAdminPanel() {
-      const container = document.getElementById('adminUserList');
-      const all = adminGetAllUsers();
-      document.getElementById('adminUserCount').textContent = all.length;
-      if (all.length === 0) { container.innerHTML = '<div class="muted">no users</div>'; return; }
-      container.innerHTML = all.map(u => `
-        <div style="background:white; border-radius:2.5rem; padding:0.4rem 1.2rem; margin-bottom:0.3rem; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 6px rgba(0,0,0,0.02); flex-wrap:wrap; gap:0.3rem;">
-          <span><i class="fas fa-user-astronaut"></i> ${u.username}</span>
-          <span class="badge-light">${u.unitCount} units · ${u.totalItems} items</span>
-        </div>
-      `).join('');
-    }
+            function isAdmin() {
+                return STATE.currentUser === STATE.adminUser;
+            }
 
-    function updateFilePreview() {
-      const container = document.getElementById('filePreviewContainer');
-      if (!STATE.pendingFile) {
-        container.innerHTML = '';
-        return;
-      }
-      const f = STATE.pendingFile;
-      const isImage = f.type && f.type.startsWith('image/');
-      container.innerHTML = `
-        <div class="file-preview-item">
-          ${isImage ? `<img src="${f.dataURL}" alt="preview">` : `<i class="fas fa-file-alt"></i>`}
-          <div class="file-name">${f.name}</div>
-        </div>
-        <span style="font-size:0.7rem; color:#3b5a78;"><i class="fas fa-check-circle"></i> ready</span>
-        <button class="btn btn-ghost btn-sm" id="clearFileBtn" style="padding:0.1rem 0.5rem; font-size:0.6rem;"><i class="fas fa-times"></i></button>
-      `;
-      document.getElementById('clearFileBtn')?.addEventListener('click', () => {
-        STATE.pendingFile = null;
-        document.getElementById('fileUploadInput').value = '';
-        updateFilePreview();
-      });
-    }
+            function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 8); }
 
-    // ---------- UI messages ----------
-    function showGlobalMessage(msg, type = 'info') {
-      const el = document.getElementById('globalMessage');
-      el.textContent = msg;
-      el.classList.remove('hidden');
-      el.style.background = type === 'error' ? '#c24b5a' : '#1e2b3a';
-      setTimeout(() => el.classList.add('hidden'), 3500);
-    }
-    function showAuthMessage(msg, type = 'info') {
-      const el = document.getElementById('authMessage');
-      el.textContent = msg;
-      el.classList.remove('hidden');
-      el.style.background = type === 'error' ? '#c24b5a' : '#1e2b3a';
-      setTimeout(() => el.classList.add('hidden'), 3000);
-    }
+            // ---------- persistence ----------
+            function saveState() {
+                try { localStorage.setItem('echoPortfolioData', JSON.stringify(STATE.users)); } catch (e) {}
+            }
 
-    // ---------- events ----------
-    function initEvents() {
-      document.getElementById('loginBtn').addEventListener('click', () => {
-        const user = document.getElementById('authUsername').value.trim();
-        const pass = document.getElementById('authPassword').value.trim();
-        const res = loginUser(user, pass);
-        if (res.success) { showAuthMessage(res.msg, 'success'); renderAll(); } 
-        else showAuthMessage(res.msg, 'error');
-      });
-      document.getElementById('signupBtn').addEventListener('click', () => {
-        const user = document.getElementById('authUsername').value.trim();
-        const pass = document.getElementById('authPassword').value.trim();
-        const res = signupUser(user, pass);
-        if (res.success) { showAuthMessage(res.msg, 'success'); renderAll(); } 
-        else showAuthMessage(res.msg, 'error');
-      });
-      document.getElementById('logoutBtn').addEventListener('click', () => { logout(); showGlobalMessage('logged out', 'info'); });
-      document.getElementById('refreshBtn').addEventListener('click', () => { renderAll(); showGlobalMessage('refreshed', 'info'); });
+            function loadState() {
+                try {
+                    const raw = localStorage.getItem('echoPortfolioData');
+                    if (raw) { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) STATE.users = parsed; }
+                } catch (e) {}
+            }
 
-      document.getElementById('addUnitBtn').addEventListener('click', () => {
-        const form = document.getElementById('addUnitForm');
-        form.classList.toggle('hidden');
-        if (!form.classList.contains('hidden')) { document.getElementById('newUnitName').value = ''; document.getElementById('newUnitName').focus(); }
-      });
-      document.getElementById('cancelAddUnit').addEventListener('click', () => { document.getElementById('addUnitForm').classList.add('hidden'); });
-      document.getElementById('confirmAddUnit').addEventListener('click', () => {
-        const name = document.getElementById('newUnitName').value.trim();
-        if (!name) { showGlobalMessage('enter unit name', 'error'); return; }
-        const res = addUnit(name);
-        showGlobalMessage(res.msg, res.success ? 'success' : 'error');
-        document.getElementById('addUnitForm').classList.add('hidden');
-        renderAll();
-      });
+            // ---------- auth ----------
+            function loginUser(username, password) {
+                if (!username || !password) return { success: false, msg: 'credentials required' };
+                const user = findUser(username);
+                if (!user) return { success: false, msg: 'user not found' };
+                if (user.password !== password) return { success: false, msg: 'wrong password' };
+                STATE.currentUser = username;
+                saveState();
+                return { success: true, msg: `welcome, ${username}` };
+            }
 
-      document.getElementById('cancelAddItem').addEventListener('click', () => { 
-        STATE.selectedUnitForItem = null; 
-        STATE.pendingFile = null;
-        document.getElementById('fileUploadInput').value = '';
-        renderAll(); 
-      });
-      document.getElementById('confirmAddItem').addEventListener('click', () => {
-        const itemName = document.getElementById('newItemInput').value.trim() || 'file';
-        if (!STATE.selectedUnitForItem) { showGlobalMessage('no unit', 'error'); return; }
-        const res = addItemToUnit(STATE.selectedUnitForItem, itemName, STATE.pendingFile);
-        showGlobalMessage(res.msg, res.success ? 'success' : 'error');
-        if (res.success) {
-          STATE.pendingFile = null;
-          document.getElementById('fileUploadInput').value = '';
-          document.getElementById('newItemInput').value = '';
-          renderAll();
-        } else renderAll();
-      });
+            function signupUser(username, password) {
+                if (!username || !password) return { success: false, msg: 'credentials required' };
+                if (username === STATE.adminUser) return { success: false, msg: 'reserved name' };
+                if (findUser(username)) return { success: false, msg: 'already exists' };
+                STATE.users.push({ username, password, units: [] });
+                STATE.currentUser = username;
+                saveState();
+                return { success: true, msg: `account created, ${username}` };
+            }
 
-      // file upload - supports any file type
-      document.getElementById('fileUploadInput').addEventListener('change', function(e) {
-        const file = this.files[0];
-        if (!file) { STATE.pendingFile = null; updateFilePreview(); return; }
-        // size limit 5MB
-        if (file.size > 5 * 1024 * 1024) {
-          showGlobalMessage('file too large (max 5MB)', 'error');
-          this.value = '';
-          STATE.pendingFile = null;
-          updateFilePreview();
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-          STATE.pendingFile = {
-            name: file.name,
-            dataURL: ev.target.result,
-            type: file.type
-          };
-          updateFilePreview();
-        };
-        reader.readAsDataURL(file);
-      });
+            function logout() {
+                STATE.currentUser = null;
+                STATE.selectedUnitForItem = null;
+                STATE.pendingFile = null;
+                renderAll();
+            }
 
-      // keyboard shortcuts
-      document.getElementById('newUnitName').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('confirmAddUnit').click(); });
-      document.getElementById('newItemInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('confirmAddItem').click(); });
-      document.getElementById('authPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('loginBtn').click(); });
-    }
+            // ---------- operations with file support ----------
+            function addUnit(unitName) {
+                const user = getCurrentUserData();
+                if (!user) return { success: false, msg: 'not logged in' };
+                if (user.units.length >= STATE.maxUnits) return { success: false, msg: `max ${STATE.maxUnits} units` };
+                if (user.units.some(u => u.unitName === unitName)) return { success: false, msg: 'unit exists' };
+                user.units.push({ unitName, items: [] });
+                saveState();
+                return { success: true, msg: `unit "${unitName}" added` };
+            }
 
-    // ---------- boot ----------
-    function init() {
-      loadState();
-      if (!findUser(STATE.adminUser)) {
-        STATE.users.push({ username: STATE.adminUser, password: STATE.adminPass, units: [] });
-        saveState();
-      }
-      initEvents();
-      renderAll();
-      if (STATE.currentUser) showGlobalMessage(`welcome back, ${STATE.currentUser}`, 'info');
-      else showGlobalMessage('sign in to start', 'info');
-    }
-    init();
-  })();
-</script>
+            function addItemToUnit(unitName, itemName, fileData) {
+                const user = getCurrentUserData();
+                if (!user) return { success: false, msg: 'not logged in' };
+                const unit = user.units.find(u => u.unitName === unitName);
+                if (!unit) return { success: false, msg: 'unit not found' };
+                if (unit.items.length >= STATE.maxItemsPerUnit) return { success: false, msg: `max ${STATE.maxItemsPerUnit} items` };
+                const newItem = { id: genId(), name: itemName || 'file' };
+                if (fileData) {
+                    newItem.file = { name: fileData.name, dataURL: fileData.dataURL, type: fileData.type };
+                }
+                unit.items.push(newItem);
+                saveState();
+                return { success: true, msg: `item added to ${unitName}` };
+            }
+
+            function removeItemFromUnit(unitName, itemId) {
+                const user = getCurrentUserData();
+                if (!user) return { success: false, msg: 'not logged in' };
+                const unit = user.units.find(u => u.unitName === unitName);
+                if (!unit) return { success: false, msg: 'unit not found' };
+                const idx = unit.items.findIndex(it => it.id === itemId);
+                if (idx === -1) return { success: false, msg: 'item not found' };
+                unit.items.splice(idx, 1);
+                saveState();
+                return { success: true, msg: 'item removed' };
+            }
+
+            function removeUnit(unitName) {
+                const user = getCurrentUserData();
+                if (!user) return { success: false, msg: 'not logged in' };
+                const idx = user.units.findIndex(u => u.unitName === unitName);
+                if (idx === -1) return { success: false, msg: 'unit not found' };
+                user.units.splice(idx, 1);
+                saveState();
+                return { success: true, msg: 'unit removed' };
+            }
+
+            function adminGetAllUsers() {
+                if (!isAdmin()) return [];
+                return STATE.users.map(u => ({ username: u.username, unitCount: u.units.length, totalItems: u.units.reduce((acc,
+                        unit) => acc + unit.items.length, 0) }));
+            }
+
+            // ---------- render ----------
+            function renderAll() {
+                const isLoggedIn = !!STATE.currentUser;
+                const user = getCurrentUserData();
+
+                document.getElementById('authSection').classList.toggle('hidden', isLoggedIn);
+                document.getElementById('userArea').classList.toggle('hidden', !isLoggedIn);
+                document.getElementById('logoutBtn').style.display = isLoggedIn ? 'inline-flex' : 'none';
+                document.getElementById('userDisplay').innerHTML = isLoggedIn ? `<i class="fas fa-user-circle"></i> ${STATE.currentUser}` :
+                    '<i class="fas fa-user-circle"></i> guest';
+
+                const adminPanel = document.getElementById('adminPanel');
+                if (isLoggedIn && isAdmin()) {
+                    adminPanel.classList.remove('hidden');
+                    renderAdminPanel();
+                } else {
+                    adminPanel.classList.add('hidden');
+                }
+
+                if (isLoggedIn && user) {
+                    document.getElementById('unitCounter').textContent = `${user.units.length} / ${STATE.maxUnits}`;
+                    const totalItems = user.units.reduce((acc, u) => acc + u.items.length, 0);
+                    document.getElementById('totalItemsCount').textContent = totalItems;
+                    renderUnits(user);
+                }
+
+                // item panel
+                if (!STATE.selectedUnitForItem) {
+                    document.getElementById('addItemPanel').classList.add('hidden');
+                    document.getElementById('filePreviewContainer').innerHTML = '';
+                } else {
+                    const unit = user ? user.units.find(u => u.unitName === STATE.selectedUnitForItem) : null;
+                    if (!unit) { STATE.selectedUnitForItem = null;
+                        document.getElementById('addItemPanel').classList.add('hidden'); } else {
+                        document.getElementById('addItemPanel').classList.remove('hidden');
+                        document.getElementById('itemUnitNameDisplay').textContent = unit.unitName;
+                        document.getElementById('itemCountDisplay').textContent = `${unit.items.length}/${STATE.maxItemsPerUnit}`;
+                        updateFilePreview();
+                    }
+                }
+                document.getElementById('addUnitForm').classList.add('hidden');
+            }
+
+            function renderUnits(user) {
+                const container = document.getElementById('unitsContainer');
+                if (!user || user.units.length === 0) {
+                    container.innerHTML =
+                        `<div class="muted" style="grid-column:1/-1; padding: 2rem 0; text-align:center; background: rgba(255,255,240,0.3); border-radius: 3rem;"><i class="fas fa-box-open fa-2x" style="opacity:0.4;"></i><br>no units — create your first</div>`;
+                    return;
+                }
+                container.innerHTML = user.units.map(unit => {
+                    const itemsHtml = unit.items.map(item => {
+                        let preview = '';
+                        if (item.file) {
+                            const isImage = item.file.type && item.file.type.startsWith('image/');
+                            const isVideo = item.file.type && item.file.type.startsWith('video/');
+                            if (isImage) {
+                                preview =
+                                    `<img src="${item.file.dataURL}" alt="file" style="width:30px;height:30px;object-fit:cover;border-radius:8px;border:1px solid #e2eaf2;">`;
+                            } else if (isVideo) {
+                                preview =
+                                    `<video src="${item.file.dataURL}" style="width:30px;height:30px;object-fit:cover;border-radius:8px;border:1px solid #e2eaf2;" muted></video>`;
+                            } else {
+                                preview = `<i class="fas fa-file" style="font-size:1.2rem;color:#3b5a78;"></i>`;
+                            }
+                        }
+                        return `
+                                <li>
+                                    <span class="item-preview-inline">${preview} ${item.name}</span>
+                                    <button class="btn btn-danger btn-sm" style="padding: 0.05rem 0.6rem; font-size: 0.65rem;" data-unit="${unit.unitName}" data-itemid="${item.id}"><i class="fas fa-trash-alt"></i></button>
+                                </li>
+                            `;
+                    }).join('');
+                    return `
+                            <div class="unit-card">
+                                <div class="unit-header">
+                                    <span><i class="fas fa-folder-open" style="color:#3a5a78;"></i> ${unit.unitName}</span>
+                                    <span class="item-count-badge">${unit.items.length}/${STATE.maxItemsPerUnit}</span>
+                                </div>
+                                <ul class="item-list">${itemsHtml || '<li class="muted" style="border:none; padding:0.2rem 0;">empty</li>'}</ul>
+                                <div style="display:flex; gap:0.3rem; margin-top:0.6rem; flex-wrap:wrap;">
+                                    <button class="btn btn-primary btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-additem="${unit.unitName}"><i class="fas fa-plus"></i> item</button>
+                                    <button class="btn btn-warning btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-remove="${unit.unitName}"><i class="fas fa-times"></i> unit</button>
+                                </div>
+                            </div>
+                        `;
+                }).join('');
+
+                container.querySelectorAll('[data-unit-remove]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const unitName = e.currentTarget.dataset.unitRemove;
+                        if (confirm(`remove unit "${unitName}" ?`)) {
+                            const res = removeUnit(unitName);
+                            showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                            renderAll();
+                        }
+                    });
+                });
+                container.querySelectorAll('[data-unit-additem]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const unitName = e.currentTarget.dataset.unitAdditem;
+                        STATE.selectedUnitForItem = unitName;
+                        STATE.pendingFile = null;
+                        document.getElementById('fileUploadInput').value = '';
+                        document.getElementById('newItemInput').value = '';
+                        renderAll();
+                        document.getElementById('newItemInput').focus();
+                    });
+                });
+                container.querySelectorAll('[data-itemid]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const unitName = e.currentTarget.dataset.unit;
+                        const itemId = e.currentTarget.dataset.itemid;
+                        const res = removeItemFromUnit(unitName, itemId);
+                        showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                        renderAll();
+                    });
+                });
+            }
+
+            function renderAdminPanel() {
+                const container = document.getElementById('adminUserList');
+                const all = adminGetAllUsers();
+                document.getElementById('adminUserCount').textContent = all.length;
+                if (all.length === 0) { container.innerHTML = '<div class="muted">no users</div>'; return; }
+                container.innerHTML = all.map(u => `
+                        <div style="background:white; border-radius:2.5rem; padding:0.4rem 1.2rem; margin-bottom:0.3rem; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 6px rgba(0,0,0,0.02); flex-wrap:wrap; gap:0.3rem;">
+                            <span><i class="fas fa-user-astronaut"></i> ${u.username}</span>
+                            <span class="badge-light">${u.unitCount} units · ${u.totalItems} items</span>
+                        </div>
+                    `).join('');
+            }
+
+            // ----- file preview with video support -----
+            function updateFilePreview() {
+                const container = document.getElementById('filePreviewContainer');
+                if (!STATE.pendingFile) {
+                    container.innerHTML = '';
+                    return;
+                }
+                const f = STATE.pendingFile;
+                const isImage = f.type && f.type.startsWith('image/');
+                const isVideo = f.type && f.type.startsWith('video/');
+
+                let previewHtml = '';
+                if (isImage) {
+                    previewHtml = `<img src="${f.dataURL}" alt="preview">`;
+                } else if (isVideo) {
+                    previewHtml = `
+                            <video src="${f.dataURL}" muted style="width:100%;height:100%;object-fit:cover;"></video>
+                            <div class="play-overlay"><i class="fas fa-play"></i></div>
+                        `;
+                } else {
+                    previewHtml = `<i class="fas fa-file-alt"></i>`;
+                }
+
+                container.innerHTML = `
+                        <div class="file-preview-item">
+                            ${previewHtml}
+                            <div class="file-name">${f.name}</div>
+                        </div>
+                        <span style="font-size:0.7rem; color:#3b5a78;"><i class="fas fa-check-circle"></i> ready (${(f.dataURL.length * 0.75 / 1024).toFixed(1)} KB)</span>
+                        <button class="btn btn-ghost btn-sm" id="clearFileBtn" style="padding:0.1rem 0.5rem; font-size:0.6rem;"><i class="fas fa-times"></i></button>
+                    `;
+                document.getElementById('clearFileBtn')?.addEventListener('click', () => {
+                    STATE.pendingFile = null;
+                    document.getElementById('fileUploadInput').value = '';
+                    updateFilePreview();
+                });
+            }
+
+            // ---------- UI messages ----------
+            function showGlobalMessage(msg, type = 'info') {
+                const el = document.getElementById('globalMessage');
+                el.textContent = msg;
+                el.classList.remove('hidden');
+                el.style.background = type === 'error' ? '#c24b5a' : '#1e2b3a';
+                setTimeout(() => el.classList.add('hidden'), 3500);
+            }
+
+            function showAuthMessage(msg, type = 'info') {
+                const el = document.getElementById('authMessage');
+                el.textContent = msg;
+                el.classList.remove('hidden');
+                el.style.background = type === 'error' ? '#c24b5a' : '#1e2b3a';
+                setTimeout(() => el.classList.add('hidden'), 3000);
+            }
+
+            // ---------- events ----------
+            function initEvents() {
+                document.getElementById('loginBtn').addEventListener('click', () => {
+                    const user = document.getElementById('authUsername').value.trim();
+                    const pass = document.getElementById('authPassword').value.trim();
+                    const res = loginUser(user, pass);
+                    if (res.success) { showAuthMessage(res.msg, 'success');
+                        renderAll(); } else showAuthMessage(res.msg, 'error');
+                });
+                document.getElementById('signupBtn').addEventListener('click', () => {
+                    const user = document.getElementById('authUsername').value.trim();
+                    const pass = document.getElementById('authPassword').value.trim();
+                    const res = signupUser(user, pass);
+                    if (res.success) { showAuthMessage(res.msg, 'success');
+                        renderAll(); } else showAuthMessage(res.msg, 'error');
+                });
+                document.getElementById('logoutBtn').addEventListener('click', () => { logout();
+                    showGlobalMessage('logged out', 'info'); });
+                document.getElementById('refreshBtn').addEventListener('click', () => { renderAll();
+                    showGlobalMessage('refreshed', 'info'); });
+
+                document.getElementById('addUnitBtn').addEventListener('click', () => {
+                    const form = document.getElementById('addUnitForm');
+                    form.classList.toggle('hidden');
+                    if (!form.classList.contains('hidden')) { document.getElementById('newUnitName').value = '';
+                        document.getElementById('newUnitName').focus(); }
+                });
+                document.getElementById('cancelAddUnit').addEventListener('click', () => { document.getElementById('addUnitForm')
+                        .classList.add('hidden'); });
+                document.getElementById('confirmAddUnit').addEventListener('click', () => {
+                    const name = document.getElementById('newUnitName').value.trim();
+                    if (!name) { showGlobalMessage('enter unit name', 'error'); return; }
+                    const res = addUnit(name);
+                    showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                    document.getElementById('addUnitForm').classList.add('hidden');
+                    renderAll();
+                });
+
+                document.getElementById('cancelAddItem').addEventListener('click', () => {
+                    STATE.selectedUnitForItem = null;
+                    STATE.pendingFile = null;
+                    document.getElementById('fileUploadInput').value = '';
+                    renderAll();
+                });
+                document.getElementById('confirmAddItem').addEventListener('click', () => {
+                    const itemName = document.getElementById('newItemInput').value.trim() || 'file';
+                    if (!STATE.selectedUnitForItem) { showGlobalMessage('no unit', 'error'); return; }
+                    const res = addItemToUnit(STATE.selectedUnitForItem, itemName, STATE.pendingFile);
+                    showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                    if (res.success) {
+                        STATE.pendingFile = null;
+                        document.getElementById('fileUploadInput').value = '';
+                        document.getElementById('newItemInput').value = '';
+                        renderAll();
+                    } else renderAll();
+                });
+
+                // file upload - supports any file, 10MB limit
+                document.getElementById('fileUploadInput').addEventListener('change', function(e) {
+                    const file = this.files[0];
+                    if (!file) { STATE.pendingFile = null;
+                        updateFilePreview(); return; }
+                    // 10MB limit
+                    if (file.size > 10 * 1024 * 1024) {
+                        showGlobalMessage('file too large (max 10MB)', 'error');
+                        this.value = '';
+                        STATE.pendingFile = null;
+                        updateFilePreview();
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        STATE.pendingFile = {
+                            name: file.name,
+                            dataURL: ev.target.result,
+                            type: file.type
+                        };
+                        updateFilePreview();
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // keyboard shortcuts
+                document.getElementById('newUnitName').addEventListener('keypress', (e) => { if (e.key === 'Enter') document
+                        .getElementById('confirmAddUnit').click(); });
+                document.getElementById('newItemInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') document
+                        .getElementById('confirmAddItem').click(); });
+                document.getElementById('authPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') document
+                        .getElementById('loginBtn').click(); });
+            }
+
+            // ---------- boot ----------
+            function init() {
+                loadState();
+                if (!findUser(STATE.adminUser)) {
+                    STATE.users.push({ username: STATE.adminUser, password: STATE.adminPass, units: [] });
+                    saveState();
+                }
+                initEvents();
+                renderAll();
+                if (STATE.currentUser) showGlobalMessage(`welcome back, ${STATE.currentUser}`, 'info');
+                else showGlobalMessage('sign in to start', 'info');
+            }
+            init();
+        })();
+    </script>
 </body>
 </html>
