@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ECHO Portfolio</title>
+    <title>ECHO Portfolio - Enhanced</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         /* ============================================
-           ECHO PORTFOLIO - Complete CSS
+           ECHO PORTFOLIO - Enhanced CSS
            ============================================ */
         * {
             margin: 0;
@@ -29,6 +29,8 @@
             --shadow: 0 8px 32px rgba(10, 22, 40, 0.15);
             --radius: 16px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --success: #10b981;
+            --danger: #ef4444;
         }
 
         body {
@@ -148,6 +150,11 @@
             box-shadow: 0 8px 24px rgba(201, 168, 76, 0.4);
         }
         .auth-form .btn-primary:active { transform: translateY(0); }
+        .auth-form .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
 
         .auth-card .auth-toggle {
             text-align: center;
@@ -175,6 +182,39 @@
             display: none;
         }
         .auth-error.show { display: block; }
+        .auth-error.success {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+
+        /* ---------- LOADING SPINNER ---------- */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            color: var(--text-light);
+            gap: 12px;
+        }
+        .loading-container .spinner {
+            width: 20px;
+            height: 20px;
+            border-width: 2px;
+        }
 
         /* ---------- DASHBOARD ---------- */
         .dashboard-container { min-height: 100vh; background: var(--gray); }
@@ -340,6 +380,8 @@
             margin-bottom: 8px;
         }
         .add-unit-card .add-text { color: var(--text-light); font-size: 14px; font-weight: 500; }
+        .add-unit-card.disabled { opacity: 0.5; cursor: not-allowed; border-color: #e5e7eb; }
+        .add-unit-card.disabled .plus-icon { background: #d1d5db; }
 
         /* ---------- UNIT VIEW ---------- */
         .unit-view-container { min-height: 100vh; background: var(--gray); }
@@ -404,9 +446,9 @@
             overflow: hidden;
         }
         .item-card .item-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .item-card .item-name { font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 2px; }
+        .item-card .item-name { font-weight: 600; font-size: 14px; color: var(--navy); margin-bottom: 2px; word-break: break-word; }
         .item-card .item-type { font-size: 12px; color: var(--text-light); }
-        .item-card .item-actions { margin-top: 10px; display: flex; gap: 8px; }
+        .item-card .item-actions { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
         .item-card .item-actions .btn-sm {
             padding: 4px 12px;
             border-radius: 6px;
@@ -417,6 +459,22 @@
         }
         .item-card .item-actions .btn-sm-danger { background: #fee2e2; color: #dc2626; }
         .item-card .item-actions .btn-sm-danger:hover { background: #fecaca; }
+        .item-card .item-actions .btn-sm-link {
+            background: #dbeafe;
+            color: #2563eb;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .item-card .item-actions .btn-sm-link:hover { background: #bfdbfe; }
+
+        .empty-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        .empty-state .empty-icon { font-size: 56px; margin-bottom: 16px; display: block; }
+        .empty-state p { font-size: 16px; }
 
         .add-item-area {
             background: white;
@@ -437,6 +495,7 @@
             flex: 1;
             min-width: 150px;
             background: white;
+            transition: var(--transition);
         }
         .add-item-area .add-form input:focus,
         .add-item-area .add-form select:focus {
@@ -458,6 +517,11 @@
             background: var(--navy-light);
             transform: translateY(-2px);
             box-shadow: 0 4px 16px rgba(10, 22, 40, 0.3);
+        }
+        .add-item-area .add-form .btn-add:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
         }
 
         /* ---------- ADMIN ---------- */
@@ -500,6 +564,50 @@
         }
         .stats-grid .card h3 { font-size: 14px; color: var(--text-light); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
         .stats-grid .card p { font-size: 36px; font-weight: 700; color: var(--navy); margin-top: 4px; }
+
+        /* ---------- TOAST NOTIFICATIONS ---------- */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .toast {
+            background: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            animation: slideInRight 0.4s ease-out;
+            border-left: 4px solid var(--gold);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast .toast-icon { font-size: 20px; flex-shrink: 0; }
+        .toast .toast-content { flex: 1; }
+        .toast .toast-title { font-weight: 600; font-size: 14px; color: var(--text-dark); }
+        .toast .toast-message { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+        .toast .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
 
         /* ---------- MODAL ---------- */
         .modal-overlay {
@@ -560,6 +668,7 @@
             .add-item-area .add-form input[type="file"],
             .add-item-area .add-form select { min-width: 100%; }
             .dashboard-stats { grid-template-columns: 1fr 1fr; }
+            .toast-container { top: 10px; right: 10px; left: 10px; max-width: none; }
         }
 
         @media (max-width: 480px) {
@@ -597,11 +706,11 @@
         <form id="auth-form" class="auth-form">
             <div class="form-group">
                 <label for="auth-email">Email Address</label>
-                <input type="email" id="auth-email" placeholder="you@institution.edu" required />
+                <input type="email" id="auth-email" placeholder="you@institution.edu" required autocomplete="email" />
             </div>
             <div class="form-group">
                 <label for="auth-password">Password</label>
-                <input type="password" id="auth-password" placeholder="••••••••" required />
+                <input type="password" id="auth-password" placeholder="••••••••" required autocomplete="current-password" />
             </div>
             <button type="submit" class="btn-primary" id="auth-submit">Sign In</button>
         </form>
@@ -671,7 +780,7 @@
         <div class="add-item-area">
             <h3>Add New Portfolio Item</h3>
             <form class="add-form" id="add-item-form">
-                <input type="text" id="item-name" placeholder="Item name..." required />
+                <input type="text" id="item-name" placeholder="Item name..." required maxlength="100" />
                 <select id="item-type" style="padding:10px 14px;border:1px solid #e5e7eb;border-radius:8px;background:white;font-size:14px;">
                     <option value="document">📄 Document</option>
                     <option value="image">🖼️ Image</option>
@@ -679,8 +788,8 @@
                     <option value="link">🔗 Link</option>
                     <option value="other">📎 Other</option>
                 </select>
-                <input type="file" id="item-file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.mp4,.mov" />
-                <button type="submit" class="btn-add">Add Item</button>
+                <input type="file" id="item-file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.gif,.mp4,.mov,.webp,.svg" />
+                <button type="submit" class="btn-add" id="add-item-btn">Add Item</button>
             </form>
         </div>
 
@@ -708,33 +817,38 @@
             <span style="font-size:13px;color:var(--text-light);">Live data from all users</span>
         </div>
 
-        <div class="stats-grid">
+        <div class="stats-grid" id="admin-stats">
             <div class="card">
                 <h3>👥 Total Registered Students</h3>
-                <p id="stat-students">Loading...</p>
+                <p id="stat-students"><span class="spinner" style="width:20px;height:20px;border-width:2px;"></span></p>
             </div>
             <div class="card">
                 <h3>📚 Total Active Units</h3>
-                <p id="stat-units">Loading...</p>
+                <p id="stat-units"><span class="spinner" style="width:20px;height:20px;border-width:2px;"></span></p>
             </div>
             <div class="card">
                 <h3>📎 Total Portfolio Items</h3>
-                <p id="stat-items">Loading...</p>
+                <p id="stat-items"><span class="spinner" style="width:20px;height:20px;border-width:2px;"></span></p>
             </div>
             <div class="card" style="border-left-color:#2563eb;">
                 <h3>💎 Premium Users</h3>
-                <p id="stat-premium">Loading...</p>
+                <p id="stat-premium"><span class="spinner" style="width:20px;height:20px;border-width:2px;"></span></p>
             </div>
         </div>
 
         <div style="margin-top:32px;background:white;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);">
             <h3 style="font-size:16px;color:var(--navy);margin-bottom:12px;">📋 Recent Activity</h3>
             <div id="recent-activity" style="color:var(--text-light);font-size:14px;">
-                Loading activity log...
+                <span class="spinner" style="width:20px;height:20px;border-width:2px;vertical-align:middle;"></span> Loading activity log...
             </div>
         </div>
     </div>
 </div>
+
+<!-- ============================================ -->
+<!-- TOAST CONTAINER                            -->
+<!-- ============================================ -->
+<div class="toast-container" id="toast-container"></div>
 
 <!-- ============================================ -->
 <!-- MODAL (for confirmations)                   -->
@@ -752,10 +866,10 @@
 
 <script>
 // ============================================
-// ECHO PORTFOLIO - Complete JavaScript
+// ECHO PORTFOLIO - Enhanced JavaScript
 // ============================================
 
-// ✅ YOUR SUPABASE CREDENTIALS
+// ✅ SUPABASE CREDENTIALS
 const SUPABASE_URL = 'https://mdiwyrwtwexvdikognuy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_-bdW2xkTUtymZKzgmpZDeg_9kkHQfdO';
 
@@ -769,6 +883,7 @@ let currentUnitId = null;
 let currentUnits = [];
 let modalCallback = null;
 let currentPage = 'auth';
+let isSubmitting = false;
 
 // ---------- PAGE NAVIGATION ----------
 function showPage(page) {
@@ -788,29 +903,130 @@ function showPage(page) {
     currentPage = page;
 }
 
+// ---------- TOAST SYSTEM ----------
+function showToast(title, message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icons = {
+        success: '✅',
+        error: '❌',
+        info: 'ℹ️',
+        warning: '⚠️'
+    };
+    
+    toast.innerHTML = `
+        <span class="toast-icon">${icons[type] || icons.info}</span>
+        <div class="toast-content">
+            <div class="toast-title">${escapeHtml(title)}</div>
+            <div class="toast-message">${escapeHtml(message)}</div>
+        </div>
+        <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    
+    container.appendChild(toast);
+    
+    // Auto-dismiss after 5 seconds
+    setTimeout(() => {
+        if (toast.parentElement) {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(40px)';
+            toast.style.transition = 'all 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }
+    }, 5000);
+}
+
 // ---------- AUTHENTICATION ----------
-document.addEventListener('DOMContentLoaded', () => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-        if (user) {
-            showPage('dashboard');
-            initDashboard();
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // Check for existing session
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session) {
+            await handleUserLoggedIn(session.user);
         } else {
             showPage('auth');
             setupAuthPage();
         }
-    });
+    } catch (error) {
+        console.error('Auth initialization error:', error);
+        showPage('auth');
+        setupAuthPage();
+    }
 
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal-overlay')) {
-            closeModal();
-        }
-    });
-
+    // Setup event listeners
     const form = document.getElementById('add-item-form');
     if (form) {
         form.addEventListener('submit', handleAddItem);
     }
 });
+
+// Auth state change listener
+supabase.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session) {
+        await handleUserLoggedIn(session.user);
+    } else if (event === 'SIGNED_OUT') {
+        currentUser = null;
+        currentUserProfile = null;
+        currentUnits = [];
+        showPage('auth');
+        setupAuthPage();
+    } else if (event === 'USER_UPDATED') {
+        // Refresh user data
+        if (session) {
+            await loadUserProfile(session.user.id);
+        }
+    }
+});
+
+async function handleUserLoggedIn(user) {
+    currentUser = user;
+    await loadUserProfile(user.id);
+    showPage('dashboard');
+    await loadUnits();
+}
+
+async function loadUserProfile(userId) {
+    try {
+        const { data: profile, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', userId)
+            .single();
+
+        if (error || !profile) {
+            // Create user profile if it doesn't exist
+            const { data: newProfile, error: insertError } = await supabase
+                .from('users')
+                .insert([
+                    { 
+                        id: userId, 
+                        email: currentUser.email, 
+                        role: 'student', 
+                        subscription_tier: 'free' 
+                    }
+                ])
+                .select()
+                .single();
+
+            if (insertError) {
+                console.error('Error creating user profile:', insertError);
+                showToast('Error', 'Failed to create user profile.', 'error');
+                return;
+            }
+            currentUserProfile = newProfile;
+        } else {
+            currentUserProfile = profile;
+        }
+        
+        updateUserUI();
+    } catch (error) {
+        console.error('Error loading user profile:', error);
+        showToast('Error', 'Failed to load user profile.', 'error');
+    }
+}
 
 function setupAuthPage() {
     let isLogin = true;
@@ -821,8 +1037,17 @@ function setupAuthPage() {
     const toggleLink = document.getElementById('auth-toggle-link');
     const errorDiv = document.getElementById('auth-error');
 
+    // Clear any previous state
+    errorDiv.classList.remove('show', 'success');
+    errorDiv.textContent = '';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Sign In';
+
     toggleLink.addEventListener('click', () => {
         isLogin = !isLogin;
+        errorDiv.classList.remove('show', 'success');
+        errorDiv.textContent = '';
+        
         if (isLogin) {
             title.textContent = 'Welcome Back';
             submitBtn.textContent = 'Sign In';
@@ -834,82 +1059,94 @@ function setupAuthPage() {
             toggleText.textContent = 'Already have an account?';
             toggleLink.textContent = 'Sign in';
         }
-        errorDiv.classList.remove('show');
-        errorDiv.textContent = '';
     });
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
         const email = document.getElementById('auth-email').value.trim();
         const password = document.getElementById('auth-password').value;
 
-        errorDiv.classList.remove('show');
+        if (!email || !password) {
+            showAuthError('Please fill in all fields.');
+            return;
+        }
+
+        if (password.length < 6) {
+            showAuthError('Password must be at least 6 characters.');
+            return;
+        }
+
+        errorDiv.classList.remove('show', 'success');
         errorDiv.textContent = '';
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
 
         try {
             let result;
             if (isLogin) {
                 result = await supabase.auth.signInWithPassword({ email, password });
             } else {
-                result = await supabase.auth.signUp({ email, password });
+                result = await supabase.auth.signUp({ 
+                    email, 
+                    password,
+                    options: {
+                        emailRedirectTo: window.location.origin
+                    }
+                });
             }
 
-            if (result.error) throw result.error;
-
-            if (!isLogin) {
-                const { data: { user } } = await supabase.auth.getUser();
-                if (user) {
-                    await supabase.from('users').insert([
-                        { id: user.id, email: user.email, role: 'student', subscription_tier: 'free' }
-                    ]);
+            if (result.error) {
+                if (result.error.message.includes('Invalid login credentials')) {
+                    showAuthError('Invalid email or password. Please try again.');
+                } else if (result.error.message.includes('User already registered')) {
+                    showAuthError('This email is already registered. Please sign in.');
+                } else {
+                    showAuthError(result.error.message);
                 }
-                errorDiv.style.background = 'rgba(52, 211, 153, 0.15)';
-                errorDiv.style.borderColor = 'rgba(52, 211, 153, 0.3)';
-                errorDiv.style.color = '#34d399';
-                errorDiv.textContent = '✅ Account created! Please sign in.';
-                errorDiv.classList.add('show');
-                setTimeout(() => toggleLink.click(), 1500);
+                submitBtn.disabled = false;
+                submitBtn.textContent = isLogin ? 'Sign In' : 'Sign Up';
                 return;
             }
 
-            window.location.reload();
+            if (!isLogin) {
+                // Show success message for signup
+                showAuthSuccess('✅ Account created! Please sign in.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign Up';
+                // Switch to login after delay
+                setTimeout(() => {
+                    if (!isLogin) {
+                        toggleLink.click();
+                    }
+                }, 2000);
+                return;
+            }
+
+            // Login successful - handled by auth state change
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Sign In';
 
         } catch (err) {
-            errorDiv.textContent = err.message || 'Authentication failed. Please try again.';
-            errorDiv.classList.add('show');
+            console.error('Auth error:', err);
+            showAuthError('An unexpected error occurred. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = isLogin ? 'Sign In' : 'Sign Up';
         }
     });
+
+    function showAuthError(message) {
+        errorDiv.textContent = message;
+        errorDiv.className = 'auth-error show';
+    }
+
+    function showAuthSuccess(message) {
+        errorDiv.textContent = message;
+        errorDiv.className = 'auth-error show success';
+    }
 }
 
 // ---------- DASHBOARD ----------
-async function initDashboard() {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-        showPage('auth');
-        return;
-    }
-
-    currentUser = user;
-
-    const { data: profile, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-    if (error || !profile) {
-        await supabase.from('users').insert([
-            { id: user.id, email: user.email, role: 'student', subscription_tier: 'free' }
-        ]);
-        window.location.reload();
-        return;
-    }
-
-    currentUserProfile = profile;
-    updateUserUI();
-    await loadUnits();
-}
-
 function updateUserUI() {
     const emailEl = document.getElementById('user-email');
     const badgeEl = document.getElementById('user-badge');
@@ -918,7 +1155,9 @@ function updateUserUI() {
     const planDisplay = document.getElementById('plan-display');
     const limitEl = document.getElementById('unit-limit');
 
-    if (emailEl) emailEl.textContent = currentUser.email;
+    if (emailEl && currentUser) {
+        emailEl.textContent = currentUser.email;
+    }
 
     if (badgeEl && currentUserProfile) {
         const tier = currentUserProfile.subscription_tier || 'free';
@@ -928,10 +1167,14 @@ function updateUserUI() {
 
     if (adminBadge && currentUserProfile && currentUserProfile.role === 'admin') {
         adminBadge.classList.remove('hidden');
+    } else if (adminBadge) {
+        adminBadge.classList.add('hidden');
     }
 
     if (adminBtn && currentUserProfile && currentUserProfile.role === 'admin') {
         adminBtn.classList.remove('hidden');
+    } else if (adminBtn) {
+        adminBtn.classList.add('hidden');
     }
 
     if (planDisplay && currentUserProfile) {
@@ -957,20 +1200,26 @@ function getItemLimit() {
 async function loadUnits() {
     if (!currentUser) return;
 
-    const { data: units, error } = await supabase
-        .from('units')
-        .select('*')
-        .eq('user_id', currentUser.id)
-        .order('created_at', { ascending: false });
+    try {
+        const { data: units, error } = await supabase
+            .from('units')
+            .select('*')
+            .eq('user_id', currentUser.id)
+            .order('created_at', { ascending: false });
 
-    if (error) {
-        console.error('Error loading units:', error);
-        return;
+        if (error) {
+            console.error('Error loading units:', error);
+            showToast('Error', 'Failed to load units.', 'error');
+            return;
+        }
+
+        currentUnits = units || [];
+        renderUnits(units || []);
+        updateStats(units || []);
+    } catch (error) {
+        console.error('Error in loadUnits:', error);
+        showToast('Error', 'An unexpected error occurred.', 'error');
     }
-
-    currentUnits = units;
-    renderUnits(units);
-    updateStats(units);
 }
 
 function renderUnits(units) {
@@ -981,19 +1230,28 @@ function renderUnits(units) {
 
     let html = '';
 
-    units.forEach(unit => {
-        html += `
-            <div class="unit-card" data-id="${unit.id}">
-                <div class="unit-icon">📁</div>
-                <div class="unit-name">${escapeHtml(unit.name)}</div>
-                <div class="unit-meta">${unit.item_count || 0} items</div>
-                <div class="unit-actions">
-                    <button class="btn-sm btn-sm-edit" onclick="openUnit('${unit.id}')">Open</button>
-                    <button class="btn-sm btn-sm-danger" onclick="confirmDeleteUnit('${unit.id}')">×</button>
-                </div>
+    if (units.length === 0) {
+        html = `
+            <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-light);">
+                <div style="font-size:48px;margin-bottom:12px;">📂</div>
+                <p>No units yet. Create your first unit below!</p>
             </div>
         `;
-    });
+    } else {
+        units.forEach(unit => {
+            html += `
+                <div class="unit-card" data-id="${unit.id}">
+                    <div class="unit-icon">📁</div>
+                    <div class="unit-name">${escapeHtml(unit.name)}</div>
+                    <div class="unit-meta">${unit.item_count || 0} items</div>
+                    <div class="unit-actions">
+                        <button class="btn-sm btn-sm-edit" onclick="openUnit('${unit.id}')">Open</button>
+                        <button class="btn-sm btn-sm-danger" onclick="confirmDeleteUnit('${unit.id}')">×</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
 
     if (units.length < limit) {
         html += `
@@ -1004,8 +1262,8 @@ function renderUnits(units) {
         `;
     } else {
         html += `
-            <div class="add-unit-card" style="opacity:0.5;cursor:not-allowed;border-color:#e5e7eb;">
-                <div class="plus-icon" style="background:#d1d5db;">+</div>
+            <div class="add-unit-card disabled">
+                <div class="plus-icon">+</div>
                 <div class="add-text">Limit Reached (${limit})</div>
             </div>
         `;
@@ -1030,7 +1288,7 @@ function showCreateUnitModal() {
 
     const limit = getUnitLimit();
     if (currentUnits.length >= limit) {
-        alert(`Unit limit reached! Maximum ${limit} units allowed.`);
+        showToast('Limit Reached', `Maximum ${limit} units allowed.`, 'warning');
         return;
     }
 
@@ -1040,48 +1298,63 @@ function showCreateUnitModal() {
 async function createUnit(name) {
     if (!currentUser) return;
 
-    const { data, error } = await supabase
-        .from('units')
-        .insert([
-            { user_id: currentUser.id, name: name, item_count: 0 }
-        ])
-        .select()
-        .single();
+    try {
+        const { data, error } = await supabase
+            .from('units')
+            .insert([
+                { user_id: currentUser.id, name: name, item_count: 0 }
+            ])
+            .select()
+            .single();
 
-    if (error) {
-        alert('Error creating unit: ' + error.message);
-        return;
+        if (error) {
+            showToast('Error', 'Failed to create unit: ' + error.message, 'error');
+            return;
+        }
+
+        showToast('Success', `Unit "${name}" created successfully!`, 'success');
+        await loadUnits();
+    } catch (error) {
+        console.error('Error creating unit:', error);
+        showToast('Error', 'An unexpected error occurred.', 'error');
     }
-
-    await loadUnits();
 }
 
 async function deleteUnit(unitId) {
     if (!currentUser) return;
 
-    await supabase
-        .from('portfolio_items')
-        .delete()
-        .eq('unit_id', unitId);
+    try {
+        // Delete all items in the unit first
+        await supabase
+            .from('portfolio_items')
+            .delete()
+            .eq('unit_id', unitId);
 
-    const { error } = await supabase
-        .from('units')
-        .delete()
-        .eq('id', unitId)
-        .eq('user_id', currentUser.id);
+        const { error } = await supabase
+            .from('units')
+            .delete()
+            .eq('id', unitId)
+            .eq('user_id', currentUser.id);
 
-    if (error) {
-        alert('Error deleting unit: ' + error.message);
-        return;
+        if (error) {
+            showToast('Error', 'Failed to delete unit: ' + error.message, 'error');
+            return;
+        }
+
+        showToast('Success', 'Unit deleted successfully.', 'success');
+        await loadUnits();
+    } catch (error) {
+        console.error('Error deleting unit:', error);
+        showToast('Error', 'An unexpected error occurred.', 'error');
     }
-
-    await loadUnits();
 }
 
 function confirmDeleteUnit(unitId) {
+    const unit = currentUnits.find(u => u.id === unitId);
+    const unitName = unit ? unit.name : 'this unit';
     showModal(
         'Delete Unit?',
-        'This will permanently delete this unit and all its items.',
+        `This will permanently delete "${unitName}" and all its items. This action cannot be undone.`,
         () => deleteUnit(unitId)
     );
 }
@@ -1099,7 +1372,7 @@ function openUnit(unitId) {
 async function loadItems() {
     const unitId = localStorage.getItem('currentUnitId');
     if (!unitId) {
-        alert('No unit selected.');
+        showToast('Error', 'No unit selected.', 'error');
         showPage('dashboard');
         return;
     }
@@ -1112,18 +1385,24 @@ async function loadItems() {
         titleEl.textContent = `📁 ${escapeHtml(name)}`;
     }
 
-    const { data: items, error } = await supabase
-        .from('portfolio_items')
-        .select('*')
-        .eq('unit_id', unitId)
-        .order('created_at', { ascending: false });
+    try {
+        const { data: items, error } = await supabase
+            .from('portfolio_items')
+            .select('*')
+            .eq('unit_id', unitId)
+            .order('created_at', { ascending: false });
 
-    if (error) {
-        console.error('Error loading items:', error);
-        return;
+        if (error) {
+            console.error('Error loading items:', error);
+            showToast('Error', 'Failed to load items.', 'error');
+            return;
+        }
+
+        renderItems(items || []);
+    } catch (error) {
+        console.error('Error in loadItems:', error);
+        showToast('Error', 'An unexpected error occurred.', 'error');
     }
-
-    renderItems(items);
 }
 
 function renderItems(items) {
@@ -1132,8 +1411,8 @@ function renderItems(items) {
 
     if (items.length === 0) {
         grid.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-light);">
-                <div style="font-size:48px;margin-bottom:12px;">📭</div>
+            <div class="empty-state">
+                <span class="empty-icon">📭</span>
                 <p>No items yet. Add your first portfolio item above!</p>
             </div>
         `;
@@ -1143,16 +1422,18 @@ function renderItems(items) {
     let html = '';
     items.forEach(item => {
         const icon = getItemIcon(item.type);
-        const fileUrl = item.file_url ? `<a href="${item.file_url}" target="_blank" style="color:var(--gold);">🔗</a>` : '';
+        const fileUrl = item.file_url ? 
+            `<a href="${escapeHtml(item.file_url)}" target="_blank" class="btn-sm btn-sm-link" style="padding:2px 8px;">🔗 View</a>` : '';
 
         html += `
             <div class="item-card" data-id="${item.id}">
                 <div class="item-thumb">
-                    ${item.file_url ? `<img src="${item.file_url}" alt="${escapeHtml(item.name)}" />` : icon}
+                    ${item.file_url ? `<img src="${escapeHtml(item.file_url)}" alt="${escapeHtml(item.name)}" loading="lazy" />` : icon}
                 </div>
-                <div class="item-name">${escapeHtml(item.name)} ${fileUrl}</div>
+                <div class="item-name">${escapeHtml(item.name)}</div>
                 <div class="item-type">${item.type || 'Document'}</div>
                 <div class="item-actions">
+                    ${fileUrl}
                     <button class="btn-sm btn-sm-danger" onclick="confirmDeleteItem('${item.id}')">Delete</button>
                 </div>
             </div>
@@ -1175,117 +1456,176 @@ function getItemIcon(type) {
 
 async function handleAddItem(e) {
     e.preventDefault();
+    
+    if (isSubmitting) return;
+    isSubmitting = true;
+    
+    const submitBtn = document.getElementById('add-item-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Adding...';
 
-    const name = document.getElementById('item-name').value.trim();
-    const type = document.getElementById('item-type').value;
-    const fileInput = document.getElementById('item-file');
-    const file = fileInput.files[0];
+    try {
+        const name = document.getElementById('item-name').value.trim();
+        const type = document.getElementById('item-type').value;
+        const fileInput = document.getElementById('item-file');
+        const file = fileInput.files[0];
 
-    if (!name) {
-        alert('Please enter an item name.');
-        return;
-    }
-
-    const { data: existingItems, error: countError } = await supabase
-        .from('portfolio_items')
-        .select('id', { count: 'exact' })
-        .eq('unit_id', currentUnitId);
-
-    if (countError) {
-        alert('Error checking item limit.');
-        return;
-    }
-
-    const limit = getItemLimit();
-    if (existingItems.length >= limit) {
-        alert(`Maximum ${limit} items per unit reached!`);
-        return;
-    }
-
-    let fileUrl = null;
-    if (file) {
-        if (file.size > 25 * 1024 * 1024) {
-            alert('File too large! Maximum 25MB.');
+        if (!name) {
+            showToast('Error', 'Please enter an item name.', 'error');
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Add Item';
             return;
         }
 
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${currentUser.id}/${currentUnitId}/${Date.now()}.${fileExt}`;
+        // Check item limit
+        const { data: existingItems, error: countError } = await supabase
+            .from('portfolio_items')
+            .select('id', { count: 'exact' })
+            .eq('unit_id', currentUnitId);
 
-        const { data: uploadData, error: uploadError } = await supabase.storage
-            .from('portfolio-files')
-            .upload(fileName, file, {
-                cacheControl: '3600',
-                upsert: false
-            });
-
-        if (uploadError) {
-            alert('Error uploading file: ' + uploadError.message);
+        if (countError) {
+            showToast('Error', 'Failed to check item limit.', 'error');
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Add Item';
             return;
         }
 
-        const { data: urlData } = supabase.storage
-            .from('portfolio-files')
-            .getPublicUrl(fileName);
+        const limit = getItemLimit();
+        if (existingItems.length >= limit) {
+            showToast('Limit Reached', `Maximum ${limit} items per unit.`, 'warning');
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Add Item';
+            return;
+        }
 
-        fileUrl = urlData.publicUrl;
-    }
-
-    const { data, error } = await supabase
-        .from('portfolio_items')
-        .insert([
-            {
-                unit_id: currentUnitId,
-                name: name,
-                type: type,
-                file_url: fileUrl,
-                user_id: currentUser.id
+        let fileUrl = null;
+        if (file) {
+            // Validate file size (25MB max)
+            if (file.size > 25 * 1024 * 1024) {
+                showToast('Error', 'File too large! Maximum 25MB.', 'error');
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Add Item';
+                return;
             }
-        ])
-        .select()
-        .single();
 
-    if (error) {
-        alert('Error adding item: ' + error.message);
-        return;
+            // Validate file type
+            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+                                 'image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/svg+xml',
+                                 'video/mp4', 'video/quicktime', 'video/x-msvideo'];
+            if (!allowedTypes.includes(file.type) && !file.type.startsWith('image/') && !file.type.startsWith('video/')) {
+                showToast('Error', 'File type not supported.', 'error');
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Add Item';
+                return;
+            }
+
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${currentUser.id}/${currentUnitId}/${Date.now()}.${fileExt}`;
+
+            const { data: uploadData, error: uploadError } = await supabase.storage
+                .from('portfolio-files')
+                .upload(fileName, file, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
+
+            if (uploadError) {
+                showToast('Error', 'Failed to upload file: ' + uploadError.message, 'error');
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Add Item';
+                return;
+            }
+
+            const { data: urlData } = supabase.storage
+                .from('portfolio-files')
+                .getPublicUrl(fileName);
+
+            fileUrl = urlData.publicUrl;
+        }
+
+        // Insert item
+        const { data, error } = await supabase
+            .from('portfolio_items')
+            .insert([
+                {
+                    unit_id: currentUnitId,
+                    name: name,
+                    type: type,
+                    file_url: fileUrl,
+                    user_id: currentUser.id
+                }
+            ])
+            .select()
+            .single();
+
+        if (error) {
+            showToast('Error', 'Failed to add item: ' + error.message, 'error');
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Add Item';
+            return;
+        }
+
+        // Update unit item count
+        await supabase
+            .from('units')
+            .update({ item_count: existingItems.length + 1 })
+            .eq('id', currentUnitId);
+
+        // Clear form
+        document.getElementById('item-name').value = '';
+        document.getElementById('item-file').value = '';
+        
+        showToast('Success', `Item "${name}" added successfully!`, 'success');
+        await loadItems();
+
+    } catch (error) {
+        console.error('Error adding item:', error);
+        showToast('Error', 'An unexpected error occurred.', 'error');
+    } finally {
+        isSubmitting = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Add Item';
     }
-
-    await supabase
-        .from('units')
-        .update({ item_count: existingItems.length + 1 })
-        .eq('id', currentUnitId);
-
-    document.getElementById('item-name').value = '';
-    document.getElementById('item-file').value = '';
-
-    await loadItems();
 }
 
 async function deleteItem(itemId) {
     if (!currentUser) return;
 
-    const { error } = await supabase
-        .from('portfolio_items')
-        .delete()
-        .eq('id', itemId)
-        .eq('user_id', currentUser.id);
+    try {
+        const { error } = await supabase
+            .from('portfolio_items')
+            .delete()
+            .eq('id', itemId)
+            .eq('user_id', currentUser.id);
 
-    if (error) {
-        alert('Error deleting item: ' + error.message);
-        return;
+        if (error) {
+            showToast('Error', 'Failed to delete item: ' + error.message, 'error');
+            return;
+        }
+
+        const { data: remaining } = await supabase
+            .from('portfolio_items')
+            .select('id', { count: 'exact' })
+            .eq('unit_id', currentUnitId);
+
+        await supabase
+            .from('units')
+            .update({ item_count: remaining.length })
+            .eq('id', currentUnitId);
+
+        showToast('Success', 'Item deleted successfully.', 'success');
+        await loadItems();
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        showToast('Error', 'An unexpected error occurred.', 'error');
     }
-
-    const { data: remaining } = await supabase
-        .from('portfolio_items')
-        .select('id', { count: 'exact' })
-        .eq('unit_id', currentUnitId);
-
-    await supabase
-        .from('units')
-        .update({ item_count: remaining.length })
-        .eq('id', currentUnitId);
-
-    await loadItems();
 }
 
 function confirmDeleteItem(itemId) {
@@ -1306,45 +1646,42 @@ async function goToAdmin() {
 }
 
 async function verifyAdmin() {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-        showPage('auth');
+    try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+            showPage('auth');
+            return false;
+        }
+
+        const { data: profile, error } = await supabase
+            .from('users')
+            .select('role')
+            .eq('id', user.id)
+            .single();
+
+        if (error || profile.role !== 'admin') {
+            showToast('Access Denied', 'You do not have administrative privileges.', 'error');
+            showPage('dashboard');
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error verifying admin:', error);
+        showToast('Error', 'Failed to verify admin status.', 'error');
         return false;
     }
-
-    const { data: profile, error } = await supabase
-        .from('users')
-        .select('role')
-        .eq('id', user.id)
-        .single();
-
-    if (error || profile.role !== 'admin') {
-        alert('⚠️ Unauthorized Access Detected.\nYou do not have administrative privileges.');
-        showPage('dashboard');
-        return false;
-    }
-
-    return true;
 }
 
 async function loadAdminStats() {
     try {
-        const { count: studentCount } = await supabase
-            .from('users')
-            .select('id', { count: 'exact', head: true });
-
-        const { count: unitCount } = await supabase
-            .from('units')
-            .select('id', { count: 'exact', head: true });
-
-        const { count: itemCount } = await supabase
-            .from('portfolio_items')
-            .select('id', { count: 'exact', head: true });
-
-        const { count: premiumCount } = await supabase
-            .from('users')
-            .select('id', { count: 'exact', head: true })
-            .eq('subscription_tier', 'premium');
+        // Get counts using the count method
+        const [{ count: studentCount }, { count: unitCount }, { count: itemCount }, { count: premiumCount }] = await Promise.all([
+            supabase.from('users').select('id', { count: 'exact', head: true }),
+            supabase.from('units').select('id', { count: 'exact', head: true }),
+            supabase.from('portfolio_items').select('id', { count: 'exact', head: true }),
+            supabase.from('users').select('id', { count: 'exact', head: true }).eq('subscription_tier', 'premium')
+        ]);
 
         document.getElementById('stat-students').textContent = studentCount || 0;
         document.getElementById('stat-units').textContent = unitCount || 0;
@@ -1359,6 +1696,7 @@ async function loadAdminStats() {
         document.getElementById('stat-units').textContent = '⚠️ Error';
         document.getElementById('stat-items').textContent = '⚠️ Error';
         document.getElementById('stat-premium').textContent = '⚠️ Error';
+        showToast('Error', 'Failed to load admin statistics.', 'error');
     }
 }
 
@@ -1366,23 +1704,24 @@ async function loadRecentActivity() {
     const activityDiv = document.getElementById('recent-activity');
 
     try {
-        const { data: recentUnits } = await supabase
-            .from('units')
-            .select('name, created_at, users!inner(email)')
-            .order('created_at', { ascending: false })
-            .limit(5);
-
-        const { data: recentItems } = await supabase
-            .from('portfolio_items')
-            .select('name, created_at, units!inner(name)')
-            .order('created_at', { ascending: false })
-            .limit(5);
+        const [recentUnits, recentItems] = await Promise.all([
+            supabase
+                .from('units')
+                .select('name, created_at, users!inner(email)')
+                .order('created_at', { ascending: false })
+                .limit(5),
+            supabase
+                .from('portfolio_items')
+                .select('name, created_at, units!inner(name)')
+                .order('created_at', { ascending: false })
+                .limit(5)
+        ]);
 
         let html = '';
 
-        if (recentUnits && recentUnits.length > 0) {
+        if (recentUnits.data && recentUnits.data.length > 0) {
             html += '<strong>📚 Recent Units Created:</strong><ul style="margin:8px 0 16px 20px;">';
-            recentUnits.forEach(u => {
+            recentUnits.data.forEach(u => {
                 const email = u.users ? u.users.email : 'Unknown user';
                 const date = new Date(u.created_at).toLocaleDateString();
                 html += `<li>${escapeHtml(u.name)} — <span style="color:var(--text-light);font-size:13px;">${escapeHtml(email)} • ${date}</span></li>`;
@@ -1390,9 +1729,9 @@ async function loadRecentActivity() {
             html += '</ul>';
         }
 
-        if (recentItems && recentItems.length > 0) {
+        if (recentItems.data && recentItems.data.length > 0) {
             html += '<strong>📎 Recent Items Uploaded:</strong><ul style="margin:8px 0 0 20px;">';
-            recentItems.forEach(item => {
+            recentItems.data.forEach(item => {
                 const unitName = item.units ? item.units.name : 'Unknown unit';
                 const date = new Date(item.created_at).toLocaleDateString();
                 html += `<li>${escapeHtml(item.name)} — <span style="color:var(--text-light);font-size:13px;">in ${escapeHtml(unitName)} • ${date}</span></li>`;
@@ -1417,7 +1756,7 @@ function upgradePlan() {
     if (!currentUserProfile) return;
 
     if (currentUserProfile.subscription_tier === 'premium') {
-        alert('You are already on the Premium plan! 🎉');
+        showToast('Premium', 'You are already on the Premium plan! 🎉', 'success');
         return;
     }
 
@@ -1427,39 +1766,49 @@ function upgradePlan() {
 }
 
 async function simulateUpgrade() {
-    const { error } = await supabase
-        .from('users')
-        .update({ subscription_tier: 'premium' })
-        .eq('id', currentUser.id);
+    try {
+        const { error } = await supabase
+            .from('users')
+            .update({ subscription_tier: 'premium' })
+            .eq('id', currentUser.id);
 
-    if (error) {
-        alert('Error upgrading: ' + error.message);
-        return;
+        if (error) {
+            showToast('Error', 'Failed to upgrade: ' + error.message, 'error');
+            return;
+        }
+
+        currentUserProfile.subscription_tier = 'premium';
+        showToast('🎉 Success', 'Upgraded to Premium! You now have 200 unit limit.', 'success');
+        updateUserUI();
+        await loadUnits();
+    } catch (error) {
+        console.error('Error upgrading:', error);
+        showToast('Error', 'An unexpected error occurred.', 'error');
     }
-
-    currentUserProfile.subscription_tier = 'premium';
-    alert('🎉 Successfully upgraded to Premium! You now have 200 unit limit.');
-    updateUserUI();
-    await loadUnits();
 }
 
 // ---------- LOGOUT ----------
 async function handleLogout() {
-    await supabase.auth.signOut();
-    localStorage.removeItem('currentUnitId');
-    localStorage.removeItem('currentUnitName');
-    window.location.reload();
+    try {
+        await supabase.auth.signOut();
+        localStorage.removeItem('currentUnitId');
+        localStorage.removeItem('currentUnitName');
+        // The auth state change will handle UI updates
+    } catch (error) {
+        console.error('Error logging out:', error);
+        showToast('Error', 'Failed to sign out.', 'error');
+    }
 }
 
 // ---------- NAVIGATION ----------
 function goBack() {
     showPage('dashboard');
-    initDashboard();
+    loadUnits();
 }
 
 function goToDashboard() {
     showPage('dashboard');
-    initDashboard();
+    loadUnits();
 }
 
 // ---------- MODAL SYSTEM ----------
@@ -1497,20 +1846,10 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// ---------- AUTO-LOGIN CHECK ----------
-supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN' && session) {
-        if (currentPage === 'auth') {
-            window.location.reload();
-        }
-    }
-    if (event === 'SIGNED_OUT') {
-        showPage('auth');
-    }
-});
-
-console.log('🚀 ECHO Portfolio loaded successfully!');
+// Log startup
+console.log('🚀 ECHO Portfolio (Enhanced) loaded successfully!');
 console.log('📡 Connected to Supabase:', SUPABASE_URL);
+console.log('✨ Features: Toast notifications, improved error handling, input validation, and more!');
 </script>
 </body>
 </html>
