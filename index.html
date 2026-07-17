@@ -3,45 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Echo Portfolio · secure units</title>
-  <!-- Font & minimal icons -->
+  <title>Echo Portfolio · Pro</title>
+  <!-- Font Awesome 6 (free) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
+    /* ----- global reset & fonts ----- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     body {
-      background: linear-gradient(145deg, #f6f9fc 0%, #e9f0f5 100%);
+      background: radial-gradient(circle at 10% 20%, #f9f3e8 0%, #e8eef5 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1.8rem;
+      margin: 0;
     }
-    .app-card {
-      max-width: 1300px;
+    /* main glass-card */
+    .app-wrapper {
+      max-width: 1400px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 3.5rem;
-      padding: 2rem 2rem 2.5rem;
-      box-shadow: 0 30px 60px rgba(0, 20, 30, 0.2), 0 10px 25px rgba(0,0,0,0.05);
-      border: 1px solid rgba(255,255,255,0.5);
+      background: rgba(255, 248, 240, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 4rem;
+      padding: 2rem 2.2rem 2.8rem;
+      box-shadow: 0 40px 80px rgba(30, 40, 50, 0.25), 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid rgba(255, 245, 235, 0.6);
       transition: all 0.2s;
     }
     h1, h2, h3 {
       font-weight: 600;
       letter-spacing: -0.02em;
+      color: #1e2b3a;
     }
     .flex-row {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 1rem;
+      gap: 0.8rem;
     }
     .flex-between {
       display: flex;
@@ -49,70 +53,99 @@
       align-items: center;
       flex-wrap: wrap;
     }
-    .badge {
-      background: #1e2b3c;
-      color: white;
-      padding: 0.35rem 1rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
+    .badge-soft {
+      background: #1e2b3a;
+      color: #f5efe8;
+      padding: 0.3rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.75rem;
       font-weight: 500;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
+    .badge-light {
+      background: rgba(30, 43, 58, 0.08);
+      color: #1e2b3a;
+      padding: 0.2rem 1rem;
+      border-radius: 60px;
+      font-size: 0.75rem;
+    }
+    /* buttons — fresh palette */
     .btn {
       background: white;
       border: none;
-      padding: 0.6rem 1.4rem;
-      border-radius: 60px;
+      padding: 0.6rem 1.6rem;
+      border-radius: 80px;
       font-weight: 500;
       font-size: 0.9rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
       border: 1px solid rgba(0,0,0,0.04);
-      transition: 0.2s;
+      transition: all 0.15s ease;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       color: #1a2634;
     }
     .btn-primary {
-      background: #1a2b3e;
+      background: #1e2b3a;
       color: white;
-      border: 1px solid #1a2b3e;
+      border: 1px solid #1e2b3a;
+      box-shadow: 0 8px 18px rgba(26, 43, 62, 0.15);
     }
     .btn-primary:hover {
       background: #0f1d2c;
-      transform: scale(0.97);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(26, 43, 62, 0.25);
     }
     .btn-outline {
       background: transparent;
-      border: 1px solid #b0c4d4;
+      border: 1px solid #cbd8e6;
     }
     .btn-outline:hover {
-      background: #e6eef6;
-    }
-    .btn-danger {
-      background: #b13e4b;
-      color: white;
-      border-color: #b13e4b;
-    }
-    .btn-danger:hover {
-      background: #8f2f3a;
+      background: #eef4fa;
+      border-color: #a0b8cc;
     }
     .btn-success {
-      background: #1f7b4d;
+      background: #1d7a4a;
       color: white;
-      border-color: #1f7b4d;
+      border-color: #1d7a4a;
     }
     .btn-success:hover {
-      background: #13633b;
+      background: #13613a;
+      transform: scale(0.97);
     }
-    .card {
-      background: rgba(255,255,255,0.7);
+    .btn-danger {
+      background: #c24b5a;
+      color: white;
+      border-color: #c24b5a;
+    }
+    .btn-danger:hover {
+      background: #a23a47;
+    }
+    .btn-warning {
+      background: #d48c3b;
+      color: white;
+      border-color: #d48c3b;
+    }
+    .btn-warning:hover {
+      background: #b8752d;
+    }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid transparent;
+    }
+    .btn-ghost:hover {
+      background: rgba(0,0,0,0.02);
+    }
+    /* cards */
+    .card-glass {
+      background: rgba(255, 250, 245, 0.6);
       backdrop-filter: blur(4px);
-      border-radius: 2.5rem;
+      border-radius: 2.8rem;
       padding: 1.8rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.02);
-      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.02);
+      border: 1px solid rgba(255, 245, 235, 0.7);
       margin-top: 1.5rem;
     }
     .input-group {
@@ -123,44 +156,49 @@
       margin: 0.5rem 0;
     }
     .input-group input, .input-group select {
-      padding: 0.7rem 1.2rem;
-      border-radius: 60px;
-      border: 1px solid #d9e2ec;
+      padding: 0.7rem 1.4rem;
+      border-radius: 80px;
+      border: 1px solid #dce5ef;
       background: white;
       font-size: 0.95rem;
       flex: 1 1 180px;
       outline: none;
       transition: 0.15s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.01);
     }
-    .input-group input:focus, .input-group select:focus {
-      border-color: #1a2b3e;
-      box-shadow: 0 0 0 3px rgba(26,43,62,0.2);
+    .input-group input:focus {
+      border-color: #1e2b3a;
+      box-shadow: 0 0 0 4px rgba(30, 43, 58, 0.12);
     }
+    /* unit grid — playful */
     .unit-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 1.2rem;
-      margin: 1.5rem 0 0.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 1.8rem 0 0.5rem;
     }
-    .unit-item {
+    .unit-card {
       background: white;
-      border-radius: 2rem;
-      padding: 1.2rem 1.2rem 1rem;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.02);
-      border: 1px solid #eef4f9;
-      transition: 0.15s;
+      border-radius: 2.5rem;
+      padding: 1.4rem 1.4rem 1.2rem;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.02);
+      border: 1px solid #ecf2f9;
+      transition: 0.2s;
+      position: relative;
     }
-    .unit-item:hover {
-      border-color: #cbdae6;
+    .unit-card:hover {
+      border-color: #c8d9ea;
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(30, 43, 58, 0.06);
     }
-    .unit-item .unit-header {
+    .unit-header {
       display: flex;
       justify-content: space-between;
       font-weight: 600;
       color: #1a2b3e;
-      border-bottom: 1px dashed #dce6ef;
-      padding-bottom: 0.4rem;
-      margin-bottom: 0.6rem;
+      border-bottom: 1px dashed #dee9f2;
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.7rem;
     }
     .item-list {
       list-style: none;
@@ -168,84 +206,87 @@
       font-size: 0.9rem;
     }
     .item-list li {
-      padding: 0.2rem 0;
+      padding: 0.3rem 0;
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid #f0f4fa;
+      align-items: center;
+      border-bottom: 1px solid #f2f7fc;
     }
-    .item-list li:last-child {
-      border: none;
-    }
-    .item-count {
+    .item-list li:last-child { border: none; }
+    .item-count-badge {
       background: #eef3f8;
-      border-radius: 40px;
-      padding: 0.1rem 0.7rem;
-      font-size: 0.75rem;
+      border-radius: 60px;
+      padding: 0.1rem 0.9rem;
+      font-size: 0.7rem;
       font-weight: 500;
     }
     .admin-section {
-      background: #e2eaf3;
-      border-radius: 2.5rem;
+      background: #e4eef9;
+      border-radius: 3rem;
       padding: 1.8rem;
-      margin-top: 2rem;
-      border: 1px solid #b9cedf;
-    }
-    .admin-section h3 {
-      color: #0b1a2b;
+      margin-top: 2.2rem;
+      border: 1px solid #bdd2e6;
     }
     .flash-message {
-      background: #1a2b3e;
+      background: #1e2b3a;
       color: white;
-      padding: 0.8rem 1.5rem;
+      padding: 0.7rem 1.8rem;
+      border-radius: 80px;
+      margin: 0.6rem 0;
+      font-weight: 450;
+    }
+    .hidden { display: none !important; }
+    .muted { color: #4f677b; font-size: 0.85rem; }
+    .flex-gap { gap: 0.8rem; }
+    .flex-wrap { flex-wrap: wrap; }
+    i { width: 1.2rem; }
+    hr { border: none; border-top: 1px solid rgba(0,0,0,0.04); margin: 1.8rem 0 0.5rem; }
+    .avatar {
+      background: #1e2b3a;
+      color: white;
       border-radius: 60px;
-      margin: 0.5rem 0;
+      padding: 0.2rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 500;
     }
-    .hidden {
-      display: none !important;
+    /* unique touches */
+    .gradient-text {
+      background: linear-gradient(135deg, #1e2b3a, #3b5a78);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .muted {
-      color: #4f677b;
-      font-size: 0.85rem;
-    }
-    .flex-gap {
-      gap: 0.8rem;
-    }
-    .flex-wrap {
-      flex-wrap: wrap;
-    }
-    i {
-      width: 1.2rem;
-    }
-    hr {
-      border: none;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      margin: 1.8rem 0 0.5rem;
+    .pill-icon {
+      background: #eef4fa;
+      border-radius: 40px;
+      padding: 0.2rem 1rem;
     }
   </style>
 </head>
 <body>
-<div class="app-card" id="app">
-  <!-- header -->
+<div class="app-wrapper" id="app">
+  <!-- header with character -->
   <div class="flex-between">
     <div class="flex-row">
-      <i class="fas fa-echo" style="font-size: 2rem; color: #1a2b3e;"></i>
-      <h1 style="font-weight: 700;">Echo Portfolio</h1>
-      <span class="badge"><i class="fas fa-shield-alt"></i> secure</span>
+      <i class="fas fa-echo" style="font-size: 2.2rem; color: #1e2b3a;"></i>
+      <h1 class="gradient-text" style="font-weight: 700;">Echo Portfolio</h1>
+      <span class="badge-soft"><i class="fas fa-shield-alt"></i> pro</span>
+      <span class="badge-light"><i class="fas fa-bolt"></i> concurrent</span>
     </div>
     <div>
       <span id="userDisplay" class="muted" style="margin-right: 1rem;"><i class="fas fa-user-circle"></i> guest</span>
-      <button class="btn btn-outline" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> logout</button>
+      <button class="btn btn-outline" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> exit</button>
     </div>
   </div>
 
-  <!-- login / signup -->
-  <div id="authSection" class="card">
+  <!-- auth -->
+  <div id="authSection" class="card-glass">
     <div class="flex-row flex-wrap" style="justify-content: center;">
-      <div class="input-group" style="flex: 2 1 300px;">
+      <div class="input-group" style="flex: 2 1 320px;">
         <input type="text" id="authUsername" placeholder="username" value="demo">
         <input type="password" id="authPassword" placeholder="password" value="demo123">
         <button class="btn btn-primary" id="loginBtn"><i class="fas fa-sign-in-alt"></i> sign in</button>
-        <button class="btn btn-outline" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
+        <button class="btn btn-success" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
       </div>
       <span class="muted" style="font-size:0.8rem;"><i class="fas fa-info-circle"></i> demo: demo / demo123</span>
     </div>
@@ -255,39 +296,44 @@
   <!-- main user area -->
   <div id="userArea" class="hidden">
     <div class="flex-between" style="margin-top: 0.5rem;">
-      <h3><i class="fas fa-layer-group"></i> your units <span class="badge" id="unitCounter">0 / 40</span></h3>
+      <div class="flex-row">
+        <h3><i class="fas fa-cubes"></i> your units</h3>
+        <span class="badge-soft" id="unitCounter">0 / 40</span>
+        <span class="badge-light"><i class="fas fa-database"></i> <span id="totalItemsCount">0</span> items</span>
+      </div>
       <div class="flex-row flex-gap">
-        <button class="btn btn-primary" id="addUnitBtn"><i class="fas fa-plus-circle"></i> add unit</button>
+        <button class="btn btn-primary" id="addUnitBtn"><i class="fas fa-plus-circle"></i> new unit</button>
+        <button class="btn btn-outline" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
       </div>
     </div>
 
     <!-- add unit inline -->
-    <div id="addUnitForm" class="hidden card" style="padding: 1rem 1.8rem; margin-top: 0.5rem;">
+    <div id="addUnitForm" class="hidden card-glass" style="padding: 1rem 1.8rem; margin-top: 0.5rem;">
       <div class="input-group">
         <input type="text" id="newUnitName" placeholder="unit name (e.g. 'Design')">
         <button class="btn btn-success" id="confirmAddUnit"><i class="fas fa-check"></i> create</button>
-        <button class="btn btn-outline" id="cancelAddUnit">cancel</button>
+        <button class="btn btn-ghost" id="cancelAddUnit">cancel</button>
       </div>
     </div>
 
     <!-- units grid -->
     <div id="unitsContainer" class="unit-grid"></div>
 
-    <!-- add item to unit (dynamic) -->
-    <div id="addItemPanel" class="hidden card" style="padding: 1rem 1.8rem; margin-top: 0.5rem;">
+    <!-- add item panel (dynamic) -->
+    <div id="addItemPanel" class="hidden card-glass" style="padding: 1rem 1.8rem; margin-top: 0.5rem; background: rgba(235, 245, 255, 0.5);">
       <div class="flex-between">
-        <span><i class="fas fa-pen"></i> add item to <strong id="itemUnitNameDisplay"></strong> <span class="item-count" id="itemCountDisplay">0/10</span></span>
+        <span><i class="fas fa-pen-fancy"></i> add item to <strong id="itemUnitNameDisplay"></strong> <span class="item-count-badge" id="itemCountDisplay">0/10</span></span>
         <div class="flex-row flex-gap">
-          <input type="text" id="newItemInput" placeholder="item name">
+          <input type="text" id="newItemInput" placeholder="item name" style="flex:1;">
           <button class="btn btn-success" id="confirmAddItem"><i class="fas fa-save"></i> add</button>
-          <button class="btn btn-outline" id="cancelAddItem">cancel</button>
+          <button class="btn btn-ghost" id="cancelAddItem">cancel</button>
         </div>
       </div>
     </div>
 
     <!-- admin panel (visible only to admin) -->
     <div id="adminPanel" class="admin-section hidden">
-      <h3><i class="fas fa-user-shield"></i> admin · all users</h3>
+      <h3><i class="fas fa-user-shield"></i> admin · all users <span class="badge-light" id="adminUserCount">0</span></h3>
       <div id="adminUserList" style="margin-top: 0.8rem; max-height: 220px; overflow-y: auto;"></div>
     </div>
   </div>
@@ -299,13 +345,12 @@
   (function() {
     // ---------- state ----------
     const STATE = {
-      users: [],            // { username, password, units: [ { unitName, items: [] } ] }
-      currentUser: null,    // username (string)
-      adminUser: 'admin',   // fixed admin
+      users: [],            // { username, password, units: [ { unitName, items: [ {id, name} ] } ] }
+      currentUser: null,
+      adminUser: 'admin',
       adminPass: 'admin123',
       maxUnits: 40,
       maxItemsPerUnit: 10,
-      // UI temp
       selectedUnitForItem: null,
     };
 
@@ -313,88 +358,71 @@
     function findUser(username) {
       return STATE.users.find(u => u.username === username);
     }
-
     function getCurrentUserData() {
       if (!STATE.currentUser) return null;
       return findUser(STATE.currentUser);
     }
-
-    // check if user is admin
     function isAdmin() {
       return STATE.currentUser === STATE.adminUser;
     }
+    function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 8); }
 
-    // generate unique id for items (simple)
-    function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 6); }
-
-    // ---------- persistence (localStorage) ----------
+    // ---------- persistence ----------
     function saveState() {
-      try {
-        localStorage.setItem('echoPortfolioData', JSON.stringify(STATE.users));
-      } catch (e) {}
+      try { localStorage.setItem('echoPortfolioData', JSON.stringify(STATE.users)); } catch (e) {}
     }
-
     function loadState() {
       try {
         const raw = localStorage.getItem('echoPortfolioData');
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed)) STATE.users = parsed;
-        }
+        if (raw) { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) STATE.users = parsed; }
       } catch (e) {}
     }
 
-    // ---------- authentication ----------
+    // ---------- auth ----------
     function loginUser(username, password) {
-      if (!username || !password) return { success: false, msg: 'username and password required' };
+      if (!username || !password) return { success: false, msg: 'credentials required' };
       const user = findUser(username);
       if (!user) return { success: false, msg: 'user not found' };
-      if (user.password !== password) return { success: false, msg: 'incorrect password' };
+      if (user.password !== password) return { success: false, msg: 'wrong password' };
       STATE.currentUser = username;
       saveState();
       return { success: true, msg: `welcome, ${username}` };
     }
-
     function signupUser(username, password) {
-      if (!username || !password) return { success: false, msg: 'username and password required' };
-      if (username === STATE.adminUser) return { success: false, msg: 'reserved username' };
-      if (findUser(username)) return { success: false, msg: 'username already exists' };
-      const newUser = { username, password, units: [] };
-      STATE.users.push(newUser);
+      if (!username || !password) return { success: false, msg: 'credentials required' };
+      if (username === STATE.adminUser) return { success: false, msg: 'reserved name' };
+      if (findUser(username)) return { success: false, msg: 'already exists' };
+      STATE.users.push({ username, password, units: [] });
       STATE.currentUser = username;
       saveState();
-      return { success: true, msg: `account created, welcome ${username}` };
+      return { success: true, msg: `account created, ${username}` };
     }
-
     function logout() {
       STATE.currentUser = null;
       STATE.selectedUnitForItem = null;
       renderAll();
     }
 
-    // ---------- unit & item operations (with concurrency handling via save/load) ----------
+    // ---------- operations (concurrent safe via save/load) ----------
     function addUnit(unitName) {
       const user = getCurrentUserData();
       if (!user) return { success: false, msg: 'not logged in' };
-      if (user.units.length >= STATE.maxUnits) return { success: false, msg: `max ${STATE.maxUnits} units reached` };
-      if (user.units.some(u => u.unitName === unitName)) return { success: false, msg: 'unit already exists' };
+      if (user.units.length >= STATE.maxUnits) return { success: false, msg: `max ${STATE.maxUnits} units` };
+      if (user.units.some(u => u.unitName === unitName)) return { success: false, msg: 'unit exists' };
       user.units.push({ unitName, items: [] });
       saveState();
       return { success: true, msg: `unit "${unitName}" added` };
     }
-
     function addItemToUnit(unitName, itemName) {
       const user = getCurrentUserData();
       if (!user) return { success: false, msg: 'not logged in' };
       const unit = user.units.find(u => u.unitName === unitName);
       if (!unit) return { success: false, msg: 'unit not found' };
-      if (unit.items.length >= STATE.maxItemsPerUnit) return { success: false, msg: `max ${STATE.maxItemsPerUnit} items per unit` };
-      // duplicate item name? allow but we can block if needed (optional)
+      if (unit.items.length >= STATE.maxItemsPerUnit) return { success: false, msg: `max ${STATE.maxItemsPerUnit} items` };
       unit.items.push({ id: genId(), name: itemName });
       saveState();
       return { success: true, msg: `item added to ${unitName}` };
     }
-
     function removeItemFromUnit(unitName, itemId) {
       const user = getCurrentUserData();
       if (!user) return { success: false, msg: 'not logged in' };
@@ -406,7 +434,6 @@
       saveState();
       return { success: true, msg: 'item removed' };
     }
-
     function removeUnit(unitName) {
       const user = getCurrentUserData();
       if (!user) return { success: false, msg: 'not logged in' };
@@ -416,11 +443,9 @@
       saveState();
       return { success: true, msg: 'unit removed' };
     }
-
-    // admin: get all users (only for admin)
     function adminGetAllUsers() {
       if (!isAdmin()) return [];
-      return STATE.users.map(u => ({ username: u.username, unitCount: u.units.length, units: u.units }));
+      return STATE.users.map(u => ({ username: u.username, unitCount: u.units.length, totalItems: u.units.reduce((acc, unit) => acc + unit.items.length, 0) }));
     }
 
     // ---------- render ----------
@@ -428,13 +453,11 @@
       const isLoggedIn = !!STATE.currentUser;
       const user = getCurrentUserData();
 
-      // auth section
       document.getElementById('authSection').classList.toggle('hidden', isLoggedIn);
       document.getElementById('userArea').classList.toggle('hidden', !isLoggedIn);
       document.getElementById('logoutBtn').style.display = isLoggedIn ? 'inline-flex' : 'none';
       document.getElementById('userDisplay').innerHTML = isLoggedIn ? `<i class="fas fa-user-circle"></i> ${STATE.currentUser}` : '<i class="fas fa-user-circle"></i> guest';
 
-      // admin panel
       const adminPanel = document.getElementById('adminPanel');
       if (isLoggedIn && isAdmin()) {
         adminPanel.classList.remove('hidden');
@@ -444,70 +467,66 @@
       }
 
       if (isLoggedIn && user) {
-        // unit counter
         document.getElementById('unitCounter').textContent = `${user.units.length} / ${STATE.maxUnits}`;
+        const totalItems = user.units.reduce((acc, u) => acc + u.items.length, 0);
+        document.getElementById('totalItemsCount').textContent = totalItems;
         renderUnits(user);
       }
 
-      // hide add item panel if not selected
+      // item panel
       if (!STATE.selectedUnitForItem) {
         document.getElementById('addItemPanel').classList.add('hidden');
       } else {
-        // re-check if unit still exists
         const unit = user ? user.units.find(u => u.unitName === STATE.selectedUnitForItem) : null;
-        if (!unit) {
-          STATE.selectedUnitForItem = null;
-          document.getElementById('addItemPanel').classList.add('hidden');
-        } else {
+        if (!unit) { STATE.selectedUnitForItem = null; document.getElementById('addItemPanel').classList.add('hidden'); }
+        else {
           document.getElementById('addItemPanel').classList.remove('hidden');
           document.getElementById('itemUnitNameDisplay').textContent = unit.unitName;
           document.getElementById('itemCountDisplay').textContent = `${unit.items.length}/${STATE.maxItemsPerUnit}`;
         }
       }
-      // hide add unit form
       document.getElementById('addUnitForm').classList.add('hidden');
     }
 
     function renderUnits(user) {
       const container = document.getElementById('unitsContainer');
       if (!user || user.units.length === 0) {
-        container.innerHTML = `<div class="muted" style="grid-column:1/-1; padding: 2rem 0; text-align:center;"><i class="fas fa-inbox"></i> no units yet — add your first unit</div>`;
+        container.innerHTML = `<div class="muted" style="grid-column:1/-1; padding: 2.5rem 0; text-align:center; background: rgba(255,255,240,0.3); border-radius: 4rem;"><i class="fas fa-box-open fa-2x" style="opacity:0.5;"></i><br>no units — create your first</div>`;
         return;
       }
       container.innerHTML = user.units.map(unit => {
         const itemsHtml = unit.items.map(item => `
           <li>
-            <span>${item.name}</span>
+            <span><i class="fas fa-circle" style="color:#1e2b3a; font-size:0.4rem; vertical-align:middle; margin-right:0.4rem;"></i> ${item.name}</span>
             <button class="btn btn-danger" style="padding: 0.1rem 0.7rem; font-size: 0.7rem;" data-unit="${unit.unitName}" data-itemid="${item.id}"><i class="fas fa-trash-alt"></i></button>
           </li>
         `).join('');
         return `
-          <div class="unit-item">
+          <div class="unit-card">
             <div class="unit-header">
-              <span><i class="fas fa-folder"></i> ${unit.unitName}</span>
-              <span class="item-count">${unit.items.length}/${STATE.maxItemsPerUnit}</span>
+              <span><i class="fas fa-folder-open" style="color:#3a5a78;"></i> ${unit.unitName}</span>
+              <span class="item-count-badge">${unit.items.length}/${STATE.maxItemsPerUnit}</span>
             </div>
-            <ul class="item-list">${itemsHtml || '<li class="muted" style="border:none;">no items</li>'}</ul>
+            <ul class="item-list">${itemsHtml || '<li class="muted" style="border:none; padding:0.3rem 0;">empty</li>'}</ul>
             <div style="display:flex; gap:0.4rem; margin-top:0.8rem; flex-wrap:wrap;">
-              <button class="btn btn-outline" style="padding:0.2rem 0.8rem; font-size:0.75rem;" data-unit-additem="${unit.unitName}"><i class="fas fa-plus"></i> item</button>
-              <button class="btn btn-danger" style="padding:0.2rem 0.8rem; font-size:0.75rem;" data-unit-remove="${unit.unitName}"><i class="fas fa-times"></i> unit</button>
+              <button class="btn btn-primary" style="padding:0.2rem 1rem; font-size:0.75rem;" data-unit-additem="${unit.unitName}"><i class="fas fa-plus"></i> item</button>
+              <button class="btn btn-warning" style="padding:0.2rem 1rem; font-size:0.75rem;" data-unit-remove="${unit.unitName}"><i class="fas fa-times"></i> unit</button>
             </div>
           </div>
         `;
       }).join('');
 
-      // event listeners for unit actions
+      // event listeners
       container.querySelectorAll('[data-unit-remove]').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const unitName = e.currentTarget.dataset.unitRemove;
-          if (confirm(`remove unit "${unitName}" and all items?`)) {
+          if (confirm(`remove unit "${unitName}" ?`)) {
             const res = removeUnit(unitName);
             showGlobalMessage(res.msg, res.success ? 'success' : 'error');
             renderAll();
           }
         });
       });
-
       container.querySelectorAll('[data-unit-additem]').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const unitName = e.currentTarget.dataset.unitAdditem;
@@ -517,7 +536,6 @@
           document.getElementById('newItemInput').focus();
         });
       });
-
       container.querySelectorAll('[data-itemid]').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const unitName = e.currentTarget.dataset.unit;
@@ -532,14 +550,12 @@
     function renderAdminPanel() {
       const container = document.getElementById('adminUserList');
       const all = adminGetAllUsers();
-      if (all.length === 0) {
-        container.innerHTML = '<div class="muted">no users registered</div>';
-        return;
-      }
+      document.getElementById('adminUserCount').textContent = all.length;
+      if (all.length === 0) { container.innerHTML = '<div class="muted">no users</div>'; return; }
       container.innerHTML = all.map(u => `
-        <div style="background:white; border-radius:2rem; padding:0.5rem 1.2rem; margin-bottom:0.3rem; display:flex; justify-content:space-between;">
-          <span><i class="fas fa-user"></i> ${u.username}</span>
-          <span class="item-count">${u.unitCount} units</span>
+        <div style="background:white; border-radius:3rem; padding:0.5rem 1.5rem; margin-bottom:0.4rem; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+          <span><i class="fas fa-user-astronaut"></i> ${u.username}</span>
+          <span class="badge-light">${u.unitCount} units · ${u.totalItems} items</span>
         </div>
       `).join('');
     }
@@ -549,65 +565,42 @@
       const el = document.getElementById('globalMessage');
       el.textContent = msg;
       el.classList.remove('hidden');
-      el.style.background = type === 'error' ? '#b13e4b' : '#1a2b3e';
+      el.style.background = type === 'error' ? '#c24b5a' : '#1e2b3a';
       setTimeout(() => el.classList.add('hidden'), 3500);
     }
-
     function showAuthMessage(msg, type = 'info') {
       const el = document.getElementById('authMessage');
       el.textContent = msg;
       el.classList.remove('hidden');
-      el.style.background = type === 'error' ? '#b13e4b' : '#1a2b3e';
+      el.style.background = type === 'error' ? '#c24b5a' : '#1e2b3a';
       setTimeout(() => el.classList.add('hidden'), 3000);
     }
 
-    // ---------- event bindings ----------
+    // ---------- events ----------
     function initEvents() {
-      // login
       document.getElementById('loginBtn').addEventListener('click', () => {
         const user = document.getElementById('authUsername').value.trim();
         const pass = document.getElementById('authPassword').value.trim();
         const res = loginUser(user, pass);
-        if (res.success) {
-          showAuthMessage(res.msg, 'success');
-          renderAll();
-        } else {
-          showAuthMessage(res.msg, 'error');
-        }
+        if (res.success) { showAuthMessage(res.msg, 'success'); renderAll(); } 
+        else showAuthMessage(res.msg, 'error');
       });
-
-      // signup
       document.getElementById('signupBtn').addEventListener('click', () => {
         const user = document.getElementById('authUsername').value.trim();
         const pass = document.getElementById('authPassword').value.trim();
         const res = signupUser(user, pass);
-        if (res.success) {
-          showAuthMessage(res.msg, 'success');
-          renderAll();
-        } else {
-          showAuthMessage(res.msg, 'error');
-        }
+        if (res.success) { showAuthMessage(res.msg, 'success'); renderAll(); } 
+        else showAuthMessage(res.msg, 'error');
       });
+      document.getElementById('logoutBtn').addEventListener('click', () => { logout(); showGlobalMessage('logged out', 'info'); });
+      document.getElementById('refreshBtn').addEventListener('click', () => { renderAll(); showGlobalMessage('refreshed', 'info'); });
 
-      // logout
-      document.getElementById('logoutBtn').addEventListener('click', () => {
-        logout();
-        renderAll();
-        showGlobalMessage('logged out', 'info');
-      });
-
-      // add unit
       document.getElementById('addUnitBtn').addEventListener('click', () => {
         const form = document.getElementById('addUnitForm');
         form.classList.toggle('hidden');
-        if (!form.classList.contains('hidden')) {
-          document.getElementById('newUnitName').value = '';
-          document.getElementById('newUnitName').focus();
-        }
+        if (!form.classList.contains('hidden')) { document.getElementById('newUnitName').value = ''; document.getElementById('newUnitName').focus(); }
       });
-      document.getElementById('cancelAddUnit').addEventListener('click', () => {
-        document.getElementById('addUnitForm').classList.add('hidden');
-      });
+      document.getElementById('cancelAddUnit').addEventListener('click', () => { document.getElementById('addUnitForm').classList.add('hidden'); });
       document.getElementById('confirmAddUnit').addEventListener('click', () => {
         const name = document.getElementById('newUnitName').value.trim();
         if (!name) { showGlobalMessage('enter unit name', 'error'); return; }
@@ -617,56 +610,35 @@
         renderAll();
       });
 
-      // add item panel
-      document.getElementById('cancelAddItem').addEventListener('click', () => {
-        STATE.selectedUnitForItem = null;
-        renderAll();
-      });
+      document.getElementById('cancelAddItem').addEventListener('click', () => { STATE.selectedUnitForItem = null; renderAll(); });
       document.getElementById('confirmAddItem').addEventListener('click', () => {
         const itemName = document.getElementById('newItemInput').value.trim();
         if (!itemName) { showGlobalMessage('enter item name', 'error'); return; }
-        if (!STATE.selectedUnitForItem) { showGlobalMessage('no unit selected', 'error'); return; }
+        if (!STATE.selectedUnitForItem) { showGlobalMessage('no unit', 'error'); return; }
         const res = addItemToUnit(STATE.selectedUnitForItem, itemName);
         showGlobalMessage(res.msg, res.success ? 'success' : 'error');
-        if (res.success) {
-          document.getElementById('newItemInput').value = '';
-          renderAll();
-          // keep panel open
-        } else {
-          renderAll();
-        }
+        if (res.success) { document.getElementById('newItemInput').value = ''; renderAll(); } 
+        else renderAll();
       });
 
-      // enter key on inputs
-      document.getElementById('newUnitName').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') document.getElementById('confirmAddUnit').click();
-      });
-      document.getElementById('newItemInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') document.getElementById('confirmAddItem').click();
-      });
-      document.getElementById('authPassword').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') document.getElementById('loginBtn').click();
-      });
+      // keyboard shortcuts
+      document.getElementById('newUnitName').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('confirmAddUnit').click(); });
+      document.getElementById('newItemInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('confirmAddItem').click(); });
+      document.getElementById('authPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('loginBtn').click(); });
     }
 
     // ---------- boot ----------
     function init() {
       loadState();
-      // if admin doesn't exist, create it (but we keep it fixed)
       if (!findUser(STATE.adminUser)) {
         STATE.users.push({ username: STATE.adminUser, password: STATE.adminPass, units: [] });
         saveState();
       }
       initEvents();
       renderAll();
-      // show welcome message
-      if (STATE.currentUser) {
-        showGlobalMessage(`welcome back, ${STATE.currentUser}`, 'info');
-      } else {
-        showGlobalMessage('sign in or create account', 'info');
-      }
+      if (STATE.currentUser) showGlobalMessage(`welcome back, ${STATE.currentUser}`, 'info');
+      else showGlobalMessage('sign in to start', 'info');
     }
-
     init();
   })();
 </script>
