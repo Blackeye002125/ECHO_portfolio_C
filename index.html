@@ -35,9 +35,7 @@
             border: 1px solid rgba(255, 245, 235, 0.5);
             transition: all 0.2s;
         }
-        h1,
-        h2,
-        h3 {
+        h1, h2, h3 {
             font-weight: 600;
             letter-spacing: -0.02em;
             color: #1e2b3a;
@@ -524,7 +522,7 @@
             color: #1d7a4a;
         }
 
-        /* teacher/student view */
+        /* role badges */
         .role-badge {
             padding: 0.2rem 0.8rem;
             border-radius: 60px;
@@ -538,6 +536,20 @@
         .role-student {
             background: #1e2b3a;
             color: white;
+        }
+        .role-admin {
+            background: #c24b5a;
+            color: white;
+        }
+
+        /* permission denied */
+        .permission-denied {
+            background: #fef3f2;
+            border: 1px solid #fecaca;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            color: #991b1b;
+            text-align: center;
         }
 
         @keyframes fadeIn {
@@ -638,6 +650,22 @@
         .cdacc-score.low {
             color: #c24b5a;
         }
+        .admin-badge {
+            background: #1e2b3a;
+            color: white;
+            padding: 0.1rem 0.8rem;
+            border-radius: 60px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+        .teacher-badge {
+            background: #d48c3b;
+            color: white;
+            padding: 0.1rem 0.8rem;
+            border-radius: 60px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -661,17 +689,17 @@
         <div id="authSection" class="card-glass">
             <div class="flex-row flex-wrap" style="justify-content: center;">
                 <div class="input-group" style="flex: 2 1 280px;">
-                    <input type="text" id="authUsername" placeholder="username" value="teacher">
-                    <input type="password" id="authPassword" placeholder="password" value="teacher123">
+                    <input type="text" id="authUsername" placeholder="username" value="student">
+                    <input type="password" id="authPassword" placeholder="password" value="student123">
                     <select id="authRole" style="padding:0.6rem 1.2rem;border-radius:80px;border:1px solid #dce5ef;background:white;font-size:0.9rem;">
                         <option value="student">Student</option>
-                        <option value="teacher" selected>Teacher</option>
+                        <option value="teacher">Teacher</option>
                         <option value="admin">Admin</option>
                     </select>
                     <button class="btn btn-primary" id="loginBtn"><i class="fas fa-sign-in-alt"></i> sign in</button>
                     <button class="btn btn-success" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
                 </div>
-                <span class="muted" style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> teacher/teacher123 · student/student123 · admin/admin123</span>
+                <span class="muted" style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> student/student123 · teacher/teacher123 · admin/admin123</span>
             </div>
             <div id="authMessage" class="flash-message hidden"></div>
         </div>
@@ -684,6 +712,7 @@
                     <div class="flex-row">
                         <span class="role-badge" id="roleBadge">Student</span>
                         <span class="badge-light"><i class="fas fa-id-badge"></i> <span id="userNameDisplay">user</span></span>
+                        <span class="badge-light" id="userRoleDisplay">Student</span>
                     </div>
                     <div class="flex-row flex-gap">
                         <span class="badge-light"><i class="fas fa-chart-line"></i> CDACC: <span id="cdaccScoreDisplay">0</span></span>
@@ -692,72 +721,84 @@
                 </div>
             </div>
 
-            <div class="flex-between" style="margin-top: 0.3rem;">
-                <div class="flex-row">
-                    <h3 style="font-size: 1.2rem;"><i class="fas fa-cubes"></i> units</h3>
-                    <span class="badge-soft" id="unitCounter">0 / 40</span>
-                    <span class="badge-light"><i class="fas fa-database"></i> <span id="totalItemsCount">0</span></span>
-                </div>
-                <div class="flex-row flex-gap">
-                    <button class="btn btn-primary btn-sm" id="addUnitBtn"><i class="fas fa-plus-circle"></i> new unit</button>
-                    <button class="btn btn-outline btn-sm" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
-                </div>
-            </div>
-
-            <!-- add unit inline -->
-            <div id="addUnitForm" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.3rem;">
-                <div class="input-group">
-                    <input type="text" id="newUnitName" placeholder="unit name">
-                    <button class="btn btn-success btn-sm" id="confirmAddUnit"><i class="fas fa-check"></i> create</button>
-                    <button class="btn btn-ghost btn-sm" id="cancelAddUnit">cancel</button>
-                </div>
-            </div>
-
-            <!-- units grid -->
-            <div id="unitsContainer" class="unit-grid"></div>
-
-            <!-- add item panel with file upload -->
-            <div id="addItemPanel" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.5rem; background: rgba(235, 245, 255, 0.4);">
-                <div class="flex-between" style="gap: 0.5rem;">
-                    <span style="font-size:0.9rem;"><i class="fas fa-pen-fancy"></i> add to <strong id="itemUnitNameDisplay"></strong> <span class="item-count-badge" id="itemCountDisplay">0/10</span></span>
-                    <div class="flex-row flex-gap" style="flex-wrap: wrap;">
-                        <input type="text" id="newItemInput" placeholder="item name" style="flex:1; min-width:100px; padding:0.4rem 1rem; font-size:0.85rem;">
-                        <label class="file-upload-label" style="font-size:0.7rem; padding:0.15rem 0.8rem;"><i class="fas fa-file-upload"></i> file <input type="file" id="fileUploadInput" style="display:none;"></label>
-                        <button class="btn btn-success btn-sm" id="confirmAddItem"><i class="fas fa-save"></i> add</button>
-                        <button class="btn btn-ghost btn-sm" id="cancelAddItem">cancel</button>
+            <!-- STUDENT VIEW: Only their own units -->
+            <div id="studentView">
+                <div class="flex-between" style="margin-top: 0.3rem;">
+                    <div class="flex-row">
+                        <h3 style="font-size: 1.2rem;"><i class="fas fa-cubes"></i> My Units</h3>
+                        <span class="badge-soft" id="unitCounter">0 / 40</span>
+                        <span class="badge-light"><i class="fas fa-database"></i> <span id="totalItemsCount">0</span></span>
+                    </div>
+                    <div class="flex-row flex-gap">
+                        <button class="btn btn-primary btn-sm" id="addUnitBtn"><i class="fas fa-plus-circle"></i> new unit</button>
+                        <button class="btn btn-outline btn-sm" id="refreshBtn"><i class="fas fa-sync-alt"></i></button>
                     </div>
                 </div>
-                <div id="filePreviewContainer" class="file-preview" style="margin-top: 0.4rem;"></div>
+
+                <!-- add unit inline -->
+                <div id="addUnitForm" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.3rem;">
+                    <div class="input-group">
+                        <input type="text" id="newUnitName" placeholder="unit name">
+                        <button class="btn btn-success btn-sm" id="confirmAddUnit"><i class="fas fa-check"></i> create</button>
+                        <button class="btn btn-ghost btn-sm" id="cancelAddUnit">cancel</button>
+                    </div>
+                </div>
+
+                <!-- units grid -->
+                <div id="unitsContainer" class="unit-grid"></div>
+
+                <!-- add item panel with file upload -->
+                <div id="addItemPanel" class="hidden card-glass" style="padding: 0.8rem 1.5rem; margin-top: 0.5rem; background: rgba(235, 245, 255, 0.4);">
+                    <div class="flex-between" style="gap: 0.5rem;">
+                        <span style="font-size:0.9rem;"><i class="fas fa-pen-fancy"></i> add to <strong id="itemUnitNameDisplay"></strong> <span class="item-count-badge" id="itemCountDisplay">0/10</span></span>
+                        <div class="flex-row flex-gap" style="flex-wrap: wrap;">
+                            <input type="text" id="newItemInput" placeholder="item name" style="flex:1; min-width:100px; padding:0.4rem 1rem; font-size:0.85rem;">
+                            <label class="file-upload-label" style="font-size:0.7rem; padding:0.15rem 0.8rem;"><i class="fas fa-file-upload"></i> file <input type="file" id="fileUploadInput" style="display:none;"></label>
+                            <button class="btn btn-success btn-sm" id="confirmAddItem"><i class="fas fa-save"></i> add</button>
+                            <button class="btn btn-ghost btn-sm" id="cancelAddItem">cancel</button>
+                        </div>
+                    </div>
+                    <div id="filePreviewContainer" class="file-preview" style="margin-top: 0.4rem;"></div>
+                </div>
             </div>
 
             <!-- TEACHER VIEW: Student submissions -->
-            <div id="teacherView" class="card-glass hidden" style="background: rgba(235, 245, 255, 0.3);">
+            <div id="teacherView" class="hidden card-glass" style="background: rgba(235, 245, 255, 0.3);">
                 <h3 style="font-size:1.1rem;"><i class="fas fa-users"></i> Student Submissions <span class="badge-light" id="studentCount">0</span></h3>
                 <div id="studentSubmissionsContainer" style="margin-top: 0.8rem;"></div>
             </div>
 
-            <!-- TVET Institutions -->
+            <!-- TVET Institutions - visible to all but only admin can manage -->
             <div class="card-glass" style="background: rgba(235, 245, 255, 0.2);">
                 <div class="flex-between">
                     <h3 style="font-size:1.1rem;"><i class="fas fa-university"></i> TVET Institutions (Kenya)</h3>
-                    <button class="btn btn-primary btn-sm" id="addTvetBtn"><i class="fas fa-plus"></i> add institution</button>
+                    <button class="btn btn-primary btn-sm" id="addTvetBtn" style="display:none;"><i class="fas fa-plus"></i> add institution</button>
                 </div>
                 <div id="tvetContainer" class="tvet-grid" style="margin-top: 0.5rem;"></div>
             </div>
 
-            <!-- ADMISSIONS SECTION -->
+            <!-- ADMISSIONS SECTION - visible to all -->
             <div class="card-glass" style="margin-top: 1.2rem; background: rgba(235, 245, 255, 0.3);">
                 <div class="flex-between">
                     <h3 style="font-size:1.1rem;"><i class="fas fa-graduation-cap"></i> Admissions</h3>
-                    <button class="btn btn-primary btn-sm" id="addAdmissionBtn"><i class="fas fa-plus"></i> new admission</button>
+                    <button class="btn btn-primary btn-sm" id="addAdmissionBtn" style="display:none;"><i class="fas fa-plus"></i> new admission</button>
                 </div>
                 <div id="admissionsContainer" style="margin-top: 0.8rem;"></div>
             </div>
 
-            <!-- admin panel -->
+            <!-- ADMIN PANEL - only visible to admins -->
             <div id="adminPanel" class="admin-section hidden">
-                <h3 style="font-size:1.1rem;"><i class="fas fa-user-shield"></i> admin · all users <span class="badge-light" id="adminUserCount">0</span></h3>
-                <div id="adminUserList" class="scrollable-list" style="margin-top: 0.6rem;"></div>
+                <h3 style="font-size:1.1rem;"><i class="fas fa-user-shield"></i> Admin Dashboard <span class="badge-light" id="adminUserCount">0</span></h3>
+                <div style="margin-top:0.5rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:1rem;">
+                    <div class="card-glass" style="padding:1rem;">
+                        <h4><i class="fas fa-users"></i> All Users</h4>
+                        <div id="adminUserList" class="scrollable-list" style="margin-top: 0.6rem; max-height:300px;"></div>
+                    </div>
+                    <div class="card-glass" style="padding:1rem;">
+                        <h4><i class="fas fa-chart-bar"></i> System Stats</h4>
+                        <div id="systemStats" style="margin-top:0.5rem;"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -779,7 +820,7 @@
             const STATE = {
                 users: [],
                 currentUser: null,
-                currentRole: 'student', // student, teacher, admin
+                currentRole: 'student',
                 adminUser: 'admin',
                 adminPass: 'admin123',
                 maxUnits: 40,
@@ -788,7 +829,7 @@
                 pendingFile: null,
                 admissions: [],
                 tvetInstitutions: [],
-                cdaccScores: {}, // username: score
+                cdaccScores: {},
             };
 
             // ---------- helpers ----------
@@ -807,6 +848,10 @@
 
             function isTeacher() {
                 return STATE.currentRole === 'teacher' || isAdmin();
+            }
+
+            function isStudent() {
+                return STATE.currentRole === 'student' && !isTeacher() && !isAdmin();
             }
 
             function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 8); }
@@ -918,6 +963,7 @@
 
             // ---------- admissions ----------
             function addAdmission(title, description, date, status) {
+                if (!isAdmin()) return { success: false, msg: 'only admins can add admissions' };
                 if (!title) return { success: false, msg: 'title required' };
                 STATE.admissions.push({
                     id: genId(),
@@ -931,6 +977,7 @@
             }
 
             function removeAdmission(id) {
+                if (!isAdmin()) return { success: false, msg: 'only admins can remove admissions' };
                 const idx = STATE.admissions.findIndex(a => a.id === id);
                 if (idx === -1) return { success: false, msg: 'not found' };
                 STATE.admissions.splice(idx, 1);
@@ -940,6 +987,7 @@
 
             // ---------- TVET ----------
             function addTvet(name, county, type) {
+                if (!isAdmin()) return { success: false, msg: 'only admins can add institutions' };
                 if (!name) return { success: false, msg: 'name required' };
                 STATE.tvetInstitutions.push({
                     id: genId(),
@@ -952,6 +1000,7 @@
             }
 
             function removeTvet(id) {
+                if (!isAdmin()) return { success: false, msg: 'only admins can remove institutions' };
                 const idx = STATE.tvetInstitutions.findIndex(t => t.id === id);
                 if (idx === -1) return { success: false, msg: 'not found' };
                 STATE.tvetInstitutions.splice(idx, 1);
@@ -961,6 +1010,9 @@
 
             // ---------- CDACC ----------
             function updateCdaccScore(username, score) {
+                if (!isTeacher() && username !== STATE.currentUser) {
+                    return { success: false, msg: 'only teachers/admins can update others\' scores' };
+                }
                 if (score < 0 || score > 100) return { success: false, msg: 'score must be 0-100' };
                 STATE.cdaccScores[username] = score;
                 saveState();
@@ -983,6 +1035,16 @@
                 }));
             }
 
+            function getSystemStats() {
+                const totalUsers = STATE.users.length;
+                const students = STATE.users.filter(u => (u.role || 'student') === 'student').length;
+                const teachers = STATE.users.filter(u => u.role === 'teacher').length;
+                const admins = STATE.users.filter(u => u.role === 'admin').length;
+                const totalUnits = STATE.users.reduce((acc, u) => acc + u.units.length, 0);
+                const totalItems = STATE.users.reduce((acc, u) => acc + u.units.reduce((a, unit) => a + unit.items.length, 0), 0);
+                return { totalUsers, students, teachers, admins, totalUnits, totalItems };
+            }
+
             // ---------- render ----------
             function renderAll() {
                 const isLoggedIn = !!STATE.currentUser;
@@ -1001,21 +1063,26 @@
                     badge.textContent = STATE.currentRole.charAt(0).toUpperCase() + STATE.currentRole.slice(1);
                     badge.className = `role-badge role-${STATE.currentRole}`;
                     document.getElementById('userNameDisplay').textContent = STATE.currentUser;
+                    document.getElementById('userRoleDisplay').textContent = 
+                        STATE.currentRole.charAt(0).toUpperCase() + STATE.currentRole.slice(1);
 
                     // CDACC score
                     const score = getCdaccScore(STATE.currentUser);
                     document.getElementById('cdaccScoreDisplay').textContent = score;
                     const scoreEl = document.getElementById('cdaccScoreDisplay');
-                    scoreEl.className = score >= 70 ? 'cdacc-score high' : score >= 40 ? 'cdacc-score medium' :
-                        'cdacc-score low';
+                    scoreEl.className = score >= 70 ? 'cdacc-score high' : score >= 40 ? 'cdacc-score medium' : 'cdacc-score low';
 
-                    // Teacher view
+                    // Show/hide views based on role
+                    const studentView = document.getElementById('studentView');
                     const teacherView = document.getElementById('teacherView');
-                    if (isTeacher()) {
+
+                    if (isStudent()) {
+                        studentView.classList.remove('hidden');
+                        teacherView.classList.add('hidden');
+                    } else if (isTeacher()) {
+                        studentView.classList.remove('hidden');
                         teacherView.classList.remove('hidden');
                         renderTeacherView();
-                    } else {
-                        teacherView.classList.add('hidden');
                     }
 
                     // Admin panel
@@ -1023,9 +1090,14 @@
                     if (isAdmin()) {
                         adminPanel.classList.remove('hidden');
                         renderAdminPanel();
+                        renderSystemStats();
                     } else {
                         adminPanel.classList.add('hidden');
                     }
+
+                    // Show/hide admin buttons
+                    document.getElementById('addAdmissionBtn').style.display = isAdmin() ? 'inline-flex' : 'none';
+                    document.getElementById('addTvetBtn').style.display = isAdmin() ? 'inline-flex' : 'none';
 
                     if (user) {
                         document.getElementById('unitCounter').textContent = `${user.units.length} / ${STATE.maxUnits}`;
@@ -1048,8 +1120,7 @@
                         document.getElementById('addItemPanel').classList.add('hidden'); } else {
                         document.getElementById('addItemPanel').classList.remove('hidden');
                         document.getElementById('itemUnitNameDisplay').textContent = unit.unitName;
-                        document.getElementById('itemCountDisplay').textContent =
-                        `${unit.items.length}/${STATE.maxItemsPerUnit}`;
+                        document.getElementById('itemCountDisplay').textContent = `${unit.items.length}/${STATE.maxItemsPerUnit}`;
                         updateFilePreview();
                     }
                 }
@@ -1070,11 +1141,9 @@
                             const isImage = item.file.type && item.file.type.startsWith('image/');
                             const isVideo = item.file.type && item.file.type.startsWith('video/');
                             if (isImage) {
-                                preview =
-                                `<img src="${item.file.dataURL}" alt="file">`;
+                                preview = `<img src="${item.file.dataURL}" alt="file">`;
                             } else if (isVideo) {
-                                preview =
-                                    `<video src="${item.file.dataURL}" muted></video>`;
+                                preview = `<video src="${item.file.dataURL}" muted></video>`;
                             } else {
                                 preview = `<i class="fas fa-file"></i>`;
                             }
@@ -1159,6 +1228,7 @@
                                 <div class="flex-row">
                                     <span class="cdacc-score ${scoreClass}">CDACC: ${score}</span>
                                     <button class="btn btn-primary btn-sm" onclick="viewStudentSubmissions('${student.username}')"><i class="fas fa-eye"></i> view</button>
+                                    <button class="btn btn-warning btn-sm" onclick="updateStudentScore('${student.username}')"><i class="fas fa-edit"></i> score</button>
                                 </div>
                             </div>
                         `;
@@ -1180,6 +1250,24 @@
                 alert(message);
             };
 
+            window.updateStudentScore = function(username) {
+                if (!isTeacher()) {
+                    showGlobalMessage('only teachers/admins can update scores', 'error');
+                    return;
+                }
+                const currentScore = getCdaccScore(username);
+                const newScore = prompt(`Enter CDACC score for ${username} (0-100):`, currentScore);
+                if (newScore === null) return;
+                const numScore = parseInt(newScore);
+                if (isNaN(numScore) || numScore < 0 || numScore > 100) {
+                    showGlobalMessage('score must be 0-100', 'error');
+                    return;
+                }
+                const res = updateCdaccScore(username, numScore);
+                showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                renderAll();
+            };
+
             function renderAdmissions() {
                 const container = document.getElementById('admissionsContainer');
                 if (STATE.admissions.length === 0) {
@@ -1198,22 +1286,24 @@
                                         <div class="muted" style="font-size:0.8rem; margin-top:0.2rem;">${a.description || 'No description'}</div>
                                         <div class="muted" style="font-size:0.7rem;">${a.date}</div>
                                     </div>
-                                    <button class="btn btn-danger btn-sm" data-admission-id="${a.id}"><i class="fas fa-trash-alt"></i></button>
+                                    ${isAdmin() ? `<button class="btn btn-danger btn-sm" data-admission-id="${a.id}"><i class="fas fa-trash-alt"></i></button>` : ''}
                                 </div>
                             </div>
                         `;
                 }).join('');
 
-                container.querySelectorAll('[data-admission-id]').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const id = e.currentTarget.dataset.admissionId;
-                        if (confirm('remove this admission?')) {
-                            const res = removeAdmission(id);
-                            showGlobalMessage(res.msg, res.success ? 'success' : 'error');
-                            renderAll();
-                        }
+                if (isAdmin()) {
+                    container.querySelectorAll('[data-admission-id]').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.currentTarget.dataset.admissionId;
+                            if (confirm('remove this admission?')) {
+                                const res = removeAdmission(id);
+                                showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                                renderAll();
+                            }
+                        });
                     });
-                });
+                }
             }
 
             function renderTvet() {
@@ -1279,11 +1369,43 @@
                 document.getElementById('adminUserCount').textContent = all.length;
                 if (all.length === 0) { container.innerHTML = '<div class="muted">no users</div>'; return; }
                 container.innerHTML = all.map(u => `
-                        <div style="background:white; border-radius:2.5rem; padding:0.4rem 1.2rem; margin-bottom:0.3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.3rem; border:1px solid #ecf2f9;">
-                            <span><i class="fas fa-user-astronaut"></i> ${u.username} <span class="badge-light">${u.role}</span></span>
+                        <div style="background:white; border-radius:1.5rem; padding:0.4rem 1rem; margin-bottom:0.3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.3rem; border:1px solid #ecf2f9;">
+                            <span><i class="fas fa-user-astronaut"></i> ${u.username} 
+                                <span class="${u.role === 'admin' ? 'admin-badge' : u.role === 'teacher' ? 'teacher-badge' : 'badge-light'}" style="font-size:0.6rem;">${u.role || 'student'}</span>
+                            </span>
                             <span class="badge-light">${u.unitCount} units · ${u.totalItems} items · CDACC: ${u.cdacc}</span>
                         </div>
                     `).join('');
+            }
+
+            function renderSystemStats() {
+                const stats = getSystemStats();
+                const container = document.getElementById('systemStats');
+                container.innerHTML = `
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem;">
+                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                                <div style="font-size:1.5rem; font-weight:700;">${stats.totalUsers}</div>
+                                <div class="muted">Total Users</div>
+                            </div>
+                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                                <div style="font-size:1.5rem; font-weight:700;">${stats.students}</div>
+                                <div class="muted">Students</div>
+                            </div>
+                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                                <div style="font-size:1.5rem; font-weight:700;">${stats.teachers}</div>
+                                <div class="muted">Teachers</div>
+                            </div>
+                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                                <div style="font-size:1.5rem; font-weight:700;">${stats.admins}</div>
+                                <div class="muted">Admins</div>
+                            </div>
+                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center; grid-column: span 2;">
+                                <div style="font-size:1.5rem; font-weight:700;">${stats.totalUnits}</div>
+                                <div class="muted">Total Units</div>
+                                <div style="font-size:0.8rem; margin-top:0.2rem;">${stats.totalItems} items across all units</div>
+                            </div>
+                        </div>
+                    `;
             }
 
             // ----- file preview -----
@@ -1487,8 +1609,12 @@
                     reader.readAsDataURL(file);
                 });
 
-                // Admissions
+                // Admissions - only admins can add
                 document.getElementById('addAdmissionBtn').addEventListener('click', () => {
+                    if (!isAdmin()) {
+                        showGlobalMessage('only admins can add admissions', 'error');
+                        return;
+                    }
                     const title = prompt('Admission title:');
                     if (!title) return;
                     const description = prompt('Description (optional):') || '';
@@ -1499,9 +1625,12 @@
                     renderAll();
                 });
 
-                // TVET
+                // TVET - only admins can add
                 document.getElementById('addTvetBtn').addEventListener('click', () => {
-                    if (!isAdmin()) { showGlobalMessage('only admins can add institutions', 'error'); return; }
+                    if (!isAdmin()) {
+                        showGlobalMessage('only admins can add institutions', 'error');
+                        return;
+                    }
                     const name = prompt('Institution name:');
                     if (!name) return;
                     const county = prompt('County:') || 'Nairobi';
@@ -1511,7 +1640,7 @@
                     renderAll();
                 });
 
-                // CDACC update
+                // CDACC update - students update their own, teachers update students
                 document.getElementById('updateCdaccBtn').addEventListener('click', () => {
                     const score = prompt('Enter CDACC score (0-100):', getCdaccScore(STATE.currentUser));
                     if (score === null) return;
