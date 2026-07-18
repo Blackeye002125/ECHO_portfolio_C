@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Echo Portfolio · Secure TVET Kenya</title>
+    <title>Echo Portfolio · Advanced TVET Kenya</title>
     <!-- Font Awesome 6 (free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -509,6 +509,14 @@
             background: #c24b5a;
             color: white;
         }
+        .role-hod {
+            background: #6c3b78;
+            color: white;
+        }
+        .role-instadmin {
+            background: #1d7a4a;
+            color: white;
+        }
 
         .student-list-item {
             background: white;
@@ -548,6 +556,14 @@
         }
         .teacher-badge {
             background: #d48c3b;
+            color: white;
+            padding: 0.1rem 0.8rem;
+            border-radius: 60px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+        .hod-badge {
+            background: #6c3b78;
             color: white;
             padding: 0.1rem 0.8rem;
             border-radius: 60px;
@@ -619,6 +635,39 @@
             transition: width 0.3s;
         }
 
+        /* Technology Section */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .tech-item {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 0.8rem;
+            text-align: center;
+            border: 1px solid #ecf2f9;
+            transition: 0.2s;
+        }
+        .tech-item:hover {
+            border-color: #3b5a78;
+            transform: scale(1.02);
+        }
+        .tech-item .tech-icon {
+            font-size: 1.8rem;
+            color: #3b5a78;
+        }
+        .tech-item .tech-name {
+            font-weight: 500;
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+        }
+        .tech-item .tech-status {
+            font-size: 0.6rem;
+            color: #4f677b;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
@@ -628,6 +677,7 @@
             .app-wrapper { padding: 1.2rem; border-radius: 2.5rem; }
             .unit-grid { grid-template-columns: 1fr; }
             .program-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr 1fr; }
             .tvet-grid { grid-template-columns: 1fr 1fr; }
             .btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
             .card-glass { padding: 1rem; }
@@ -639,6 +689,7 @@
         @media (min-width: 601px) and (max-width: 900px) {
             .unit-grid { grid-template-columns: repeat(2, 1fr); }
             .program-grid { grid-template-columns: repeat(2, 1fr); }
+            .tech-grid { grid-template-columns: repeat(3, 1fr); }
         }
         .scrollable-list {
             max-height: 200px;
@@ -658,21 +709,12 @@
             border-color: #c8d9ea;
         }
 
-        /* Institution admin section */
         .inst-admin-card {
             background: white;
             border-radius: 1.5rem;
             padding: 1rem;
             border: 1px solid #ecf2f9;
             margin-bottom: 0.5rem;
-        }
-        .inst-admin-card .inst-name {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        .inst-admin-card .inst-detail {
-            font-size: 0.8rem;
-            color: #4f677b;
         }
         .security-badge {
             background: #1d7a4a;
@@ -688,6 +730,27 @@
         .security-badge.unverified {
             background: #c24b5a;
         }
+
+        /* Course/HOD management */
+        .course-item {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ecf2f9;
+            margin-bottom: 0.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .course-item .course-name {
+            font-weight: 500;
+        }
+        .course-item .hod-name {
+            font-size: 0.75rem;
+            color: #4f677b;
+        }
     </style>
 </head>
 <body>
@@ -697,8 +760,8 @@
             <div class="flex-row">
                 <i class="fas fa-echo" style="font-size: 2rem; color: #1e2b3a;"></i>
                 <h1 class="gradient-text" style="font-weight: 700; font-size: 1.6rem;">Echo Portfolio</h1>
-                <span class="badge-soft"><i class="fas fa-shield-alt"></i> Secure</span>
-                <span class="badge-light"><i class="fas fa-graduation-cap"></i> TVET Kenya</span>
+                <span class="badge-soft"><i class="fas fa-shield-alt"></i> Advanced</span>
+                <span class="badge-light"><i class="fas fa-microchip"></i> AI-Ready</span>
             </div>
             <div>
                 <span id="userDisplay" class="muted" style="margin-right: 0.6rem;"><i class="fas fa-user-circle"></i> guest</span>
@@ -715,7 +778,9 @@
                     <select id="authRole" style="padding:0.6rem 1.2rem;border-radius:80px;border:1px solid #dce5ef;background:white;font-size:0.9rem;">
                         <option value="student">Student</option>
                         <option value="teacher">Lecturer</option>
-                        <option value="admin">Admin</option>
+                        <option value="hod">HOD</option>
+                        <option value="instadmin">Institution Admin</option>
+                        <option value="admin">System Admin</option>
                     </select>
                     <button class="btn btn-primary" id="loginBtn"><i class="fas fa-sign-in-alt"></i> sign in</button>
                     <button class="btn btn-success" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
@@ -723,8 +788,8 @@
             </div>
             <div style="font-size:0.7rem; color:#4f677b; padding:0.5rem; background:rgba(255,255,255,0.5); border-radius:1rem; margin-top:0.5rem;">
                 <i class="fas fa-info-circle"></i> 
-                <strong>Demo:</strong> student/student123 · teacher/teacher123 · admin/admin123
-                <br><small>Each institution has ONE admin who manages lecturers and departments</small>
+                <strong>Demo:</strong> student/student123 · lecturer/lecturer123 · hod/hod123 · instadmin/instadmin123 · admin/admin123
+                <br><small>Institution Admin manages courses & assigns HODs | HOD updates CDACC scores</small>
             </div>
             <div id="authMessage" class="flash-message hidden"></div>
         </div>
@@ -738,39 +803,58 @@
                         <span class="role-badge" id="roleBadge">Student</span>
                         <span class="badge-light"><i class="fas fa-id-badge"></i> <span id="userNameDisplay">user</span></span>
                         <span class="badge-light" id="userInstitutionDisplay"></span>
-                        <span class="badge-light" id="userProgramDisplay"></span>
+                        <span class="badge-light" id="userCourseDisplay"></span>
                         <span class="badge-light" id="userDepartmentDisplay"></span>
                     </div>
                     <div class="flex-row flex-gap">
                         <span class="badge-light"><i class="fas fa-chart-line"></i> Progress: <span id="progressDisplay">0%</span></span>
                         <span class="badge-light"><i class="fas fa-star"></i> CDACC: <span id="cdaccScoreDisplay">0</span></span>
-                        <button class="btn btn-primary btn-sm" id="updateCdaccBtn"><i class="fas fa-edit"></i> score</button>
+                        <span id="cdaccUpdateBtnContainer">
+                            <button class="btn btn-primary btn-sm" id="updateCdaccBtn"><i class="fas fa-edit"></i> update score</button>
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <!-- INSTITUTION ADMIN SECTION (Only for institution admins) -->
-            <div id="instAdminSection" class="hidden card-glass" style="background: rgba(200, 230, 255, 0.2); border: 2px solid #3b5a78;">
+            <!-- TECHNOLOGY SECTION -->
+            <div class="card-glass" style="background: rgba(200, 230, 255, 0.1); border: 1px solid #3b5a78;">
+                <div class="flex-between">
+                    <h3 style="font-size:1rem;"><i class="fas fa-microchip"></i> Advanced Technology Stack</h3>
+                    <span class="badge-info"><i class="fas fa-bolt"></i> AI-Enhanced</span>
+                </div>
+                <div id="techContainer" class="tech-grid"></div>
+            </div>
+
+            <!-- INSTITUTION ADMIN SECTION -->
+            <div id="instAdminSection" class="hidden card-glass" style="background: rgba(200, 230, 255, 0.2); border: 2px solid #1d7a4a;">
                 <div class="flex-between">
                     <h3 style="font-size:1.1rem;"><i class="fas fa-user-shield"></i> Institution Admin Panel</h3>
                     <span class="security-badge verified"><i class="fas fa-check-circle"></i> Verified Admin</span>
                 </div>
                 <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:1rem; margin-top:0.5rem;">
                     <div class="card-glass" style="padding:1rem;">
-                        <h4><i class="fas fa-chalkboard-teacher"></i> Manage Lecturers</h4>
-                        <div id="lecturerList" style="margin-top:0.5rem; max-height:200px; overflow-y:auto;"></div>
+                        <h4><i class="fas fa-book"></i> Manage Courses</h4>
+                        <div id="courseList" style="margin-top:0.5rem; max-height:200px; overflow-y:auto;"></div>
                         <div class="input-group" style="margin-top:0.5rem;">
-                            <input type="text" id="newLecturerUsername" placeholder="Lecturer username" style="flex:1;">
-                            <input type="text" id="newLecturerDept" placeholder="Department" style="flex:1;">
-                            <button class="btn btn-success btn-sm" id="addLecturerBtn"><i class="fas fa-plus"></i> Add</button>
+                            <input type="text" id="newCourseName" placeholder="Course name" style="flex:1;">
+                            <button class="btn btn-success btn-sm" id="addCourseBtn"><i class="fas fa-plus"></i> Add</button>
                         </div>
                     </div>
                     <div class="card-glass" style="padding:1rem;">
-                        <h4><i class="fas fa-building"></i> Manage Departments</h4>
-                        <div id="departmentList" style="margin-top:0.5rem; max-height:200px; overflow-y:auto;"></div>
+                        <h4><i class="fas fa-user-graduate"></i> Assign HODs</h4>
+                        <div id="hodAssignmentList" style="margin-top:0.5rem; max-height:200px; overflow-y:auto;"></div>
                         <div class="input-group" style="margin-top:0.5rem;">
-                            <input type="text" id="newDepartmentName" placeholder="Department name" style="flex:1;">
-                            <button class="btn btn-success btn-sm" id="addDepartmentBtn"><i class="fas fa-plus"></i> Add</button>
+                            <select id="hodCourseSelect" style="flex:1; padding:0.6rem 1.2rem; border-radius:80px; border:1px solid #dce5ef; background:white;"></select>
+                            <select id="hodUserSelect" style="flex:1; padding:0.6rem 1.2rem; border-radius:80px; border:1px solid #dce5ef; background:white;"></select>
+                            <button class="btn btn-purple btn-sm" id="assignHodBtn"><i class="fas fa-user-tie"></i> Assign</button>
+                        </div>
+                    </div>
+                    <div class="card-glass" style="padding:1rem;">
+                        <h4><i class="fas fa-users"></i> Manage Lecturers</h4>
+                        <div id="lecturerList" style="margin-top:0.5rem; max-height:200px; overflow-y:auto;"></div>
+                        <div class="input-group" style="margin-top:0.5rem;">
+                            <input type="text" id="newLecturerUsername" placeholder="Lecturer username" style="flex:1;">
+                            <button class="btn btn-success btn-sm" id="addLecturerBtn"><i class="fas fa-plus"></i> Add</button>
                         </div>
                     </div>
                 </div>
@@ -778,7 +862,7 @@
 
             <!-- PROGRAM SELECTION -->
             <div id="programSelection" class="card-glass" style="background: rgba(235, 245, 255, 0.2);">
-                <h3 style="font-size:1.1rem;"><i class="fas fa-th-large"></i> Your Programs</h3>
+                <h3 style="font-size:1.1rem;"><i class="fas fa-th-large"></i> Your Courses</h3>
                 <div id="programContainer" class="program-grid"></div>
             </div>
 
@@ -820,12 +904,12 @@
                 </div>
             </div>
 
-            <!-- TEACHER VIEW -->
+            <!-- TEACHER/HOD VIEW -->
             <div id="teacherView" class="hidden card-glass" style="background: rgba(235, 245, 255, 0.3);">
                 <h3 style="font-size:1.1rem;"><i class="fas fa-users"></i> My Students <span class="badge-light" id="studentCount">0</span></h3>
                 <div style="font-size:0.8rem; color:#4f677b; margin-bottom:0.5rem;">
                     <i class="fas fa-university"></i> <span id="teacherInstitutionDisplay">-</span> 
-                    <i class="fas fa-building"></i> <span id="teacherDepartmentDisplay">-</span>
+                    <i class="fas fa-book"></i> <span id="teacherCourseDisplay">-</span>
                 </div>
                 <div id="studentSubmissionsContainer" style="margin-top: 0.8rem;"></div>
             </div>
@@ -848,7 +932,7 @@
                 <div id="admissionsContainer" style="margin-top: 0.8rem;"></div>
             </div>
 
-            <!-- ADMIN PANEL - Only system admin -->
+            <!-- SYSTEM ADMIN PANEL -->
             <div id="adminPanel" class="admin-section hidden">
                 <h3 style="font-size:1.1rem;"><i class="fas fa-user-shield"></i> System Admin Dashboard</h3>
                 <div style="margin-top:0.5rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:1rem;">
@@ -859,6 +943,14 @@
                     <div class="card-glass" style="padding:1rem;">
                         <h4><i class="fas fa-chart-bar"></i> System Stats</h4>
                         <div id="systemStats" style="margin-top:0.5rem;"></div>
+                    </div>
+                    <div class="card-glass" style="padding:1rem;">
+                        <h4><i class="fas fa-building"></i> Manage Institutions</h4>
+                        <div id="systemInstitutionList" style="margin-top:0.5rem; max-height:200px; overflow-y:auto;"></div>
+                        <div class="input-group" style="margin-top:0.5rem;">
+                            <input type="text" id="systemNewInstName" placeholder="Institution name" style="flex:1;">
+                            <button class="btn btn-success btn-sm" id="systemAddInstBtn"><i class="fas fa-plus"></i> Add</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -920,9 +1012,21 @@
                 // Institution data
                 institutionAdmins: {}, // institutionName: username
                 institutionLecturers: {}, // institutionName: [username]
+                institutionCourses: {}, // institutionName: [courseName]
+                institutionHODs: {}, // courseName: username (HOD)
                 institutionDepartments: {}, // institutionName: [departmentName]
-                // User roles with institution context
-                userRoles: {}, // username: { role, institution, department, program }
+                userRoles: {}, // username: { role, institution, course, department }
+                // Technology stack
+                technologies: [
+                    { id: 'ai', name: 'AI Assessment', icon: 'fa-robot', status: 'Active' },
+                    { id: 'blockchain', name: 'Blockchain Verification', icon: 'fa-link', status: 'Active' },
+                    { id: 'cloud', name: 'Cloud Storage', icon: 'fa-cloud', status: 'Active' },
+                    { id: 'analytics', name: 'Learning Analytics', icon: 'fa-chart-line', status: 'Active' },
+                    { id: 'mobile', name: 'Mobile Ready', icon: 'fa-mobile-alt', status: 'Active' },
+                    { id: 'vr', name: 'VR Training', icon: 'fa-vr-cardboard', status: 'Beta' },
+                    { id: 'iot', name: 'IoT Integration', icon: 'fa-wifi', status: 'Beta' },
+                    { id: 'bigdata', name: 'Big Data', icon: 'fa-database', status: 'Active' },
+                ]
             };
 
             // ========== HELPERS ==========
@@ -941,32 +1045,43 @@
 
             function isInstitutionAdmin() {
                 if (isSystemAdmin()) return true;
-                const user = getCurrentUserData();
-                if (!user) return false;
                 const roleInfo = STATE.userRoles[STATE.currentUser];
                 if (!roleInfo) return false;
-                if (roleInfo.role !== 'admin') return false;
-                // Verify this user is the registered admin for their institution
+                if (roleInfo.role !== 'instadmin') return false;
                 const instAdmin = STATE.institutionAdmins[roleInfo.institution];
                 return instAdmin === STATE.currentUser;
             }
 
-            function isTeacher() {
+            function isHOD() {
                 if (isSystemAdmin() || isInstitutionAdmin()) return true;
+                const roleInfo = STATE.userRoles[STATE.currentUser];
+                if (!roleInfo) return false;
+                if (roleInfo.role !== 'hod') return false;
+                // Verify they are actually HOD for their course
+                const hod = STATE.institutionHODs[roleInfo.course];
+                return hod === STATE.currentUser;
+            }
+
+            function isTeacher() {
+                if (isSystemAdmin() || isInstitutionAdmin() || isHOD()) return true;
                 const roleInfo = STATE.userRoles[STATE.currentUser];
                 if (!roleInfo) return false;
                 return roleInfo.role === 'teacher';
             }
 
             function isStudent() {
-                if (isSystemAdmin() || isInstitutionAdmin() || isTeacher()) return false;
+                if (isSystemAdmin() || isInstitutionAdmin() || isHOD() || isTeacher()) return false;
                 const roleInfo = STATE.userRoles[STATE.currentUser];
                 if (!roleInfo) return true;
                 return roleInfo.role === 'student';
             }
 
+            function canUpdateCdacc() {
+                return isHOD() || isSystemAdmin() || isInstitutionAdmin();
+            }
+
             function getUserRoleInfo(username) {
-                return STATE.userRoles[username] || { role: 'student', institution: '', department: '', program: '' };
+                return STATE.userRoles[username] || { role: 'student', institution: '', course: '', department: '' };
             }
 
             function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 8); }
@@ -982,16 +1097,18 @@
                         studentProgramUnits: STATE.studentProgramUnits,
                         institutionAdmins: STATE.institutionAdmins,
                         institutionLecturers: STATE.institutionLecturers,
+                        institutionCourses: STATE.institutionCourses,
+                        institutionHODs: STATE.institutionHODs,
                         institutionDepartments: STATE.institutionDepartments,
                         userRoles: STATE.userRoles
                     };
-                    localStorage.setItem('echoPortfolioSecureData', JSON.stringify(data));
+                    localStorage.setItem('echoPortfolioAdvancedData', JSON.stringify(data));
                 } catch (e) {}
             }
 
             function loadState() {
                 try {
-                    const raw = localStorage.getItem('echoPortfolioSecureData');
+                    const raw = localStorage.getItem('echoPortfolioAdvancedData');
                     if (raw) {
                         const parsed = JSON.parse(raw);
                         if (Array.isArray(parsed.users)) STATE.users = parsed.users;
@@ -1001,6 +1118,8 @@
                         if (parsed.studentProgramUnits) STATE.studentProgramUnits = parsed.studentProgramUnits;
                         if (parsed.institutionAdmins) STATE.institutionAdmins = parsed.institutionAdmins;
                         if (parsed.institutionLecturers) STATE.institutionLecturers = parsed.institutionLecturers;
+                        if (parsed.institutionCourses) STATE.institutionCourses = parsed.institutionCourses;
+                        if (parsed.institutionHODs) STATE.institutionHODs = parsed.institutionHODs;
                         if (parsed.institutionDepartments) STATE.institutionDepartments = parsed.institutionDepartments;
                         if (parsed.userRoles) STATE.userRoles = parsed.userRoles;
                     }
@@ -1011,7 +1130,6 @@
             function loginUser(username, password, role) {
                 if (!username || !password) return { success: false, msg: 'Username and password required' };
                 
-                // System admin check
                 if (username === STATE.adminUser && password === STATE.adminPass) {
                     STATE.currentUser = username;
                     STATE.currentRole = 'admin';
@@ -1023,7 +1141,6 @@
                 if (!user) return { success: false, msg: 'User not found. Please sign up first.' };
                 if (user.password !== password) return { success: false, msg: 'Incorrect password' };
                 
-                // Verify role matches stored role
                 const roleInfo = STATE.userRoles[username] || { role: 'student' };
                 if (role && roleInfo.role !== role) {
                     return { success: false, msg: `This account is registered as ${roleInfo.role}. Please select correct role.` };
@@ -1031,43 +1148,42 @@
 
                 STATE.currentUser = username;
                 STATE.currentRole = roleInfo.role || 'student';
-                if (roleInfo.program) {
-                    STATE.selectedProgram = STATE.programs.find(p => p.name === roleInfo.program)?.id || null;
+                if (roleInfo.course) {
+                    STATE.selectedProgram = STATE.programs.find(p => p.name === roleInfo.course)?.id || null;
                 }
                 saveState();
                 return { success: true, msg: `Welcome, ${username} (${STATE.currentRole})` };
             }
 
-            function signupUser(username, password, role, institution, department, program, admissionNumber) {
+            function signupUser(username, password, role, institution, course, department, admissionNumber) {
                 if (!username || !password) return { success: false, msg: 'Username and password required' };
                 if (username === STATE.adminUser) return { success: false, msg: 'Reserved username' };
                 if (findUser(username)) return { success: false, msg: 'Username already exists' };
 
-                // Security: Prevent role spoofing
-                // Only system admin can create admin accounts
+                // Security: Only system admin can create admin accounts
                 if (role === 'admin' && !isSystemAdmin()) {
                     return { success: false, msg: 'Only system admin can create admin accounts' };
                 }
 
-                // Students must have admission number
                 if (role === 'student' && !admissionNumber) {
                     return { success: false, msg: 'Admission number required for students' };
                 }
 
-                // Teachers must be in an institution and department
-                if (role === 'teacher' && (!institution || !department)) {
-                    return { success: false, msg: 'Institution and department required for lecturers' };
+                if (role === 'teacher' && (!institution || !course)) {
+                    return { success: false, msg: 'Institution and course required for lecturers' };
                 }
 
-                // Institution admins: verify they are the designated admin for that institution
-                if (role === 'admin' && institution) {
+                if (role === 'hod' && (!institution || !course)) {
+                    return { success: false, msg: 'Institution and course required for HOD' };
+                }
+
+                if (role === 'instadmin' && institution) {
                     const existingAdmin = STATE.institutionAdmins[institution];
                     if (existingAdmin && existingAdmin !== username) {
                         return { success: false, msg: `Institution already has an admin: ${existingAdmin}` };
                     }
                 }
 
-                // Create user
                 const newUser = {
                     username,
                     password,
@@ -1076,21 +1192,28 @@
                 };
                 STATE.users.push(newUser);
 
-                // Store role info
                 STATE.userRoles[username] = {
                     role: role || 'student',
                     institution: institution || '',
-                    department: department || '',
-                    program: program || ''
+                    course: course || '',
+                    department: department || ''
                 };
 
-                // If admin, register as institution admin
-                if (role === 'admin' && institution) {
+                if (role === 'instadmin' && institution) {
                     STATE.institutionAdmins[institution] = username;
                 }
 
-                // If teacher, add to institution lecturer list
-                if (role === 'teacher' && institution) {
+                if (role === 'hod' && course) {
+                    STATE.institutionHODs[course] = username;
+                    if (institution && !STATE.institutionCourses[institution]) {
+                        STATE.institutionCourses[institution] = [];
+                    }
+                    if (institution && !STATE.institutionCourses[institution].includes(course)) {
+                        STATE.institutionCourses[institution].push(course);
+                    }
+                }
+
+                if ((role === 'teacher' || role === 'hod') && institution) {
                     if (!STATE.institutionLecturers[institution]) {
                         STATE.institutionLecturers[institution] = [];
                     }
@@ -1099,20 +1222,19 @@
                     }
                 }
 
-                // Add department if not exists
-                if (department && institution) {
-                    if (!STATE.institutionDepartments[institution]) {
-                        STATE.institutionDepartments[institution] = [];
+                if (course && institution) {
+                    if (!STATE.institutionCourses[institution]) {
+                        STATE.institutionCourses[institution] = [];
                     }
-                    if (!STATE.institutionDepartments[institution].includes(department)) {
-                        STATE.institutionDepartments[institution].push(department);
+                    if (!STATE.institutionCourses[institution].includes(course)) {
+                        STATE.institutionCourses[institution].push(course);
                     }
                 }
 
                 STATE.currentUser = username;
                 STATE.currentRole = role || 'student';
-                if (program) {
-                    STATE.selectedProgram = STATE.programs.find(p => p.name === program)?.id || null;
+                if (course) {
+                    STATE.selectedProgram = STATE.programs.find(p => p.name === course)?.id || null;
                 }
                 saveState();
                 return { success: true, msg: `Account created for ${username} (${role})` };
@@ -1127,7 +1249,60 @@
             }
 
             // ========== INSTITUTION ADMIN FUNCTIONS ==========
-            function addLecturer(username, department) {
+            function addCourse(courseName) {
+                if (!isInstitutionAdmin()) {
+                    return { success: false, msg: 'Only institution admin can add courses' };
+                }
+                const roleInfo = STATE.userRoles[STATE.currentUser];
+                const institution = roleInfo.institution;
+                
+                if (!STATE.institutionCourses[institution]) {
+                    STATE.institutionCourses[institution] = [];
+                }
+                if (STATE.institutionCourses[institution].includes(courseName)) {
+                    return { success: false, msg: 'Course already exists' };
+                }
+                STATE.institutionCourses[institution].push(courseName);
+                saveState();
+                return { success: true, msg: `Course ${courseName} added` };
+            }
+
+            function assignHOD(courseName, hodUsername) {
+                if (!isInstitutionAdmin()) {
+                    return { success: false, msg: 'Only institution admin can assign HODs' };
+                }
+                const roleInfo = STATE.userRoles[STATE.currentUser];
+                const institution = roleInfo.institution;
+                
+                const hodUser = findUser(hodUsername);
+                if (!hodUser) return { success: false, msg: 'User not found' };
+                
+                const hodRole = STATE.userRoles[hodUsername] || { role: 'student' };
+                if (hodRole.role !== 'hod' && hodRole.role !== 'teacher') {
+                    return { success: false, msg: 'User must be a lecturer or HOD' };
+                }
+                
+                // Check if course exists in this institution
+                const courses = STATE.institutionCourses[institution] || [];
+                if (!courses.includes(courseName)) {
+                    return { success: false, msg: 'Course not found in this institution' };
+                }
+                
+                STATE.institutionHODs[courseName] = hodUsername;
+                // Update user role to HOD if not already
+                if (hodRole.role !== 'hod') {
+                    STATE.userRoles[hodUsername] = {
+                        ...hodRole,
+                        role: 'hod',
+                        course: courseName,
+                        institution: institution
+                    };
+                }
+                saveState();
+                return { success: true, msg: `${hodUsername} assigned as HOD for ${courseName}` };
+            }
+
+            function addLecturer(username) {
                 if (!isInstitutionAdmin()) {
                     return { success: false, msg: 'Only institution admin can add lecturers' };
                 }
@@ -1137,59 +1312,38 @@
                 const user = findUser(username);
                 if (!user) return { success: false, msg: 'User not found' };
                 
-                // Check if user is already a lecturer
                 const userRole = STATE.userRoles[username] || { role: 'student' };
-                if (userRole.role === 'admin') {
+                if (userRole.role === 'instadmin' || userRole.role === 'admin') {
                     return { success: false, msg: 'User is an admin, cannot be assigned as lecturer' };
                 }
-                if (userRole.role === 'teacher') {
-                    return { success: false, msg: 'User is already a lecturer' };
-                }
-
-                // Update role
+                
                 STATE.userRoles[username] = {
+                    ...userRole,
                     role: 'teacher',
                     institution: institution,
-                    department: department,
-                    program: userRole.program || ''
+                    course: userRole.course || ''
                 };
 
-                // Add to lecturer list
                 if (!STATE.institutionLecturers[institution]) {
                     STATE.institutionLecturers[institution] = [];
                 }
                 if (!STATE.institutionLecturers[institution].includes(username)) {
                     STATE.institutionLecturers[institution].push(username);
                 }
-
                 saveState();
-                return { success: true, msg: `${username} added as lecturer in ${department}` };
+                return { success: true, msg: `${username} added as lecturer` };
             }
 
-            function addDepartment(departmentName) {
-                if (!isInstitutionAdmin()) {
-                    return { success: false, msg: 'Only institution admin can add departments' };
-                }
-                const roleInfo = STATE.userRoles[STATE.currentUser];
-                const institution = roleInfo.institution;
-                
-                if (!STATE.institutionDepartments[institution]) {
-                    STATE.institutionDepartments[institution] = [];
-                }
-                if (STATE.institutionDepartments[institution].includes(departmentName)) {
-                    return { success: false, msg: 'Department already exists' };
-                }
-                STATE.institutionDepartments[institution].push(departmentName);
-                saveState();
-                return { success: true, msg: `Department ${departmentName} added` };
+            function getInstitutionCourses(institution) {
+                return STATE.institutionCourses[institution] || [];
+            }
+
+            function getInstitutionHOD(courseName) {
+                return STATE.institutionHODs[courseName] || null;
             }
 
             function getInstitutionLecturers(institution) {
                 return STATE.institutionLecturers[institution] || [];
-            }
-
-            function getInstitutionDepartments(institution) {
-                return STATE.institutionDepartments[institution] || [];
             }
 
             // ========== PROGRAM OPERATIONS ==========
@@ -1284,11 +1438,26 @@
                 return { success: true, msg: 'Unit removed' };
             }
 
-            // ========== CDACC ==========
+            // ========== CDACC - Only HOD or System Admin can update ==========
             function updateCdaccScore(username, score) {
-                if (!isTeacher() && username !== STATE.currentUser) {
-                    return { success: false, msg: 'Only teachers/admins can update others\' scores' };
+                // Only HOD, Institution Admin, or System Admin can update scores
+                if (!canUpdateCdacc()) {
+                    return { success: false, msg: 'Only HOD, Institution Admin, or System Admin can update CDACC scores' };
                 }
+                
+                const user = findUser(username);
+                if (!user) return { success: false, msg: 'User not found' };
+                
+                // Verify HOD has authority over this student
+                if (isHOD() && !isSystemAdmin() && !isInstitutionAdmin()) {
+                    const hodInfo = STATE.userRoles[STATE.currentUser];
+                    const studentInfo = STATE.userRoles[username] || { course: '' };
+                    // HOD can only update students in their course
+                    if (hodInfo.course !== studentInfo.course) {
+                        return { success: false, msg: 'You can only update scores for students in your course' };
+                    }
+                }
+                
                 if (score < 0 || score > 100) return { success: false, msg: 'Score must be 0-100' };
                 STATE.cdaccScores[username] = score;
                 saveState();
@@ -1350,13 +1519,13 @@
             function adminGetAllUsers() {
                 if (!isSystemAdmin()) return [];
                 return STATE.users.map(u => {
-                    const roleInfo = STATE.userRoles[u.username] || { role: 'student', institution: '', department: '', program: '' };
+                    const roleInfo = STATE.userRoles[u.username] || { role: 'student', institution: '', course: '', department: '' };
                     return {
                         username: u.username,
                         role: roleInfo.role,
                         institution: roleInfo.institution || '-',
+                        course: roleInfo.course || '-',
                         department: roleInfo.department || '-',
-                        program: roleInfo.program || '-',
                         admissionNumber: u.admissionNumber || '-',
                         unitCount: u.units.length,
                         totalItems: u.units.reduce((acc, unit) => acc + unit.items.length, 0),
@@ -1370,17 +1539,19 @@
                 const roles = Object.values(STATE.userRoles);
                 const students = roles.filter(r => r.role === 'student').length;
                 const teachers = roles.filter(r => r.role === 'teacher').length;
+                const hods = roles.filter(r => r.role === 'hod').length;
+                const instadmins = roles.filter(r => r.role === 'instadmin').length;
                 const admins = roles.filter(r => r.role === 'admin').length;
                 const totalUnits = STATE.users.reduce((acc, u) => acc + u.units.length, 0);
                 const totalItems = STATE.users.reduce((acc, u) => acc + u.units.reduce((a, unit) => a + unit.items.length, 0), 0);
-                return { totalUsers, students, teachers, admins, totalUnits, totalItems };
+                return { totalUsers, students, teachers, hods, instadmins, admins, totalUnits, totalItems };
             }
 
             // ========== RENDER ==========
             function renderAll() {
                 const isLoggedIn = !!STATE.currentUser;
                 const user = getCurrentUserData();
-                const roleInfo = STATE.userRoles[STATE.currentUser] || { role: 'student', institution: '', department: '', program: '' };
+                const roleInfo = STATE.userRoles[STATE.currentUser] || { role: 'student', institution: '', course: '', department: '' };
 
                 document.getElementById('authSection').classList.toggle('hidden', isLoggedIn);
                 document.getElementById('userArea').classList.toggle('hidden', !isLoggedIn);
@@ -1392,20 +1563,70 @@
                 if (isLoggedIn && user) {
                     // Role badge
                     const badge = document.getElementById('roleBadge');
-                    badge.textContent = roleInfo.role.charAt(0).toUpperCase() + roleInfo.role.slice(1);
+                    const roleNames = {
+                        'student': 'Student',
+                        'teacher': 'Lecturer',
+                        'hod': 'HOD',
+                        'instadmin': 'Inst. Admin',
+                        'admin': 'System Admin'
+                    };
+                    badge.textContent = roleNames[roleInfo.role] || roleInfo.role;
                     badge.className = `role-badge role-${roleInfo.role}`;
                     document.getElementById('userNameDisplay').textContent = STATE.currentUser;
                     document.getElementById('userInstitutionDisplay').textContent = roleInfo.institution ? 
                         `<i class="fas fa-university"></i> ${roleInfo.institution}` : '';
-                    document.getElementById('userProgramDisplay').textContent = roleInfo.program ? 
-                        `<i class="fas fa-graduation-cap"></i> ${roleInfo.program}` : '';
+                    document.getElementById('userCourseDisplay').textContent = roleInfo.course ? 
+                        `<i class="fas fa-book"></i> ${roleInfo.course}` : '';
                     document.getElementById('userDepartmentDisplay').textContent = roleInfo.department ? 
                         `<i class="fas fa-building"></i> ${roleInfo.department}` : '';
 
+                    // CDACC - Only show score, update button only for HOD/Admin
                     const score = getCdaccScore(STATE.currentUser);
                     document.getElementById('cdaccScoreDisplay').textContent = score;
                     const scoreEl = document.getElementById('cdaccScoreDisplay');
                     scoreEl.className = score >= 70 ? 'cdacc-score high' : score >= 40 ? 'cdacc-score medium' : 'cdacc-score low';
+                    
+                    // Show/hide CDACC update button
+                    const updateBtnContainer = document.getElementById('cdaccUpdateBtnContainer');
+                    if (canUpdateCdacc()) {
+                        updateBtnContainer.innerHTML = `
+                            <button class="btn btn-primary btn-sm" id="updateCdaccBtn"><i class="fas fa-edit"></i> update score</button>
+                            <button class="btn btn-outline btn-sm" id="updateStudentScoreBtn"><i class="fas fa-users"></i> student scores</button>
+                        `;
+                        document.getElementById('updateCdaccBtn')?.addEventListener('click', () => {
+                            const currentScore = getCdaccScore(STATE.currentUser);
+                            const score = prompt('Enter CDACC score (0-100):', currentScore);
+                            if (score === null) return;
+                            const numScore = parseInt(score);
+                            if (isNaN(numScore) || numScore < 0 || numScore > 100) {
+                                showGlobalMessage('Score must be 0-100', 'error');
+                                return;
+                            }
+                            const res = updateCdaccScore(STATE.currentUser, numScore);
+                            showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                            renderAll();
+                        });
+                        document.getElementById('updateStudentScoreBtn')?.addEventListener('click', () => {
+                            const username = prompt('Enter student username:');
+                            if (!username) return;
+                            const currentScore = getCdaccScore(username);
+                            const score = prompt(`Enter CDACC score for ${username} (0-100):`, currentScore);
+                            if (score === null) return;
+                            const numScore = parseInt(score);
+                            if (isNaN(numScore) || numScore < 0 || numScore > 100) {
+                                showGlobalMessage('Score must be 0-100', 'error');
+                                return;
+                            }
+                            const res = updateCdaccScore(username, numScore);
+                            showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                            renderAll();
+                        });
+                    } else {
+                        updateBtnContainer.innerHTML = `<span class="badge-light"><i class="fas fa-lock"></i> Only HOD/Admin can update</span>`;
+                    }
+
+                    // Technology section
+                    renderTechnology();
 
                     // Institution Admin Section
                     const instAdminSection = document.getElementById('instAdminSection');
@@ -1427,7 +1648,7 @@
                         teacherView.classList.add('hidden');
                         renderPrograms(user);
                         renderUnits(user);
-                    } else if (isTeacher()) {
+                    } else if (isTeacher() || isHOD()) {
                         programSelection.classList.add('hidden');
                         studentView.classList.remove('hidden');
                         teacherView.classList.remove('hidden');
@@ -1447,6 +1668,7 @@
                         adminPanel.classList.remove('hidden');
                         renderAdminPanel();
                         renderSystemStats();
+                        renderSystemInstitutions();
                     } else {
                         adminPanel.classList.add('hidden');
                     }
@@ -1487,13 +1709,64 @@
                 document.getElementById('addUnitForm').classList.add('hidden');
             }
 
+            function renderTechnology() {
+                const container = document.getElementById('techContainer');
+                container.innerHTML = STATE.technologies.map(tech => `
+                    <div class="tech-item">
+                        <div class="tech-icon"><i class="fas ${tech.icon}"></i></div>
+                        <div class="tech-name">${tech.name}</div>
+                        <div class="tech-status">${tech.status}</div>
+                    </div>
+                `).join('');
+            }
+
             function renderInstitutionAdmin() {
                 const roleInfo = STATE.userRoles[STATE.currentUser];
                 const institution = roleInfo.institution;
                 
+                // Courses list
+                const courseContainer = document.getElementById('courseList');
+                const courses = getInstitutionCourses(institution);
+                if (courses.length === 0) {
+                    courseContainer.innerHTML = '<div class="muted">No courses added yet</div>';
+                } else {
+                    courseContainer.innerHTML = courses.map(c => `
+                        <div class="course-item">
+                            <span class="course-name"><i class="fas fa-book"></i> ${c}</span>
+                            <span class="hod-name">HOD: ${getInstitutionHOD(c) || 'Not assigned'}</span>
+                        </div>
+                    `).join('');
+                }
+
+                // HOD Assignment
+                const hodList = document.getElementById('hodAssignmentList');
+                const hodCourses = courses.filter(c => getInstitutionHOD(c));
+                if (hodCourses.length === 0) {
+                    hodList.innerHTML = '<div class="muted">No HODs assigned yet</div>';
+                } else {
+                    hodList.innerHTML = hodCourses.map(c => `
+                        <div class="course-item">
+                            <span class="course-name"><i class="fas fa-user-tie"></i> ${c}</span>
+                            <span class="hod-name">HOD: ${getInstitutionHOD(c)}</span>
+                        </div>
+                    `).join('');
+                }
+
+                // Populate HOD assignment dropdowns
+                const courseSelect = document.getElementById('hodCourseSelect');
+                const userSelect = document.getElementById('hodUserSelect');
+                courseSelect.innerHTML = courses.map(c => `<option value="${c}">${c}</option>`).join('');
+                
+                // Get all teachers and HODs in this institution
+                const lecturers = getInstitutionLecturers(institution);
+                const allUsers = STATE.users.filter(u => {
+                    const role = STATE.userRoles[u.username] || { role: 'student' };
+                    return (role.role === 'teacher' || role.role === 'hod') && role.institution === institution;
+                });
+                userSelect.innerHTML = allUsers.map(u => `<option value="${u.username}">${u.username}</option>`).join('');
+
                 // Lecturers list
                 const lecturerContainer = document.getElementById('lecturerList');
-                const lecturers = getInstitutionLecturers(institution);
                 if (lecturers.length === 0) {
                     lecturerContainer.innerHTML = '<div class="muted">No lecturers added yet</div>';
                 } else {
@@ -1502,29 +1775,29 @@
                         return `
                             <div style="display:flex; justify-content:space-between; padding:0.3rem 0; border-bottom:1px solid #ecf2f9;">
                                 <span><i class="fas fa-user"></i> ${l}</span>
-                                <span class="badge-light">${lRole.department || 'No dept'}</span>
+                                <span class="badge-light">${lRole.course || 'No course'}</span>
                             </div>
                         `;
                     }).join('');
-                }
-
-                // Departments list
-                const deptContainer = document.getElementById('departmentList');
-                const depts = getInstitutionDepartments(institution);
-                if (depts.length === 0) {
-                    deptContainer.innerHTML = '<div class="muted">No departments added yet</div>';
-                } else {
-                    deptContainer.innerHTML = depts.map(d => `
-                        <div style="display:flex; justify-content:space-between; padding:0.3rem 0; border-bottom:1px solid #ecf2f9;">
-                            <span><i class="fas fa-building"></i> ${d}</span>
-                        </div>
-                    `).join('');
                 }
             }
 
             function renderPrograms(user) {
                 const container = document.getElementById('programContainer');
-                container.innerHTML = STATE.programs.map(p => {
+                const roleInfo = STATE.userRoles[STATE.currentUser] || {};
+                // Show only courses from user's institution if they have one
+                let availablePrograms = STATE.programs;
+                if (roleInfo.institution && !isSystemAdmin()) {
+                    const courses = getInstitutionCourses(roleInfo.institution);
+                    availablePrograms = STATE.programs.filter(p => courses.includes(p.name));
+                }
+                
+                if (availablePrograms.length === 0) {
+                    container.innerHTML = `<div class="muted" style="grid-column:1/-1; text-align:center; padding:1rem;">No courses available for your institution</div>`;
+                    return;
+                }
+                
+                container.innerHTML = availablePrograms.map(p => {
                     const isSelected = STATE.selectedProgram === p.id;
                     const progress = getProgramProgress(STATE.currentUser, p.id);
                     const units = user.units.filter(u => u.programId === p.id);
@@ -1653,21 +1926,22 @@
             function renderTeacherView(roleInfo) {
                 const container = document.getElementById('studentSubmissionsContainer');
                 const institution = roleInfo.institution;
-                const department = roleInfo.department;
+                const course = roleInfo.course;
                 
-                // Filter students by institution and department
+                // For HOD: show all students in their course
+                // For Teacher: show students in their course
                 const students = STATE.users.filter(u => {
                     const uRole = STATE.userRoles[u.username] || { role: 'student' };
                     if (uRole.role !== 'student') return false;
-                    return uRole.institution === institution && uRole.department === department;
+                    return uRole.institution === institution && uRole.course === course;
                 });
                 
                 document.getElementById('studentCount').textContent = students.length;
                 document.getElementById('teacherInstitutionDisplay').textContent = institution || 'Not assigned';
-                document.getElementById('teacherDepartmentDisplay').textContent = department || 'Not assigned';
+                document.getElementById('teacherCourseDisplay').textContent = course || 'Not assigned';
 
                 if (students.length === 0) {
-                    container.innerHTML = '<div class="muted">No students assigned to your institution and department</div>';
+                    container.innerHTML = '<div class="muted">No students assigned to your institution and course</div>';
                     return;
                 }
 
@@ -1686,8 +1960,8 @@
                             </div>
                             <div class="flex-row">
                                 <span class="cdacc-score ${scoreClass}">CDACC: ${score}</span>
+                                ${canUpdateCdacc() ? `<button class="btn btn-warning btn-sm" onclick="updateStudentScore('${student.username}')"><i class="fas fa-edit"></i> score</button>` : ''}
                                 <button class="btn btn-primary btn-sm" onclick="viewStudentSubmissions('${student.username}')"><i class="fas fa-eye"></i></button>
-                                <button class="btn btn-warning btn-sm" onclick="updateStudentScore('${student.username}')"><i class="fas fa-edit"></i></button>
                             </div>
                         </div>
                     `;
@@ -1701,8 +1975,7 @@
                 const sRole = STATE.userRoles[username] || {};
                 let message = `📚 ${username}'s Portfolio\n`;
                 message += `🏫 ${sRole.institution || 'No institution'}\n`;
-                message += `📚 ${sRole.department || 'No department'}\n`;
-                message += `🎓 ${sRole.program || 'No program'}\n`;
+                message += `📚 ${sRole.course || 'No course'}\n`;
                 message += `📋 ${student.admissionNumber || 'No admission #'}\n\n`;
                 const units = student.units.filter(u => u.programId === program.id);
                 units.forEach(unit => {
@@ -1716,8 +1989,8 @@
             };
 
             window.updateStudentScore = function(username) {
-                if (!isTeacher()) {
-                    showGlobalMessage('Only teachers/admins can update scores', 'error');
+                if (!canUpdateCdacc()) {
+                    showGlobalMessage('Only HOD, Institution Admin, or System Admin can update scores', 'error');
                     return;
                 }
                 const currentScore = getCdaccScore(username);
@@ -1796,6 +2069,7 @@
                             <div class="muted" style="font-size:0.7rem;">${t.county} · ${t.type}</div>
                             ${STATE.institutionAdmins[t.name] ? `<div class="security-badge verified" style="font-size:0.5rem;">Admin: ${STATE.institutionAdmins[t.name]}</div>` : 
                                                               `<div class="security-badge unverified" style="font-size:0.5rem;">No admin assigned</div>`}
+                            ${STATE.institutionCourses[t.name] ? `<div style="font-size:0.6rem;color:#4f677b;">${STATE.institutionCourses[t.name].length} courses</div>` : ''}
                         </div>
                         ${isSystemAdmin() ? `<button class="btn btn-danger btn-sm" style="padding:0.05rem 0.5rem;font-size:0.6rem;" data-tvet-id="${t.id}"><i class="fas fa-times"></i></button>` : ''}
                     </div>
@@ -1819,22 +2093,30 @@
                 const container = document.getElementById('adminUserList');
                 const all = adminGetAllUsers();
                 if (all.length === 0) { container.innerHTML = '<div class="muted">No users</div>'; return; }
-                container.innerHTML = all.map(u => `
-                    <div style="background:white; border-radius:1.5rem; padding:0.4rem 1rem; margin-bottom:0.3rem; border:1px solid #ecf2f9;">
-                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.2rem;">
-                            <span><i class="fas fa-user-astronaut"></i> ${u.username} 
-                                <span class="${u.role === 'admin' ? 'admin-badge' : u.role === 'teacher' ? 'teacher-badge' : 'badge-light'}" style="font-size:0.6rem;">${u.role || 'student'}</span>
-                            </span>
-                            <span class="badge-light">${u.unitCount} units · ${u.totalItems} items · CDACC: ${u.cdacc}</span>
+                container.innerHTML = all.map(u => {
+                    const roleNames = {
+                        'student': 'Student',
+                        'teacher': 'Lecturer',
+                        'hod': 'HOD',
+                        'instadmin': 'Inst. Admin',
+                        'admin': 'System Admin'
+                    };
+                    return `
+                        <div style="background:white; border-radius:1.5rem; padding:0.4rem 1rem; margin-bottom:0.3rem; border:1px solid #ecf2f9;">
+                            <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.2rem;">
+                                <span><i class="fas fa-user-astronaut"></i> ${u.username} 
+                                    <span class="${u.role === 'admin' ? 'admin-badge' : u.role === 'teacher' ? 'teacher-badge' : u.role === 'hod' ? 'hod-badge' : 'badge-light'}" style="font-size:0.6rem;">${roleNames[u.role] || u.role}</span>
+                                </span>
+                                <span class="badge-light">${u.unitCount} units · ${u.totalItems} items · CDACC: ${u.cdacc}</span>
+                            </div>
+                            <div style="font-size:0.7rem; color:#4f677b; margin-top:0.2rem; display:flex; flex-wrap:wrap; gap:0.3rem;">
+                                ${u.institution !== '-' ? `🏫 ${u.institution}` : ''} 
+                                ${u.course !== '-' ? `📚 ${u.course}` : ''}
+                                ${u.admissionNumber !== '-' ? `📋 ${u.admissionNumber}` : ''}
+                            </div>
                         </div>
-                        <div style="font-size:0.7rem; color:#4f677b; margin-top:0.2rem; display:flex; flex-wrap:wrap; gap:0.3rem;">
-                            ${u.institution !== '-' ? `🏫 ${u.institution}` : ''} 
-                            ${u.department !== '-' ? `📚 ${u.department}` : ''}
-                            ${u.program !== '-' ? `🎓 ${u.program}` : ''}
-                            ${u.admissionNumber !== '-' ? `📋 ${u.admissionNumber}` : ''}
-                        </div>
-                    </div>
-                `).join('');
+                    `;
+                }).join('');
             }
 
             function renderSystemStats() {
@@ -1852,11 +2134,19 @@
                         </div>
                         <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
                             <div style="font-size:1.5rem; font-weight:700;">${stats.teachers}</div>
-                            <div class="muted">Teachers</div>
+                            <div class="muted">Lecturers</div>
+                        </div>
+                        <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                            <div style="font-size:1.5rem; font-weight:700;">${stats.hods}</div>
+                            <div class="muted">HODs</div>
+                        </div>
+                        <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                            <div style="font-size:1.5rem; font-weight:700;">${stats.instadmins}</div>
+                            <div class="muted">Inst. Admins</div>
                         </div>
                         <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
                             <div style="font-size:1.5rem; font-weight:700;">${stats.admins}</div>
-                            <div class="muted">Admins</div>
+                            <div class="muted">System Admins</div>
                         </div>
                         <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center; grid-column: span 2;">
                             <div style="font-size:1.5rem; font-weight:700;">${stats.totalUnits}</div>
@@ -1865,6 +2155,20 @@
                         </div>
                     </div>
                 `;
+            }
+
+            function renderSystemInstitutions() {
+                const container = document.getElementById('systemInstitutionList');
+                if (STATE.tvetInstitutions.length === 0) {
+                    container.innerHTML = '<div class="muted">No institutions</div>';
+                    return;
+                }
+                container.innerHTML = STATE.tvetInstitutions.map(inst => `
+                    <div style="display:flex; justify-content:space-between; padding:0.3rem 0; border-bottom:1px solid #ecf2f9;">
+                        <span><i class="fas fa-university"></i> ${inst.name}</span>
+                        <span class="badge-light">${inst.county}</span>
+                    </div>
+                `).join('');
             }
 
             // ----- FILE PREVIEW -----
@@ -1954,7 +2258,6 @@
                         `;
                     }
                 } else {
-                    // Try to display as generic file
                     content = `
                         <div style="padding:2rem;text-align:center;max-width:100%;">
                             <i class="fas fa-file" style="font-size:4rem;color:#3b5a78;"></i>
@@ -2016,8 +2319,8 @@
                     
                     let admissionNumber = '';
                     let institution = '';
+                    let course = '';
                     let department = '';
-                    let program = '';
                     
                     if (role === 'student') {
                         admissionNumber = prompt('Enter your Admission Number:') || '';
@@ -2026,22 +2329,24 @@
                             return;
                         }
                         institution = prompt('Enter your Institution:') || '';
+                        const courses = getInstitutionCourses(institution);
+                        const courseList = courses.length > 0 ? courses.join(', ') : 'No courses available';
+                        course = prompt(`Enter your Course (${courseList}):`) || '';
                         department = prompt('Enter your Department:') || '';
-                        const programNames = STATE.programs.map(p => p.name).join(', ');
-                        program = prompt(`Enter your Program (${programNames}):`) || '';
                     } else if (role === 'teacher') {
                         institution = prompt('Enter your Institution:') || '';
+                        const courses = getInstitutionCourses(institution);
+                        const courseList = courses.length > 0 ? courses.join(', ') : 'No courses available';
+                        course = prompt(`Enter your Course (${courseList}):`) || '';
                         department = prompt('Enter your Department:') || '';
-                        // Verify institution exists
-                        if (!STATE.tvetInstitutions.find(t => t.name === institution)) {
-                            showAuthMessage('Institution not found in TVET system. Contact admin.', 'error');
-                            return;
-                        }
-                        const programNames = STATE.programs.map(p => p.name).join(', ');
-                        program = prompt(`Enter your Program (${programNames}):`) || '';
-                    } else if (role === 'admin') {
+                    } else if (role === 'hod') {
+                        institution = prompt('Enter your Institution:') || '';
+                        const courses = getInstitutionCourses(institution);
+                        const courseList = courses.length > 0 ? courses.join(', ') : 'No courses available';
+                        course = prompt(`Enter your Course (${courseList}):`) || '';
+                    } else if (role === 'instadmin') {
                         if (!isSystemAdmin()) {
-                            showAuthMessage('Only system admin can create admin accounts', 'error');
+                            showAuthMessage('Only system admin can create institution admin accounts', 'error');
                             return;
                         }
                         institution = prompt('Enter Institution name to assign as admin:') || '';
@@ -2049,14 +2354,14 @@
                             showAuthMessage('Institution name is required for admin', 'error');
                             return;
                         }
-                        // Verify institution exists
-                        if (!STATE.tvetInstitutions.find(t => t.name === institution)) {
+                        const instExists = STATE.tvetInstitutions.find(t => t.name === institution);
+                        if (!instExists) {
                             showAuthMessage('Institution not found. Please add it first.', 'error');
                             return;
                         }
                     }
                     
-                    const res = signupUser(username, password, role, institution, department, program, admissionNumber);
+                    const res = signupUser(username, password, role, institution, course, department, admissionNumber);
                     if (res.success) { showAuthMessage(res.msg, 'success');
                         renderAll(); } else showAuthMessage(res.msg, 'error');
                 });
@@ -2066,31 +2371,42 @@
                 document.getElementById('refreshBtn').addEventListener('click', () => { renderAll();
                     showGlobalMessage('Refreshed', 'info'); });
 
-                // Institution Admin: Add Lecturer
-                document.getElementById('addLecturerBtn').addEventListener('click', () => {
-                    const username = document.getElementById('newLecturerUsername').value.trim();
-                    const department = document.getElementById('newLecturerDept').value.trim();
-                    if (!username || !department) {
-                        showGlobalMessage('Username and department required', 'error');
+                // Institution Admin: Add Course
+                document.getElementById('addCourseBtn').addEventListener('click', () => {
+                    const courseName = document.getElementById('newCourseName').value.trim();
+                    if (!courseName) {
+                        showGlobalMessage('Course name required', 'error');
                         return;
                     }
-                    const res = addLecturer(username, department);
+                    const res = addCourse(courseName);
                     showGlobalMessage(res.msg, res.success ? 'success' : 'error');
-                    document.getElementById('newLecturerUsername').value = '';
-                    document.getElementById('newLecturerDept').value = '';
+                    document.getElementById('newCourseName').value = '';
                     renderAll();
                 });
 
-                // Institution Admin: Add Department
-                document.getElementById('addDepartmentBtn').addEventListener('click', () => {
-                    const deptName = document.getElementById('newDepartmentName').value.trim();
-                    if (!deptName) {
-                        showGlobalMessage('Department name required', 'error');
+                // Institution Admin: Assign HOD
+                document.getElementById('assignHodBtn').addEventListener('click', () => {
+                    const course = document.getElementById('hodCourseSelect').value;
+                    const hodUser = document.getElementById('hodUserSelect').value;
+                    if (!course || !hodUser) {
+                        showGlobalMessage('Select both course and user', 'error');
                         return;
                     }
-                    const res = addDepartment(deptName);
+                    const res = assignHOD(course, hodUser);
                     showGlobalMessage(res.msg, res.success ? 'success' : 'error');
-                    document.getElementById('newDepartmentName').value = '';
+                    renderAll();
+                });
+
+                // Institution Admin: Add Lecturer
+                document.getElementById('addLecturerBtn').addEventListener('click', () => {
+                    const username = document.getElementById('newLecturerUsername').value.trim();
+                    if (!username) {
+                        showGlobalMessage('Username required', 'error');
+                        return;
+                    }
+                    const res = addLecturer(username);
+                    showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                    document.getElementById('newLecturerUsername').value = '';
                     renderAll();
                 });
 
@@ -2193,17 +2509,22 @@
                     renderAll();
                 });
 
-                document.getElementById('updateCdaccBtn').addEventListener('click', () => {
-                    const currentScore = getCdaccScore(STATE.currentUser);
-                    const score = prompt('Enter CDACC score (0-100):', currentScore);
-                    if (score === null) return;
-                    const numScore = parseInt(score);
-                    if (isNaN(numScore) || numScore < 0 || numScore > 100) {
-                        showGlobalMessage('Score must be 0-100', 'error');
+                // System Admin: Add Institution
+                document.getElementById('systemAddInstBtn').addEventListener('click', () => {
+                    if (!isSystemAdmin()) {
+                        showGlobalMessage('Only system admin can add institutions', 'error');
                         return;
                     }
-                    const res = updateCdaccScore(STATE.currentUser, numScore);
+                    const name = document.getElementById('systemNewInstName').value.trim();
+                    if (!name) {
+                        showGlobalMessage('Institution name required', 'error');
+                        return;
+                    }
+                    const county = prompt('County:') || 'Nairobi';
+                    const type = prompt('Type (Public/Private):') || 'Public';
+                    const res = addTvet(name, county, type);
                     showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                    document.getElementById('systemNewInstName').value = '';
                     renderAll();
                 });
 
@@ -2213,12 +2534,12 @@
                         .getElementById('confirmAddItem').click(); });
                 document.getElementById('authPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') document
                         .getElementById('loginBtn').click(); });
+                document.getElementById('newCourseName').addEventListener('keypress', (e) => { if (e.key === 'Enter') document
+                        .getElementById('addCourseBtn').click(); });
                 document.getElementById('newLecturerUsername').addEventListener('keypress', (e) => { if (e.key === 'Enter')
                         document.getElementById('addLecturerBtn').click(); });
-                document.getElementById('newLecturerDept').addEventListener('keypress', (e) => { if (e.key === 'Enter')
-                        document.getElementById('addLecturerBtn').click(); });
-                document.getElementById('newDepartmentName').addEventListener('keypress', (e) => { if (e.key === 'Enter')
-                        document.getElementById('addDepartmentBtn').click(); });
+                document.getElementById('systemNewInstName').addEventListener('keypress', (e) => { if (e.key === 'Enter')
+                        document.getElementById('systemAddInstBtn').click(); });
             }
 
             // ========== BOOT ==========
@@ -2236,13 +2557,13 @@
                     STATE.userRoles[STATE.adminUser] = {
                         role: 'admin',
                         institution: 'System',
-                        department: 'Administration',
-                        program: 'System'
+                        course: 'System',
+                        department: 'Administration'
                     };
                     saveState();
                 }
                 
-                // Create default institution admin if not exists
+                // Create default institution admin
                 if (!findUser('instadmin')) {
                     STATE.users.push({ 
                         username: 'instadmin', 
@@ -2251,33 +2572,51 @@
                         units: [] 
                     });
                     STATE.userRoles['instadmin'] = {
-                        role: 'admin',
+                        role: 'instadmin',
                         institution: 'Nairobi Technical',
-                        department: 'Administration',
-                        program: 'Engineering'
+                        course: 'Engineering',
+                        department: 'Administration'
                     };
                     STATE.institutionAdmins['Nairobi Technical'] = 'instadmin';
                     saveState();
                 }
                 
-                // Create default teacher
-                if (!findUser('teacher')) {
+                // Create default HOD
+                if (!findUser('hod')) {
                     STATE.users.push({ 
-                        username: 'teacher', 
-                        password: 'teacher123',
-                        admissionNumber: 'TCH001',
+                        username: 'hod', 
+                        password: 'hod123',
+                        admissionNumber: 'HOD001',
                         units: [] 
                     });
-                    STATE.userRoles['teacher'] = {
+                    STATE.userRoles['hod'] = {
+                        role: 'hod',
+                        institution: 'Nairobi Technical',
+                        course: 'ICT',
+                        department: 'ICT'
+                    };
+                    STATE.institutionHODs['ICT'] = 'hod';
+                    saveState();
+                }
+                
+                // Create default teacher
+                if (!findUser('lecturer')) {
+                    STATE.users.push({ 
+                        username: 'lecturer', 
+                        password: 'lecturer123',
+                        admissionNumber: 'LEC001',
+                        units: [] 
+                    });
+                    STATE.userRoles['lecturer'] = {
                         role: 'teacher',
                         institution: 'Nairobi Technical',
-                        department: 'ICT',
-                        program: 'ICT'
+                        course: 'ICT',
+                        department: 'ICT'
                     };
                     if (!STATE.institutionLecturers['Nairobi Technical']) {
                         STATE.institutionLecturers['Nairobi Technical'] = [];
                     }
-                    STATE.institutionLecturers['Nairobi Technical'].push('teacher');
+                    STATE.institutionLecturers['Nairobi Technical'].push('lecturer');
                     saveState();
                 }
                 
@@ -2292,9 +2631,15 @@
                     STATE.userRoles['student'] = {
                         role: 'student',
                         institution: 'Nairobi Technical',
-                        department: 'ICT',
-                        program: 'ICT'
+                        course: 'ICT',
+                        department: 'ICT'
                     };
+                    saveState();
+                }
+                
+                // Add default courses
+                if (!STATE.institutionCourses['Nairobi Technical']) {
+                    STATE.institutionCourses['Nairobi Technical'] = ['ICT', 'Engineering', 'Business', 'Health Sciences'];
                     saveState();
                 }
                 
@@ -2318,8 +2663,8 @@
                 
                 if (STATE.currentUser) {
                     const roleInfo = STATE.userRoles[STATE.currentUser] || { role: 'student' };
-                    if (roleInfo.program) {
-                        STATE.selectedProgram = STATE.programs.find(p => p.name === roleInfo.program)?.id || null;
+                    if (roleInfo.course) {
+                        STATE.selectedProgram = STATE.programs.find(p => p.name === roleInfo.course)?.id || null;
                     }
                 }
                 
