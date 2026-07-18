@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Echo Portfolio · Secure TVET Kenya</title>
+    <title>Echo Portfolio · Multi-Program TVET Kenya</title>
     <!-- Font Awesome 6 (free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -61,7 +61,6 @@
             font-size: 0.7rem;
             font-weight: 500;
             letter-spacing: 0.4px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             white-space: nowrap;
         }
         .badge-light {
@@ -96,6 +95,14 @@
             font-size: 0.7rem;
             white-space: nowrap;
         }
+        .badge-info {
+            background: #3b5a78;
+            color: white;
+            padding: 0.15rem 1rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
         .btn {
             background: white;
             border: none;
@@ -117,12 +124,10 @@
             background: #1e2b3a;
             color: white;
             border: 1px solid #1e2b3a;
-            box-shadow: 0 8px 18px rgba(26, 43, 62, 0.15);
         }
         .btn-primary:hover {
             background: #0f1d2c;
             transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(26, 43, 62, 0.25);
         }
         .btn-outline {
             background: transparent;
@@ -130,7 +135,6 @@
         }
         .btn-outline:hover {
             background: #eef4fa;
-            border-color: #a0b8cc;
         }
         .btn-success {
             background: #1d7a4a;
@@ -139,7 +143,6 @@
         }
         .btn-success:hover {
             background: #13613a;
-            transform: scale(0.97);
         }
         .btn-danger {
             background: #c24b5a;
@@ -160,9 +163,6 @@
         .btn-ghost {
             background: transparent;
             border: 1px solid transparent;
-        }
-        .btn-ghost:hover {
-            background: rgba(0, 0, 0, 0.02);
         }
         .btn-sm {
             padding: 0.2rem 0.9rem;
@@ -199,20 +199,12 @@
             flex: 1 1 160px;
             outline: none;
             transition: 0.15s;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
             min-width: 120px;
         }
         .input-group input:focus,
-        .input-group select:focus,
-        .input-group textarea:focus {
+        .input-group select:focus {
             border-color: #1e2b3a;
             box-shadow: 0 0 0 4px rgba(30, 43, 58, 0.12);
-        }
-        .input-group textarea {
-            border-radius: 20px;
-            min-height: 60px;
-            resize: vertical;
-            flex: 1 1 300px;
         }
         .unit-grid {
             display: grid;
@@ -227,14 +219,12 @@
             box-shadow: 0 8px 22px rgba(0, 0, 0, 0.02);
             border: 1px solid #ecf2f9;
             transition: 0.2s;
-            position: relative;
             display: flex;
             flex-direction: column;
         }
         .unit-card:hover {
             border-color: #c8d9ea;
             transform: translateY(-3px);
-            box-shadow: 0 16px 32px rgba(30, 43, 58, 0.06);
         }
         .unit-header {
             display: flex;
@@ -297,9 +287,6 @@
         }
         .flex-gap {
             gap: 0.6rem;
-        }
-        .flex-wrap {
-            flex-wrap: wrap;
         }
         i {
             width: 1.1rem;
@@ -574,94 +561,90 @@
             color: #1d7a4a;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+        /* Program cards */
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+        .program-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.2rem;
+            border: 1px solid #ecf2f9;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .program-card:hover {
+            border-color: #c8d9ea;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .program-card .program-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .program-card .program-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .program-card .program-desc {
+            font-size: 0.85rem;
+            color: #4f677b;
+            margin: 0.3rem 0;
         }
 
-        /* responsive */
+        .progress-bar {
+            height: 6px;
+            background: #eef3f8;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .progress-bar .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         @media (max-width: 600px) {
-            .app-wrapper {
-                padding: 1.2rem;
-                border-radius: 2.5rem;
-            }
-            .unit-grid {
-                grid-template-columns: 1fr;
-            }
-            .tvet-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .btn {
-                padding: 0.4rem 0.9rem;
-                font-size: 0.8rem;
-            }
-            .card-glass {
-                padding: 1rem;
-            }
-            .input-group input {
-                min-width: 100px;
-            }
-            .flex-between {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .file-preview-item {
-                width: 70px;
-                height: 70px;
-            }
-            .modal-content {
-                padding: 1rem;
-                max-width: 95vw;
-            }
-            .modal-content iframe {
-                width: 100%;
-                height: 400px;
-            }
+            .app-wrapper { padding: 1.2rem; border-radius: 2.5rem; }
+            .unit-grid { grid-template-columns: 1fr; }
+            .program-grid { grid-template-columns: 1fr; }
+            .tvet-grid { grid-template-columns: 1fr 1fr; }
+            .btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
+            .card-glass { padding: 1rem; }
+            .flex-between { flex-direction: column; align-items: stretch; }
+            .file-preview-item { width: 70px; height: 70px; }
+            .modal-content { padding: 1rem; max-width: 95vw; }
+            .modal-content iframe { width: 100%; height: 400px; }
         }
         @media (min-width: 601px) and (max-width: 900px) {
-            .unit-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .tvet-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .unit-grid { grid-template-columns: repeat(2, 1fr); }
+            .program-grid { grid-template-columns: repeat(2, 1fr); }
         }
         .scrollable-list {
             max-height: 200px;
             overflow-y: auto;
             padding-right: 4px;
         }
-        .scrollable-list::-webkit-scrollbar {
-            width: 4px;
-        }
-        .scrollable-list::-webkit-scrollbar-thumb {
-            background: #b0c8dc;
-            border-radius: 10px;
-        }
+        .scrollable-list::-webkit-scrollbar { width: 4px; }
+        .scrollable-list::-webkit-scrollbar-thumb { background: #b0c8dc; border-radius: 10px; }
         .admission-card {
             background: white;
             border-radius: 2rem;
             padding: 1.2rem;
             margin-bottom: 0.8rem;
             border: 1px solid #ecf2f9;
-            transition: 0.15s;
         }
         .admission-card:hover {
             border-color: #c8d9ea;
-        }
-        .login-help {
-            font-size: 0.7rem;
-            color: #4f677b;
-            padding: 0.5rem;
-            background: rgba(255,255,255,0.5);
-            border-radius: 1rem;
-            margin-top: 0.5rem;
         }
     </style>
 </head>
@@ -672,7 +655,7 @@
             <div class="flex-row">
                 <i class="fas fa-echo" style="font-size: 2rem; color: #1e2b3a;"></i>
                 <h1 class="gradient-text" style="font-weight: 700; font-size: 1.6rem;">Echo Portfolio</h1>
-                <span class="badge-soft"><i class="fas fa-shield-alt"></i> Secure</span>
+                <span class="badge-soft"><i class="fas fa-shield-alt"></i> Multi-Program</span>
                 <span class="badge-light"><i class="fas fa-graduation-cap"></i> TVET Kenya</span>
             </div>
             <div>
@@ -696,38 +679,43 @@
                     <button class="btn btn-success" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
                 </div>
             </div>
-            <div class="login-help">
+            <div style="font-size:0.7rem; color:#4f677b; padding:0.5rem; background:rgba(255,255,255,0.5); border-radius:1rem; margin-top:0.5rem;">
                 <i class="fas fa-info-circle"></i> 
-                <strong>Demo Accounts:</strong> 
-                student/student123 · teacher/teacher123 · admin/admin123
-                <br><small>Students: Use your admission number to sign up</small>
+                <strong>Demo:</strong> student/student123 · teacher/teacher123 · admin/admin123
             </div>
             <div id="authMessage" class="flash-message hidden"></div>
         </div>
 
         <!-- MAIN USER AREA -->
         <div id="userArea" class="hidden">
-            <!-- User Info & CDACC -->
+            <!-- User Info -->
             <div class="card-glass" style="background: rgba(235, 245, 255, 0.3); padding: 1rem 1.5rem;">
                 <div class="flex-between">
                     <div class="flex-row">
                         <span class="role-badge" id="roleBadge">Student</span>
                         <span class="badge-light"><i class="fas fa-id-badge"></i> <span id="userNameDisplay">user</span></span>
+                        <span class="badge-light" id="userProgramDisplay"></span>
                         <span class="badge-light" id="userInstitutionDisplay"></span>
-                        <span class="badge-light" id="userDepartmentDisplay"></span>
                     </div>
                     <div class="flex-row flex-gap">
-                        <span class="badge-light"><i class="fas fa-chart-line"></i> CDACC: <span id="cdaccScoreDisplay">0</span></span>
+                        <span class="badge-light"><i class="fas fa-chart-line"></i> Progress: <span id="progressDisplay">0%</span></span>
+                        <span class="badge-light"><i class="fas fa-star"></i> CDACC: <span id="cdaccScoreDisplay">0</span></span>
                         <button class="btn btn-primary btn-sm" id="updateCdaccBtn"><i class="fas fa-edit"></i> score</button>
                     </div>
                 </div>
             </div>
 
-            <!-- STUDENT VIEW -->
+            <!-- PROGRAM SELECTION / DASHBOARD -->
+            <div id="programSelection" class="card-glass" style="background: rgba(235, 245, 255, 0.2);">
+                <h3 style="font-size:1.1rem;"><i class="fas fa-th-large"></i> Your Programs</h3>
+                <div id="programContainer" class="program-grid"></div>
+            </div>
+
+            <!-- STUDENT VIEW - Units for selected program -->
             <div id="studentView">
                 <div class="flex-between" style="margin-top: 0.3rem;">
                     <div class="flex-row">
-                        <h3 style="font-size: 1.2rem;"><i class="fas fa-cubes"></i> My Units</h3>
+                        <h3 style="font-size: 1.2rem;"><i class="fas fa-cubes"></i> <span id="currentProgramTitle">Units</span></h3>
                         <span class="badge-soft" id="unitCounter">0 / 10</span>
                         <span class="badge-light"><i class="fas fa-database"></i> <span id="totalItemsCount">0</span></span>
                     </div>
@@ -761,12 +749,12 @@
                 </div>
             </div>
 
-            <!-- TEACHER VIEW - Only sees students in their institution & department -->
+            <!-- TEACHER VIEW -->
             <div id="teacherView" class="hidden card-glass" style="background: rgba(235, 245, 255, 0.3);">
                 <h3 style="font-size:1.1rem;"><i class="fas fa-users"></i> My Students <span class="badge-light" id="studentCount">0</span></h3>
                 <div style="font-size:0.8rem; color:#4f677b; margin-bottom:0.5rem;">
                     <i class="fas fa-university"></i> <span id="teacherInstitutionDisplay">-</span> 
-                    <i class="fas fa-building"></i> <span id="teacherDepartmentDisplay">-</span>
+                    <i class="fas fa-graduation-cap"></i> <span id="teacherProgramDisplay">-</span>
                 </div>
                 <div id="studentSubmissionsContainer" style="margin-top: 0.8rem;"></div>
             </div>
@@ -774,7 +762,7 @@
             <!-- TVET Institutions -->
             <div class="card-glass" style="background: rgba(235, 245, 255, 0.2);">
                 <div class="flex-between">
-                    <h3 style="font-size:1.1rem;"><i class="fas fa-university"></i> TVET Institutions (Kenya)</h3>
+                    <h3 style="font-size:1.1rem;"><i class="fas fa-university"></i> TVET Institutions</h3>
                     <button class="btn btn-primary btn-sm" id="addTvetBtn" style="display:none;"><i class="fas fa-plus"></i> add</button>
                 </div>
                 <div id="tvetContainer" class="tvet-grid" style="margin-top: 0.5rem;"></div>
@@ -824,18 +812,42 @@
                 users: [],
                 currentUser: null,
                 currentRole: 'student',
+                selectedProgram: null,
                 adminUser: 'admin',
                 adminPass: 'admin123',
-                maxUnits: 10, // Students can only have 10 units
+                maxUnits: 10,
                 maxItemsPerUnit: 10,
                 selectedUnitForItem: null,
                 pendingFile: null,
                 admissions: [],
                 tvetInstitutions: [],
                 cdaccScores: {},
-                // Institution & Department data
-                institutions: ['Nairobi Technical', 'Kiambu Institute', 'Mombasa Polytechnic', 'Kisumu Polytechnic', 'Eldoret TTI'],
-                departments: ['Engineering', 'ICT', 'Business', 'Health Sciences', 'Agriculture', 'Tourism', 'Education'],
+                // Program definitions
+                programs: [
+                    { id: 'eng', name: 'Engineering', icon: 'fa-cogs', color: '#1d7a4a', 
+                      description: 'Mechanical, Electrical, Civil, and Automotive Engineering',
+                      units: ['Engineering Mathematics', 'Technical Drawing', 'Workshop Practice', 'Electrical Principles', 'Fluid Mechanics'] },
+                    { id: 'ict', name: 'Information & Communication Technology', icon: 'fa-laptop-code', color: '#3b5a78',
+                      description: 'Software Development, Networking, Cybersecurity, and Database Management',
+                      units: ['Programming Fundamentals', 'Database Systems', 'Networking Basics', 'Web Development', 'Cybersecurity'] },
+                    { id: 'business', name: 'Business & Management', icon: 'fa-chart-pie', color: '#d48c3b',
+                      description: 'Accounting, Marketing, Human Resources, and Entrepreneurship',
+                      units: ['Business Communication', 'Accounting Principles', 'Marketing Management', 'HR Management', 'Entrepreneurship'] },
+                    { id: 'health', name: 'Health Sciences', icon: 'fa-heartbeat', color: '#c24b5a',
+                      description: 'Nursing, Clinical Medicine, Pharmacy, and Public Health',
+                      units: ['Anatomy & Physiology', 'Clinical Procedures', 'Pharmacology', 'Public Health', 'Medical Ethics'] },
+                    { id: 'agriculture', name: 'Agriculture & Agribusiness', icon: 'fa-seedling', color: '#6b8c42',
+                      description: 'Crop Production, Animal Science, Agribusiness, and Food Technology',
+                      units: ['Crop Production', 'Animal Science', 'Agribusiness', 'Soil Science', 'Food Technology'] },
+                    { id: 'tourism', name: 'Tourism & Hospitality', icon: 'fa-umbrella-beach', color: '#2b6b8c',
+                      description: 'Tourism Management, Hotel Operations, and Event Management',
+                      units: ['Tourism Management', 'Hotel Operations', 'Event Management', 'Customer Service', 'Travel Operations'] },
+                    { id: 'education', name: 'Education & Training', icon: 'fa-chalkboard-teacher', color: '#8c6b42',
+                      description: 'Teacher Education, Curriculum Development, and Educational Management',
+                      units: ['Educational Psychology', 'Curriculum Development', 'Teaching Methods', 'Educational Management', 'Special Needs Education'] }
+                ],
+                // Student program units (progress tracking)
+                studentProgramUnits: {}, // username: { programId: [unitName, ...] }
             };
 
             // ========== HELPERS ==========
@@ -870,20 +882,22 @@
                         admissions: STATE.admissions,
                         tvetInstitutions: STATE.tvetInstitutions,
                         cdaccScores: STATE.cdaccScores,
+                        studentProgramUnits: STATE.studentProgramUnits
                     };
-                    localStorage.setItem('echoPortfolioSecureData', JSON.stringify(data));
+                    localStorage.setItem('echoPortfolioMultiData', JSON.stringify(data));
                 } catch (e) {}
             }
 
             function loadState() {
                 try {
-                    const raw = localStorage.getItem('echoPortfolioSecureData');
+                    const raw = localStorage.getItem('echoPortfolioMultiData');
                     if (raw) {
                         const parsed = JSON.parse(raw);
                         if (Array.isArray(parsed.users)) STATE.users = parsed.users;
                         if (Array.isArray(parsed.admissions)) STATE.admissions = parsed.admissions;
                         if (Array.isArray(parsed.tvetInstitutions)) STATE.tvetInstitutions = parsed.tvetInstitutions;
                         if (parsed.cdaccScores) STATE.cdaccScores = parsed.cdaccScores;
+                        if (parsed.studentProgramUnits) STATE.studentProgramUnits = parsed.studentProgramUnits;
                     }
                 } catch (e) {}
             }
@@ -892,7 +906,6 @@
             function loginUser(username, password, role) {
                 if (!username || !password) return { success: false, msg: 'Username and password required' };
                 
-                // Admin login check
                 if (username === STATE.adminUser && password === STATE.adminPass) {
                     STATE.currentUser = username;
                     STATE.currentRole = 'admin';
@@ -903,24 +916,23 @@
                 const user = findUser(username);
                 if (!user) return { success: false, msg: 'User not found. Please sign up first.' };
                 if (user.password !== password) return { success: false, msg: 'Incorrect password' };
-                
-                // Verify role matches
                 if (role && user.role !== role) {
-                    return { success: false, msg: `This account is registered as ${user.role}. Please select correct role.` };
+                    return { success: false, msg: `This account is registered as ${user.role}.` };
                 }
 
                 STATE.currentUser = username;
                 STATE.currentRole = user.role || 'student';
+                // Set default program
+                if (user.program) STATE.selectedProgram = user.program;
                 saveState();
-                return { success: true, msg: `Welcome, ${username} (${STATE.currentRole})` };
+                return { success: true, msg: `Welcome, ${username}` };
             }
 
-            function signupUser(username, password, role, institution, department, admissionNumber) {
+            function signupUser(username, password, role, institution, program, admissionNumber) {
                 if (!username || !password) return { success: false, msg: 'Username and password required' };
                 if (username === STATE.adminUser) return { success: false, msg: 'Reserved username' };
                 if (findUser(username)) return { success: false, msg: 'Username already exists' };
 
-                // For students, admission number is required
                 if (role === 'student' && !admissionNumber) {
                     return { success: false, msg: 'Admission number required for students' };
                 }
@@ -930,39 +942,79 @@
                     password,
                     role: role || 'student',
                     institution: institution || '',
-                    department: department || '',
+                    program: program || '',
                     admissionNumber: admissionNumber || '',
                     units: []
                 };
                 STATE.users.push(newUser);
                 STATE.currentUser = username;
                 STATE.currentRole = role || 'student';
+                STATE.selectedProgram = program || null;
                 saveState();
                 return { success: true, msg: `Account created for ${username} (${role})` };
             }
 
             function logout() {
                 STATE.currentUser = null;
+                STATE.selectedProgram = null;
                 STATE.selectedUnitForItem = null;
                 STATE.pendingFile = null;
                 renderAll();
             }
 
-            // ========== OPERATIONS ==========
-            function addUnit(unitName) {
+            // ========== PROGRAM OPERATIONS ==========
+            function getStudentProgramUnits(username, programId) {
+                if (!STATE.studentProgramUnits[username]) {
+                    STATE.studentProgramUnits[username] = {};
+                }
+                if (!STATE.studentProgramUnits[username][programId]) {
+                    const program = STATE.programs.find(p => p.id === programId);
+                    STATE.studentProgramUnits[username][programId] = program ? [...program.units] : [];
+                    saveState();
+                }
+                return STATE.studentProgramUnits[username][programId];
+            }
+
+            function getProgramProgress(username, programId) {
+                const units = getStudentProgramUnits(username, programId);
+                const user = findUser(username);
+                if (!user) return 0;
+                const completed = user.units.filter(u => 
+                    u.programId === programId && u.completed
+                ).length;
+                return units.length > 0 ? Math.round((completed / units.length) * 100) : 0;
+            }
+
+            function addUnitToProgram(unitName, programId) {
                 const user = getCurrentUserData();
                 if (!user) return { success: false, msg: 'Not logged in' };
                 if (user.units.length >= STATE.maxUnits) {
                     return { success: false, msg: `Max ${STATE.maxUnits} units reached` };
                 }
-                if (user.units.some(u => u.unitName === unitName)) {
-                    return { success: false, msg: 'Unit already exists' };
+                if (user.units.some(u => u.unitName === unitName && u.programId === programId)) {
+                    return { success: false, msg: 'Unit already exists in this program' };
                 }
-                user.units.push({ unitName, items: [] });
+                user.units.push({ 
+                    unitName, 
+                    programId, 
+                    completed: false,
+                    items: [] 
+                });
                 saveState();
-                return { success: true, msg: `Unit "${unitName}" added` };
+                return { success: true, msg: `Unit "${unitName}" added to program` };
             }
 
+            function completeUnit(unitName, programId) {
+                const user = getCurrentUserData();
+                if (!user) return { success: false, msg: 'Not logged in' };
+                const unit = user.units.find(u => u.unitName === unitName && u.programId === programId);
+                if (!unit) return { success: false, msg: 'Unit not found' };
+                unit.completed = !unit.completed;
+                saveState();
+                return { success: true, msg: unit.completed ? 'Unit marked as completed' : 'Unit marked as incomplete' };
+            }
+
+            // ========== STANDARD OPERATIONS ==========
             function addItemToUnit(unitName, itemName, fileData) {
                 const user = getCurrentUserData();
                 if (!user) return { success: false, msg: 'Not logged in' };
@@ -992,10 +1044,10 @@
                 return { success: true, msg: 'Item removed' };
             }
 
-            function removeUnit(unitName) {
+            function removeUnit(unitName, programId) {
                 const user = getCurrentUserData();
                 if (!user) return { success: false, msg: 'Not logged in' };
-                const idx = user.units.findIndex(u => u.unitName === unitName);
+                const idx = user.units.findIndex(u => u.unitName === unitName && u.programId === programId);
                 if (idx === -1) return { success: false, msg: 'Unit not found' };
                 user.units.splice(idx, 1);
                 saveState();
@@ -1051,19 +1103,8 @@
 
             // ========== CDACC ==========
             function updateCdaccScore(username, score) {
-                // Teachers can update their students, admins can update anyone, students update themselves
                 if (!isTeacher() && username !== STATE.currentUser) {
                     return { success: false, msg: 'Only teachers/admins can update others\' scores' };
-                }
-                // Teachers can only update students in their institution/department
-                if (isTeacher() && !isAdmin() && username !== STATE.currentUser) {
-                    const student = findUser(username);
-                    const teacher = getCurrentUserData();
-                    if (student && teacher) {
-                        if (student.institution !== teacher.institution || student.department !== teacher.department) {
-                            return { success: false, msg: 'You can only update scores for your students' };
-                        }
-                    }
                 }
                 if (score < 0 || score > 100) return { success: false, msg: 'Score must be 0-100' };
                 STATE.cdaccScores[username] = score;
@@ -1082,7 +1123,7 @@
                     username: u.username,
                     role: u.role || 'student',
                     institution: u.institution || '-',
-                    department: u.department || '-',
+                    program: u.program || '-',
                     admissionNumber: u.admissionNumber || '-',
                     unitCount: u.units.length,
                     totalItems: u.units.reduce((acc, unit) => acc + unit.items.length, 0),
@@ -1113,33 +1154,37 @@
                     '<i class="fas fa-user-circle"></i> guest';
 
                 if (isLoggedIn && user) {
-                    // Role badge
                     const badge = document.getElementById('roleBadge');
                     badge.textContent = STATE.currentRole.charAt(0).toUpperCase() + STATE.currentRole.slice(1);
                     badge.className = `role-badge role-${STATE.currentRole}`;
                     document.getElementById('userNameDisplay').textContent = STATE.currentUser;
                     document.getElementById('userInstitutionDisplay').textContent = user.institution ? 
                         `<i class="fas fa-university"></i> ${user.institution}` : '';
-                    document.getElementById('userDepartmentDisplay').textContent = user.department ? 
-                        `<i class="fas fa-building"></i> ${user.department}` : '';
+                    document.getElementById('userProgramDisplay').textContent = user.program ? 
+                        `<i class="fas fa-graduation-cap"></i> ${user.program}` : '';
 
-                    // CDACC score
                     const score = getCdaccScore(STATE.currentUser);
                     document.getElementById('cdaccScoreDisplay').textContent = score;
                     const scoreEl = document.getElementById('cdaccScoreDisplay');
                     scoreEl.className = score >= 70 ? 'cdacc-score high' : score >= 40 ? 'cdacc-score medium' : 'cdacc-score low';
 
                     // Show/hide views
+                    const programSelection = document.getElementById('programSelection');
                     const studentView = document.getElementById('studentView');
                     const teacherView = document.getElementById('teacherView');
 
                     if (isStudent()) {
+                        programSelection.classList.remove('hidden');
                         studentView.classList.remove('hidden');
                         teacherView.classList.add('hidden');
+                        renderPrograms(user);
+                        renderUnits(user);
                     } else if (isTeacher()) {
+                        programSelection.classList.add('hidden');
                         studentView.classList.remove('hidden');
                         teacherView.classList.remove('hidden');
                         renderTeacherView(user);
+                        renderUnits(user);
                     }
 
                     // Admin panel
@@ -1152,15 +1197,17 @@
                         adminPanel.classList.add('hidden');
                     }
 
-                    // Show/hide admin buttons
                     document.getElementById('addAdmissionBtn').style.display = isAdmin() ? 'inline-flex' : 'none';
                     document.getElementById('addTvetBtn').style.display = isAdmin() ? 'inline-flex' : 'none';
 
                     if (user) {
-                        document.getElementById('unitCounter').textContent = `${user.units.length} / ${STATE.maxUnits}`;
-                        const totalItems = user.units.reduce((acc, u) => acc + u.items.length, 0);
+                        const unitsForProgram = user.units.filter(u => u.programId === STATE.selectedProgram);
+                        document.getElementById('unitCounter').textContent = `${unitsForProgram.length} / ${STATE.maxUnits}`;
+                        const totalItems = unitsForProgram.reduce((acc, u) => acc + u.items.length, 0);
                         document.getElementById('totalItemsCount').textContent = totalItems;
-                        renderUnits(user);
+                        
+                        const progress = getProgramProgress(STATE.currentUser, STATE.selectedProgram);
+                        document.getElementById('progressDisplay').textContent = progress + '%';
                     }
 
                     renderAdmissions();
@@ -1172,7 +1219,7 @@
                     document.getElementById('addItemPanel').classList.add('hidden');
                     document.getElementById('filePreviewContainer').innerHTML = '';
                 } else {
-                    const unit = user ? user.units.find(u => u.unitName === STATE.selectedUnitForItem) : null;
+                    const unit = user ? user.units.find(u => u.unitName === STATE.selectedUnitForItem && u.programId === STATE.selectedProgram) : null;
                     if (!unit) {
                         STATE.selectedUnitForItem = null;
                         document.getElementById('addItemPanel').classList.add('hidden');
@@ -1186,63 +1233,102 @@
                 document.getElementById('addUnitForm').classList.add('hidden');
             }
 
+            function renderPrograms(user) {
+                const container = document.getElementById('programContainer');
+                container.innerHTML = STATE.programs.map(p => {
+                    const isSelected = STATE.selectedProgram === p.id;
+                    const progress = getProgramProgress(STATE.currentUser, p.id);
+                    const units = user.units.filter(u => u.programId === p.id);
+                    const completed = units.filter(u => u.completed).length;
+                    const total = getStudentProgramUnits(STATE.currentUser, p.id).length;
+                    return `
+                        <div class="program-card" style="border-color: ${isSelected ? p.color : '#ecf2f9'}; border-width: ${isSelected ? '2px' : '1px'};" onclick="selectProgram('${p.id}')">
+                            <div class="program-icon" style="color:${p.color}"><i class="fas ${p.icon}"></i></div>
+                            <div class="program-title">${p.name}</div>
+                            <div class="program-desc">${p.description}</div>
+                            <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-top:0.3rem;">
+                                <span>${completed}/${total} units</span>
+                                <span>${progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width:${progress}%; background:${p.color};"></div>
+                            </div>
+                            ${isSelected ? `<div style="margin-top:0.5rem;"><span class="badge-success" style="font-size:0.6rem;"><i class="fas fa-check"></i> Active</span></div>` : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            window.selectProgram = function(programId) {
+                STATE.selectedProgram = programId;
+                STATE.selectedUnitForItem = null;
+                renderAll();
+                showGlobalMessage(`Switched to ${STATE.programs.find(p => p.id === programId).name} program`, 'info');
+            };
+
             function renderUnits(user) {
                 const container = document.getElementById('unitsContainer');
-                if (!user || user.units.length === 0) {
-                    container.innerHTML =
-                        `<div class="muted" style="grid-column:1/-1; padding: 2rem 0; text-align:center; background: rgba(255,255,240,0.3); border-radius: 3rem;">
-                            <i class="fas fa-box-open fa-2x" style="opacity:0.4;"></i><br>no units — create your first (max ${STATE.maxUnits})
+                const programUnits = user.units.filter(u => u.programId === STATE.selectedProgram);
+                const program = STATE.programs.find(p => p.id === STATE.selectedProgram);
+                document.getElementById('currentProgramTitle').textContent = program ? program.name + ' Units' : 'Units';
+
+                if (programUnits.length === 0) {
+                    container.innerHTML = `
+                        <div class="muted" style="grid-column:1/-1; padding: 2rem 0; text-align:center; background: rgba(255,255,240,0.3); border-radius: 3rem;">
+                            <i class="fas fa-box-open fa-2x" style="opacity:0.4;"></i><br>
+                            no units in this program — create your first (max ${STATE.maxUnits})
                         </div>`;
                     return;
                 }
-                container.innerHTML = user.units.map(unit => {
+
+                container.innerHTML = programUnits.map(unit => {
                     const itemsHtml = unit.items.map(item => {
                         let preview = '';
                         if (item.file) {
                             const isImage = item.file.type && item.file.type.startsWith('image/');
                             const isVideo = item.file.type && item.file.type.startsWith('video/');
-                            if (isImage) {
-                                preview = `<img src="${item.file.dataURL}" alt="file">`;
-                            } else if (isVideo) {
-                                preview = `<video src="${item.file.dataURL}" muted></video>`;
-                            } else {
-                                preview = `<i class="fas fa-file"></i>`;
-                            }
+                            if (isImage) preview = `<img src="${item.file.dataURL}" alt="file">`;
+                            else if (isVideo) preview = `<video src="${item.file.dataURL}" muted></video>`;
+                            else preview = `<i class="fas fa-file"></i>`;
                         }
                         return `
-                                <li>
-                                    <span class="item-preview-inline" data-itemid="${item.id}" data-unitname="${unit.unitName}" onclick="viewFile('${unit.unitName}','${item.id}')">
-                                        ${preview} ${item.name}
-                                    </span>
-                                    <button class="btn btn-danger btn-sm" style="padding: 0.05rem 0.6rem; font-size: 0.65rem;" data-unit="${unit.unitName}" data-itemid="${item.id}"><i class="fas fa-trash-alt"></i></button>
-                                </li>
-                            `;
-                    }).join('');
-                    return `
-                            <div class="unit-card">
-                                <div class="unit-header">
-                                    <span><i class="fas fa-folder-open" style="color:#3a5a78;"></i> ${unit.unitName}</span>
-                                    <span class="item-count-badge">${unit.items.length}/${STATE.maxItemsPerUnit}</span>
-                                </div>
-                                <ul class="item-list">${itemsHtml || '<li class="muted" style="border:none; padding:0.2rem 0;">empty</li>'}</ul>
-                                <div style="display:flex; gap:0.3rem; margin-top:0.6rem; flex-wrap:wrap;">
-                                    <button class="btn btn-primary btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-additem="${unit.unitName}"><i class="fas fa-plus"></i> item</button>
-                                    <button class="btn btn-warning btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-remove="${unit.unitName}"><i class="fas fa-times"></i> unit</button>
-                                </div>
-                            </div>
+                            <li>
+                                <span class="item-preview-inline" onclick="viewFile('${unit.unitName}','${item.id}')">
+                                    ${preview} ${item.name}
+                                </span>
+                                <button class="btn btn-danger btn-sm" style="padding: 0.05rem 0.6rem; font-size: 0.65rem;" data-unit="${unit.unitName}" data-itemid="${item.id}"><i class="fas fa-trash-alt"></i></button>
+                            </li>
                         `;
+                    }).join('');
+
+                    return `
+                        <div class="unit-card" style="border-left: 4px solid ${program ? program.color : '#1e2b3a'};">
+                            <div class="unit-header">
+                                <span><i class="fas fa-folder-open" style="color:#3a5a78;"></i> ${unit.unitName}</span>
+                                <span class="item-count-badge">${unit.items.length}/${STATE.maxItemsPerUnit}</span>
+                            </div>
+                            <ul class="item-list">${itemsHtml || '<li class="muted" style="border:none; padding:0.2rem 0;">empty</li>'}</ul>
+                            <div style="display:flex; gap:0.3rem; margin-top:0.6rem; flex-wrap:wrap;">
+                                <button class="btn btn-primary btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-additem="${unit.unitName}"><i class="fas fa-plus"></i> item</button>
+                                <button class="btn ${unit.completed ? 'btn-success' : 'btn-outline'} btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-complete="${unit.unitName}"><i class="fas ${unit.completed ? 'fa-check-circle' : 'fa-circle'}"></i> ${unit.completed ? 'done' : 'complete'}</button>
+                                <button class="btn btn-warning btn-sm" style="padding:0.15rem 0.8rem; font-size:0.7rem;" data-unit-remove="${unit.unitName}"><i class="fas fa-times"></i> remove</button>
+                            </div>
+                        </div>
+                    `;
                 }).join('');
 
+                // Event listeners
                 container.querySelectorAll('[data-unit-remove]').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const unitName = e.currentTarget.dataset.unitRemove;
                         if (confirm(`Remove unit "${unitName}"?`)) {
-                            const res = removeUnit(unitName);
+                            const res = removeUnit(unitName, STATE.selectedProgram);
                             showGlobalMessage(res.msg, res.success ? 'success' : 'error');
                             renderAll();
                         }
                     });
                 });
+
                 container.querySelectorAll('[data-unit-additem]').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const unitName = e.currentTarget.dataset.unitAdditem;
@@ -1254,6 +1340,16 @@
                         document.getElementById('newItemInput').focus();
                     });
                 });
+
+                container.querySelectorAll('[data-unit-complete]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const unitName = e.currentTarget.dataset.unitComplete;
+                        const res = completeUnit(unitName, STATE.selectedProgram);
+                        showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                        renderAll();
+                    });
+                });
+
                 container.querySelectorAll('[data-itemid]').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const unitName = e.currentTarget.dataset.unit;
@@ -1267,60 +1363,62 @@
 
             function renderTeacherView(teacher) {
                 const container = document.getElementById('studentSubmissionsContainer');
-                
-                // Filter students by teacher's institution and department
                 const students = STATE.users.filter(u => {
                     if ((u.role || 'student') !== 'student') return false;
-                    if (!teacher.institution || !teacher.department) return false;
-                    return u.institution === teacher.institution && u.department === teacher.department;
+                    if (!teacher.institution || !teacher.program) return false;
+                    return u.institution === teacher.institution && u.program === teacher.program;
                 });
                 
                 document.getElementById('studentCount').textContent = students.length;
                 document.getElementById('teacherInstitutionDisplay').textContent = teacher.institution || 'Not assigned';
-                document.getElementById('teacherDepartmentDisplay').textContent = teacher.department || 'Not assigned';
+                document.getElementById('teacherProgramDisplay').textContent = teacher.program || 'Not assigned';
 
                 if (students.length === 0) {
-                    container.innerHTML = '<div class="muted">No students assigned to your institution and department</div>';
+                    container.innerHTML = '<div class="muted">No students assigned to your institution and program</div>';
                     return;
                 }
 
                 container.innerHTML = students.map(student => {
-                    const totalUnits = student.units.length;
-                    const totalItems = student.units.reduce((acc, u) => acc + u.items.length, 0);
+                    const totalUnits = student.units.filter(u => u.programId === teacher.program).length;
+                    const totalItems = student.units.filter(u => u.programId === teacher.program).reduce((acc, u) => acc + u.items.length, 0);
+                    const progress = getProgramProgress(student.username, teacher.program);
                     const score = getCdaccScore(student.username);
                     const scoreClass = score >= 70 ? 'high' : score >= 40 ? 'medium' : 'low';
                     return `
-                            <div class="student-list-item">
-                                <div>
-                                    <strong><i class="fas fa-user"></i> ${student.username}</strong>
-                                    <span class="badge-light" style="margin-left:0.5rem;">${totalUnits} units · ${totalItems} items</span>
-                                    <div style="font-size:0.7rem; color:#4f677b;">${student.admissionNumber || 'No admission #'}</div>
-                                </div>
-                                <div class="flex-row">
-                                    <span class="cdacc-score ${scoreClass}">CDACC: ${score}</span>
-                                    <button class="btn btn-primary btn-sm" onclick="viewStudentSubmissions('${student.username}')"><i class="fas fa-eye"></i> view</button>
-                                    <button class="btn btn-warning btn-sm" onclick="updateStudentScore('${student.username}')"><i class="fas fa-edit"></i> score</button>
-                                </div>
+                        <div class="student-list-item">
+                            <div>
+                                <strong><i class="fas fa-user"></i> ${student.username}</strong>
+                                <span class="badge-light" style="margin-left:0.5rem;">${totalUnits} units · ${totalItems} items</span>
+                                <div style="font-size:0.7rem; color:#4f677b;">🎓 ${student.admissionNumber || 'No admission #'}</div>
                             </div>
-                        `;
+                            <div class="flex-row">
+                                <span class="badge-light">${progress}%</span>
+                                <span class="cdacc-score ${scoreClass}">CDACC: ${score}</span>
+                                <button class="btn btn-primary btn-sm" onclick="viewStudentSubmissions('${student.username}')"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-warning btn-sm" onclick="updateStudentScore('${student.username}')"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </div>
+                    `;
                 }).join('');
             }
 
             window.viewStudentSubmissions = function(username) {
                 const student = findUser(username);
                 if (!student) { showGlobalMessage('Student not found', 'error'); return; }
-                let message = `📚 ${username}'s Portfolio:\n\n`;
+                const program = STATE.programs.find(p => p.id === STATE.selectedProgram) || STATE.programs[0];
+                let message = `📚 ${username}'s Portfolio\n`;
                 message += `🏫 ${student.institution || 'No institution'}\n`;
-                message += `📚 ${student.department || 'No department'}\n`;
-                message += `🎓 ${student.admissionNumber || 'No admission #'}\n\n`;
-                student.units.forEach(unit => {
-                    message += `📁 ${unit.unitName} (${unit.items.length} items):\n`;
+                message += `🎓 ${student.program || 'No program'}\n`;
+                message += `📋 ${student.admissionNumber || 'No admission #'}\n\n`;
+                const units = student.units.filter(u => u.programId === program.id);
+                units.forEach(unit => {
+                    message += `${unit.completed ? '✅' : '⬜'} ${unit.unitName} (${unit.items.length} items):\n`;
                     unit.items.forEach(item => {
                         message += `   • ${item.name}${item.file ? ' 📎' : ''}\n`;
                     });
-                    message += '\n';
                 });
                 message += `\n📊 CDACC Score: ${getCdaccScore(username)}`;
+                message += `\n📈 Progress: ${getProgramProgress(username, program.id)}%`;
                 alert(message);
             };
 
@@ -1352,18 +1450,18 @@
                     const statusClass = a.status === 'open' ? 'badge-success' : a.status === 'pending' ?
                         'badge-warning' : 'badge-danger';
                     return `
-                            <div class="admission-card">
-                                <div class="flex-between">
-                                    <div>
-                                        <strong>${a.title}</strong>
-                                        <span class="${statusClass}" style="margin-left:0.5rem;padding:0.1rem 0.8rem;border-radius:60px;font-size:0.7rem;">${a.status}</span>
-                                        <div class="muted" style="font-size:0.8rem; margin-top:0.2rem;">${a.description || 'No description'}</div>
-                                        <div class="muted" style="font-size:0.7rem;">${a.date}</div>
-                                    </div>
-                                    ${isAdmin() ? `<button class="btn btn-danger btn-sm" data-admission-id="${a.id}"><i class="fas fa-trash-alt"></i></button>` : ''}
+                        <div class="admission-card">
+                            <div class="flex-between">
+                                <div>
+                                    <strong>${a.title}</strong>
+                                    <span class="${statusClass}" style="margin-left:0.5rem;padding:0.1rem 0.8rem;border-radius:60px;font-size:0.7rem;">${a.status}</span>
+                                    <div class="muted" style="font-size:0.8rem; margin-top:0.2rem;">${a.description || 'No description'}</div>
+                                    <div class="muted" style="font-size:0.7rem;">${a.date}</div>
                                 </div>
+                                ${isAdmin() ? `<button class="btn btn-danger btn-sm" data-admission-id="${a.id}"><i class="fas fa-trash-alt"></i></button>` : ''}
                             </div>
-                        `;
+                        </div>
+                    `;
                 }).join('');
 
                 if (isAdmin()) {
@@ -1390,10 +1488,6 @@
                         { name: 'Kisumu National Polytechnic', county: 'Kisumu', type: 'Public' },
                         { name: 'Eldoret Technical Training Institute', county: 'Uasin Gishu', type: 'Public' },
                         { name: 'Nakuru Technical Training Institute', county: 'Nakuru', type: 'Public' },
-                        { name: 'Machakos Technical Training Institute', county: 'Machakos', type: 'Public' },
-                        { name: 'Meru National Polytechnic', county: 'Meru', type: 'Public' },
-                        { name: 'Thika Technical Training Institute', county: 'Kiambu', type: 'Public' },
-                        { name: 'Rift Valley Technical Training Institute', county: 'Nakuru', type: 'Public' },
                     ];
                     defaultTvets.forEach(t => {
                         STATE.tvetInstitutions.push({ id: genId(), ...t });
@@ -1402,15 +1496,15 @@
                 }
 
                 container.innerHTML = STATE.tvetInstitutions.map(t => `
-                        <div class="tvet-item">
-                            <i class="fas fa-university"></i>
-                            <div>
-                                <div style="font-weight:500;">${t.name}</div>
-                                <div class="muted" style="font-size:0.7rem;">${t.county} · ${t.type}</div>
-                            </div>
-                            ${isAdmin() ? `<button class="btn btn-danger btn-sm" style="padding:0.05rem 0.5rem;font-size:0.6rem;" data-tvet-id="${t.id}"><i class="fas fa-times"></i></button>` : ''}
+                    <div class="tvet-item">
+                        <i class="fas fa-university"></i>
+                        <div>
+                            <div style="font-weight:500;">${t.name}</div>
+                            <div class="muted" style="font-size:0.7rem;">${t.county} · ${t.type}</div>
                         </div>
-                    `).join('');
+                        ${isAdmin() ? `<button class="btn btn-danger btn-sm" style="padding:0.05rem 0.5rem;font-size:0.6rem;" data-tvet-id="${t.id}"><i class="fas fa-times"></i></button>` : ''}
+                    </div>
+                `).join('');
 
                 if (isAdmin()) {
                     container.querySelectorAll('[data-tvet-id]').forEach(btn => {
@@ -1431,50 +1525,50 @@
                 const all = adminGetAllUsers();
                 if (all.length === 0) { container.innerHTML = '<div class="muted">No users</div>'; return; }
                 container.innerHTML = all.map(u => `
-                        <div style="background:white; border-radius:1.5rem; padding:0.4rem 1rem; margin-bottom:0.3rem; border:1px solid #ecf2f9;">
-                            <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.2rem;">
-                                <span><i class="fas fa-user-astronaut"></i> ${u.username} 
-                                    <span class="${u.role === 'admin' ? 'admin-badge' : u.role === 'teacher' ? 'teacher-badge' : 'badge-light'}" style="font-size:0.6rem;">${u.role || 'student'}</span>
-                                </span>
-                                <span class="badge-light">${u.unitCount} units · ${u.totalItems} items · CDACC: ${u.cdacc}</span>
-                            </div>
-                            <div style="font-size:0.7rem; color:#4f677b; margin-top:0.2rem;">
-                                ${u.institution !== '-' ? `🏫 ${u.institution}` : ''} 
-                                ${u.department !== '-' ? `📚 ${u.department}` : ''}
-                                ${u.admissionNumber !== '-' ? `🎓 ${u.admissionNumber}` : ''}
-                            </div>
+                    <div style="background:white; border-radius:1.5rem; padding:0.4rem 1rem; margin-bottom:0.3rem; border:1px solid #ecf2f9;">
+                        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.2rem;">
+                            <span><i class="fas fa-user-astronaut"></i> ${u.username} 
+                                <span class="${u.role === 'admin' ? 'admin-badge' : u.role === 'teacher' ? 'teacher-badge' : 'badge-light'}" style="font-size:0.6rem;">${u.role || 'student'}</span>
+                            </span>
+                            <span class="badge-light">${u.unitCount} units · ${u.totalItems} items · CDACC: ${u.cdacc}</span>
                         </div>
-                    `).join('');
+                        <div style="font-size:0.7rem; color:#4f677b; margin-top:0.2rem;">
+                            ${u.institution !== '-' ? `🏫 ${u.institution}` : ''} 
+                            ${u.program !== '-' ? `🎓 ${u.program}` : ''}
+                            ${u.admissionNumber !== '-' ? `📋 ${u.admissionNumber}` : ''}
+                        </div>
+                    </div>
+                `).join('');
             }
 
             function renderSystemStats() {
                 const stats = getSystemStats();
                 const container = document.getElementById('systemStats');
                 container.innerHTML = `
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem;">
-                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
-                                <div style="font-size:1.5rem; font-weight:700;">${stats.totalUsers}</div>
-                                <div class="muted">Total Users</div>
-                            </div>
-                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
-                                <div style="font-size:1.5rem; font-weight:700;">${stats.students}</div>
-                                <div class="muted">Students</div>
-                            </div>
-                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
-                                <div style="font-size:1.5rem; font-weight:700;">${stats.teachers}</div>
-                                <div class="muted">Teachers</div>
-                            </div>
-                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
-                                <div style="font-size:1.5rem; font-weight:700;">${stats.admins}</div>
-                                <div class="muted">Admins</div>
-                            </div>
-                            <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center; grid-column: span 2;">
-                                <div style="font-size:1.5rem; font-weight:700;">${stats.totalUnits}</div>
-                                <div class="muted">Total Units</div>
-                                <div style="font-size:0.8rem; margin-top:0.2rem;">${stats.totalItems} items across all units</div>
-                            </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem;">
+                        <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                            <div style="font-size:1.5rem; font-weight:700;">${stats.totalUsers}</div>
+                            <div class="muted">Total Users</div>
                         </div>
-                    `;
+                        <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                            <div style="font-size:1.5rem; font-weight:700;">${stats.students}</div>
+                            <div class="muted">Students</div>
+                        </div>
+                        <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                            <div style="font-size:1.5rem; font-weight:700;">${stats.teachers}</div>
+                            <div class="muted">Teachers</div>
+                        </div>
+                        <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center;">
+                            <div style="font-size:1.5rem; font-weight:700;">${stats.admins}</div>
+                            <div class="muted">Admins</div>
+                        </div>
+                        <div style="background:white; border-radius:1.5rem; padding:0.8rem; text-align:center; grid-column: span 2;">
+                            <div style="font-size:1.5rem; font-weight:700;">${stats.totalUnits}</div>
+                            <div class="muted">Total Units</div>
+                            <div style="font-size:0.8rem; margin-top:0.2rem;">${stats.totalItems} items across all units</div>
+                        </div>
+                    </div>
+                `;
             }
 
             // ----- FILE PREVIEW -----
@@ -1487,30 +1581,27 @@
                 const f = STATE.pendingFile;
                 const isImage = f.type && f.type.startsWith('image/');
                 const isVideo = f.type && f.type.startsWith('video/');
-                const isPDF = f.type === 'application/pdf';
 
                 let previewHtml = '';
                 if (isImage) {
                     previewHtml = `<img src="${f.dataURL}" alt="preview">`;
                 } else if (isVideo) {
                     previewHtml = `
-                            <video src="${f.dataURL}" muted style="width:100%;height:100%;object-fit:cover;"></video>
-                            <div class="play-overlay"><i class="fas fa-play"></i></div>
-                        `;
-                } else if (isPDF) {
-                    previewHtml = `<i class="fas fa-file-pdf" style="font-size:2.5rem;color:#c24b5a;"></i>`;
+                        <video src="${f.dataURL}" muted style="width:100%;height:100%;object-fit:cover;"></video>
+                        <div class="play-overlay"><i class="fas fa-play"></i></div>
+                    `;
                 } else {
                     previewHtml = `<i class="fas fa-file-alt" style="font-size:2.5rem;color:#3b5a78;"></i>`;
                 }
 
                 container.innerHTML = `
-                        <div class="file-preview-item">
-                            ${previewHtml}
-                            <div class="file-name">${f.name}</div>
-                        </div>
-                        <span style="font-size:0.7rem; color:#3b5a78;"><i class="fas fa-check-circle"></i> ready</span>
-                        <button class="btn btn-ghost btn-sm" id="clearFileBtn" style="padding:0.1rem 0.5rem; font-size:0.6rem;"><i class="fas fa-times"></i></button>
-                    `;
+                    <div class="file-preview-item">
+                        ${previewHtml}
+                        <div class="file-name">${f.name}</div>
+                    </div>
+                    <span style="font-size:0.7rem; color:#3b5a78;"><i class="fas fa-check-circle"></i> ready</span>
+                    <button class="btn btn-ghost btn-sm" id="clearFileBtn" style="padding:0.1rem 0.5rem; font-size:0.6rem;"><i class="fas fa-times"></i></button>
+                `;
                 document.getElementById('clearFileBtn')?.addEventListener('click', () => {
                     STATE.pendingFile = null;
                     document.getElementById('fileUploadInput').value = '';
@@ -1542,26 +1633,17 @@
                 if (isImage) {
                     content = `<img src="${f.dataURL}" alt="${f.name}">`;
                 } else if (isVideo) {
-                    content =
-                        `<video src="${f.dataURL}" controls autoplay style="max-width:100%;max-height:75vh;border-radius:1.5rem;"></video>`;
+                    content = `<video src="${f.dataURL}" controls autoplay style="max-width:100%;max-height:75vh;border-radius:1.5rem;"></video>`;
                 } else if (isPDF) {
                     content = `<iframe src="${f.dataURL}" style="width:100%;height:600px;border:none;"></iframe>`;
                 } else {
-                    const isText = f.type && (f.type.includes('text') || f.type.includes('json') || f.type.includes(
-                    'javascript'));
-                    if (isText) {
-                        try {
-                            const text = atob(f.dataURL.split(',')[1] || '');
-                            content =
-                                `<pre style="max-width:100%;max-height:70vh;overflow:auto;padding:1rem;background:#f5f8fc;border-radius:1rem;font-size:0.85rem;white-space:pre-wrap;word-break:break-all;">${text.substring(0, 50000)}${text.length > 50000 ? '\n... (truncated)' : ''}</pre>`;
-                        } catch (e) {
-                            content =
-                                `<div style="padding:2rem;text-align:center;"><i class="fas fa-file" style="font-size:3rem;color:#3b5a78;"></i><p>${f.name}</p><p class="muted">preview not available</p></div>`;
-                        }
-                    } else {
-                        content =
-                            `<div style="padding:2rem;text-align:center;"><i class="fas fa-file" style="font-size:4rem;color:#3b5a78;"></i><p style="margin-top:1rem;font-weight:500;">${f.name}</p><p class="muted">file preview not available</p></div>`;
-                    }
+                    content = `
+                        <div style="padding:2rem;text-align:center;">
+                            <i class="fas fa-file" style="font-size:4rem;color:#3b5a78;"></i>
+                            <p style="margin-top:1rem;font-weight:500;">${f.name}</p>
+                            <p class="muted">File preview not available for this type</p>
+                        </div>
+                    `;
                 }
 
                 body.innerHTML = content;
@@ -1612,29 +1694,26 @@
                     const password = document.getElementById('authPassword').value.trim();
                     const role = document.getElementById('authRole').value;
                     
-                    // For student signup, collect admission details
                     let admissionNumber = '';
                     let institution = '';
-                    let department = '';
+                    let program = '';
                     
                     if (role === 'student') {
                         admissionNumber = prompt('Enter your Admission Number:') || '';
                         if (!admissionNumber) {
-                            showAuthMessage('Admission number is required for students', 'error');
+                            showAuthMessage('Admission number is required', 'error');
                             return;
                         }
-                        const instList = STATE.institutions.join(', ');
-                        institution = prompt(`Enter your Institution (e.g., ${instList}):`) || '';
-                        const deptList = STATE.departments.join(', ');
-                        department = prompt(`Enter your Department (e.g., ${deptList}):`) || '';
+                        institution = prompt('Enter your Institution:') || '';
+                        const programNames = STATE.programs.map(p => p.name).join(', ');
+                        program = prompt(`Enter your Program (${programNames}):`) || '';
                     } else if (role === 'teacher') {
-                        const instList = STATE.institutions.join(', ');
-                        institution = prompt(`Enter your Institution (e.g., ${instList}):`) || '';
-                        const deptList = STATE.departments.join(', ');
-                        department = prompt(`Enter your Department (e.g., ${deptList}):`) || '';
+                        institution = prompt('Enter your Institution:') || '';
+                        const programNames = STATE.programs.map(p => p.name).join(', ');
+                        program = prompt(`Enter your Program (${programNames}):`) || '';
                     }
                     
-                    const res = signupUser(username, password, role, institution, department, admissionNumber);
+                    const res = signupUser(username, password, role, institution, program, admissionNumber);
                     if (res.success) { showAuthMessage(res.msg, 'success');
                         renderAll(); } else showAuthMessage(res.msg, 'error');
                 });
@@ -1645,6 +1724,10 @@
                     showGlobalMessage('Refreshed', 'info'); });
 
                 document.getElementById('addUnitBtn').addEventListener('click', () => {
+                    if (!STATE.selectedProgram) {
+                        showGlobalMessage('Please select a program first', 'error');
+                        return;
+                    }
                     const form = document.getElementById('addUnitForm');
                     form.classList.toggle('hidden');
                     if (!form.classList.contains('hidden')) {
@@ -1657,7 +1740,11 @@
                 document.getElementById('confirmAddUnit').addEventListener('click', () => {
                     const name = document.getElementById('newUnitName').value.trim();
                     if (!name) { showGlobalMessage('Enter unit name', 'error'); return; }
-                    const res = addUnit(name);
+                    if (!STATE.selectedProgram) {
+                        showGlobalMessage('Please select a program first', 'error');
+                        return;
+                    }
+                    const res = addUnitToProgram(name, STATE.selectedProgram);
                     showGlobalMessage(res.msg, res.success ? 'success' : 'error');
                     document.getElementById('addUnitForm').classList.add('hidden');
                     renderAll();
@@ -1705,7 +1792,6 @@
                     reader.readAsDataURL(file);
                 });
 
-                // Admissions
                 document.getElementById('addAdmissionBtn').addEventListener('click', () => {
                     if (!isAdmin()) {
                         showGlobalMessage('Only admins can add admissions', 'error');
@@ -1721,7 +1807,6 @@
                     renderAll();
                 });
 
-                // TVET
                 document.getElementById('addTvetBtn').addEventListener('click', () => {
                     if (!isAdmin()) {
                         showGlobalMessage('Only admins can add institutions', 'error');
@@ -1736,7 +1821,6 @@
                     renderAll();
                 });
 
-                // CDACC
                 document.getElementById('updateCdaccBtn').addEventListener('click', () => {
                     const currentScore = getCdaccScore(STATE.currentUser);
                     const score = prompt('Enter CDACC score (0-100):', currentScore);
@@ -1751,7 +1835,6 @@
                     renderAll();
                 });
 
-                // Keyboard shortcuts
                 document.getElementById('newUnitName').addEventListener('keypress', (e) => { if (e.key === 'Enter') document
                         .getElementById('confirmAddUnit').click(); });
                 document.getElementById('newItemInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') document
@@ -1764,49 +1847,45 @@
             function init() {
                 loadState();
                 
-                // Create default admin if not exists
                 if (!findUser(STATE.adminUser)) {
                     STATE.users.push({ 
                         username: STATE.adminUser, 
                         password: STATE.adminPass, 
                         role: 'admin',
                         institution: 'System',
-                        department: 'Administration',
+                        program: 'Administration',
                         admissionNumber: 'ADMIN001',
                         units: [] 
                     });
                     saveState();
                 }
                 
-                // Create default teacher
                 if (!findUser('teacher')) {
                     STATE.users.push({ 
                         username: 'teacher', 
                         password: 'teacher123', 
                         role: 'teacher',
                         institution: 'Nairobi Technical',
-                        department: 'ICT',
+                        program: 'ICT',
                         admissionNumber: 'TCH001',
                         units: [] 
                     });
                     saveState();
                 }
                 
-                // Create default student
                 if (!findUser('student')) {
                     STATE.users.push({ 
                         username: 'student', 
                         password: 'student123', 
                         role: 'student',
                         institution: 'Nairobi Technical',
-                        department: 'ICT',
+                        program: 'ICT',
                         admissionNumber: 'STU2024-001',
                         units: [] 
                     });
                     saveState();
                 }
                 
-                // Sample admissions
                 if (STATE.admissions.length === 0) {
                     STATE.admissions.push({
                         id: genId(),
@@ -1816,6 +1895,14 @@
                         status: 'open'
                     });
                     saveState();
+                }
+                
+                // Set default program for student if not set
+                if (STATE.currentUser) {
+                    const user = findUser(STATE.currentUser);
+                    if (user && user.program) {
+                        STATE.selectedProgram = STATE.programs.find(p => p.name === user.program)?.id || null;
+                    }
                 }
                 
                 initEvents();
