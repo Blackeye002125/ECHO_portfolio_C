@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Echo Portfolio · Full View + Admissions</title>
+    <title>Echo Portfolio · TVET Kenya + CDACC</title>
     <!-- Font Awesome 6 (free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -24,14 +24,14 @@
             margin: 0;
         }
         .app-wrapper {
-            max-width: 1450px;
+            max-width: 1500px;
             width: 100%;
             background: rgba(255, 248, 240, 0.55);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border-radius: 3.5rem;
             padding: 1.8rem 1.8rem 2.5rem;
-            box-shadow: 0 40px 80px rgba(30, 40, 50, 0.2), 0 10px 30px rgba(0,0,0,0.04);
+            box-shadow: 0 40px 80px rgba(30, 40, 50, 0.2), 0 10px 30px rgba(0, 0, 0, 0.04);
             border: 1px solid rgba(255, 245, 235, 0.5);
             transition: all 0.2s;
         }
@@ -69,6 +69,30 @@
         .badge-light {
             background: rgba(30, 43, 58, 0.08);
             color: #1e2b3a;
+            padding: 0.15rem 1rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .badge-success {
+            background: #1d7a4a;
+            color: white;
+            padding: 0.15rem 1rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .badge-warning {
+            background: #d48c3b;
+            color: white;
+            padding: 0.15rem 1rem;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+        }
+        .badge-danger {
+            background: #c24b5a;
+            color: white;
             padding: 0.15rem 1rem;
             border-radius: 60px;
             font-size: 0.7rem;
@@ -466,8 +490,9 @@
             font-size: 0.9rem;
         }
 
-        /* admissions */
-        .admission-card {
+        /* admissions & TVET */
+        .admission-card,
+        .tvet-card {
             background: white;
             border-radius: 2rem;
             padding: 1.2rem;
@@ -475,8 +500,44 @@
             border: 1px solid #ecf2f9;
             transition: 0.15s;
         }
-        .admission-card:hover {
+        .admission-card:hover,
+        .tvet-card:hover {
             border-color: #c8d9ea;
+        }
+        .tvet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .tvet-item {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ecf2f9;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .tvet-item i {
+            color: #1d7a4a;
+        }
+
+        /* teacher/student view */
+        .role-badge {
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        .role-teacher {
+            background: #d48c3b;
+            color: white;
+        }
+        .role-student {
+            background: #1e2b3a;
+            color: white;
         }
 
         @keyframes fadeIn {
@@ -498,6 +559,9 @@
             }
             .unit-grid {
                 grid-template-columns: 1fr;
+            }
+            .tvet-grid {
+                grid-template-columns: 1fr 1fr;
             }
             .btn {
                 padding: 0.4rem 0.9rem;
@@ -530,6 +594,9 @@
             .unit-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .tvet-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
         .scrollable-list {
             max-height: 200px;
@@ -543,6 +610,34 @@
             background: #b0c8dc;
             border-radius: 10px;
         }
+        .student-list-item {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            border: 1px solid #ecf2f9;
+        }
+        .student-list-item:hover {
+            border-color: #c8d9ea;
+        }
+        .cdacc-score {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .cdacc-score.high {
+            color: #1d7a4a;
+        }
+        .cdacc-score.medium {
+            color: #d48c3b;
+        }
+        .cdacc-score.low {
+            color: #c24b5a;
+        }
     </style>
 </head>
 <body>
@@ -552,8 +647,8 @@
             <div class="flex-row">
                 <i class="fas fa-echo" style="font-size: 2rem; color: #1e2b3a;"></i>
                 <h1 class="gradient-text" style="font-weight: 700; font-size: 1.6rem;">Echo Portfolio</h1>
-                <span class="badge-soft"><i class="fas fa-shield-alt"></i> pro</span>
-                <span class="badge-light"><i class="fas fa-play"></i> view</span>
+                <span class="badge-soft"><i class="fas fa-shield-alt"></i> TVET</span>
+                <span class="badge-light"><i class="fas fa-graduation-cap"></i> CDACC</span>
                 <span class="badge-light"><i class="fas fa-arrow-up"></i> 10MB</span>
             </div>
             <div>
@@ -566,18 +661,37 @@
         <div id="authSection" class="card-glass">
             <div class="flex-row flex-wrap" style="justify-content: center;">
                 <div class="input-group" style="flex: 2 1 280px;">
-                    <input type="text" id="authUsername" placeholder="username" value="demo">
-                    <input type="password" id="authPassword" placeholder="password" value="demo123">
+                    <input type="text" id="authUsername" placeholder="username" value="teacher">
+                    <input type="password" id="authPassword" placeholder="password" value="teacher123">
+                    <select id="authRole" style="padding:0.6rem 1.2rem;border-radius:80px;border:1px solid #dce5ef;background:white;font-size:0.9rem;">
+                        <option value="student">Student</option>
+                        <option value="teacher" selected>Teacher</option>
+                        <option value="admin">Admin</option>
+                    </select>
                     <button class="btn btn-primary" id="loginBtn"><i class="fas fa-sign-in-alt"></i> sign in</button>
                     <button class="btn btn-success" id="signupBtn"><i class="fas fa-user-plus"></i> sign up</button>
                 </div>
-                <span class="muted" style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> demo: demo / demo123</span>
+                <span class="muted" style="font-size:0.7rem;"><i class="fas fa-info-circle"></i> teacher/teacher123 · student/student123 · admin/admin123</span>
             </div>
             <div id="authMessage" class="flash-message hidden"></div>
         </div>
 
         <!-- main user area -->
         <div id="userArea" class="hidden">
+            <!-- Role & CDACC Dashboard -->
+            <div class="card-glass" style="background: rgba(235, 245, 255, 0.3); padding: 1rem 1.5rem;">
+                <div class="flex-between">
+                    <div class="flex-row">
+                        <span class="role-badge" id="roleBadge">Student</span>
+                        <span class="badge-light"><i class="fas fa-id-badge"></i> <span id="userNameDisplay">user</span></span>
+                    </div>
+                    <div class="flex-row flex-gap">
+                        <span class="badge-light"><i class="fas fa-chart-line"></i> CDACC: <span id="cdaccScoreDisplay">0</span></span>
+                        <button class="btn btn-primary btn-sm" id="updateCdaccBtn"><i class="fas fa-edit"></i> update score</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="flex-between" style="margin-top: 0.3rem;">
                 <div class="flex-row">
                     <h3 style="font-size: 1.2rem;"><i class="fas fa-cubes"></i> units</h3>
@@ -616,8 +730,23 @@
                 <div id="filePreviewContainer" class="file-preview" style="margin-top: 0.4rem;"></div>
             </div>
 
+            <!-- TEACHER VIEW: Student submissions -->
+            <div id="teacherView" class="card-glass hidden" style="background: rgba(235, 245, 255, 0.3);">
+                <h3 style="font-size:1.1rem;"><i class="fas fa-users"></i> Student Submissions <span class="badge-light" id="studentCount">0</span></h3>
+                <div id="studentSubmissionsContainer" style="margin-top: 0.8rem;"></div>
+            </div>
+
+            <!-- TVET Institutions -->
+            <div class="card-glass" style="background: rgba(235, 245, 255, 0.2);">
+                <div class="flex-between">
+                    <h3 style="font-size:1.1rem;"><i class="fas fa-university"></i> TVET Institutions (Kenya)</h3>
+                    <button class="btn btn-primary btn-sm" id="addTvetBtn"><i class="fas fa-plus"></i> add institution</button>
+                </div>
+                <div id="tvetContainer" class="tvet-grid" style="margin-top: 0.5rem;"></div>
+            </div>
+
             <!-- ADMISSIONS SECTION -->
-            <div class="card-glass" style="margin-top: 1.8rem; background: rgba(235, 245, 255, 0.3);">
+            <div class="card-glass" style="margin-top: 1.2rem; background: rgba(235, 245, 255, 0.3);">
                 <div class="flex-between">
                     <h3 style="font-size:1.1rem;"><i class="fas fa-graduation-cap"></i> Admissions</h3>
                     <button class="btn btn-primary btn-sm" id="addAdmissionBtn"><i class="fas fa-plus"></i> new admission</button>
@@ -650,13 +779,16 @@
             const STATE = {
                 users: [],
                 currentUser: null,
+                currentRole: 'student', // student, teacher, admin
                 adminUser: 'admin',
                 adminPass: 'admin123',
                 maxUnits: 40,
                 maxItemsPerUnit: 10,
                 selectedUnitForItem: null,
-                pendingFile: null, // { name, dataURL, type }
-                admissions: [], // { id, title, description, date, status }
+                pendingFile: null,
+                admissions: [],
+                tvetInstitutions: [],
+                cdaccScores: {}, // username: score
             };
 
             // ---------- helpers ----------
@@ -670,7 +802,11 @@
             }
 
             function isAdmin() {
-                return STATE.currentUser === STATE.adminUser;
+                return STATE.currentUser === STATE.adminUser || STATE.currentRole === 'admin';
+            }
+
+            function isTeacher() {
+                return STATE.currentRole === 'teacher' || isAdmin();
             }
 
             function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 8); }
@@ -680,7 +816,9 @@
                 try {
                     const data = {
                         users: STATE.users,
-                        admissions: STATE.admissions
+                        admissions: STATE.admissions,
+                        tvetInstitutions: STATE.tvetInstitutions,
+                        cdaccScores: STATE.cdaccScores,
                     };
                     localStorage.setItem('echoPortfolioData', JSON.stringify(data));
                 } catch (e) {}
@@ -693,27 +831,32 @@
                         const parsed = JSON.parse(raw);
                         if (Array.isArray(parsed.users)) STATE.users = parsed.users;
                         if (Array.isArray(parsed.admissions)) STATE.admissions = parsed.admissions;
+                        if (Array.isArray(parsed.tvetInstitutions)) STATE.tvetInstitutions = parsed.tvetInstitutions;
+                        if (parsed.cdaccScores) STATE.cdaccScores = parsed.cdaccScores;
                     }
                 } catch (e) {}
             }
 
             // ---------- auth ----------
-            function loginUser(username, password) {
+            function loginUser(username, password, role) {
                 if (!username || !password) return { success: false, msg: 'credentials required' };
                 const user = findUser(username);
                 if (!user) return { success: false, msg: 'user not found' };
                 if (user.password !== password) return { success: false, msg: 'wrong password' };
                 STATE.currentUser = username;
+                STATE.currentRole = role || user.role || 'student';
                 saveState();
-                return { success: true, msg: `welcome, ${username}` };
+                return { success: true, msg: `welcome, ${username} (${STATE.currentRole})` };
             }
 
-            function signupUser(username, password) {
+            function signupUser(username, password, role) {
                 if (!username || !password) return { success: false, msg: 'credentials required' };
                 if (username === STATE.adminUser) return { success: false, msg: 'reserved name' };
                 if (findUser(username)) return { success: false, msg: 'already exists' };
-                STATE.users.push({ username, password, units: [] });
+                const newUser = { username, password, role: role || 'student', units: [] };
+                STATE.users.push(newUser);
                 STATE.currentUser = username;
+                STATE.currentRole = role || 'student';
                 saveState();
                 return { success: true, msg: `account created, ${username}` };
             }
@@ -725,7 +868,7 @@
                 renderAll();
             }
 
-            // ---------- operations with file support ----------
+            // ---------- operations ----------
             function addUnit(unitName) {
                 const user = getCurrentUserData();
                 if (!user) return { success: false, msg: 'not logged in' };
@@ -795,10 +938,49 @@
                 return { success: true, msg: 'admission removed' };
             }
 
+            // ---------- TVET ----------
+            function addTvet(name, county, type) {
+                if (!name) return { success: false, msg: 'name required' };
+                STATE.tvetInstitutions.push({
+                    id: genId(),
+                    name: name,
+                    county: county || 'Nairobi',
+                    type: type || 'Public'
+                });
+                saveState();
+                return { success: true, msg: 'TVET institution added' };
+            }
+
+            function removeTvet(id) {
+                const idx = STATE.tvetInstitutions.findIndex(t => t.id === id);
+                if (idx === -1) return { success: false, msg: 'not found' };
+                STATE.tvetInstitutions.splice(idx, 1);
+                saveState();
+                return { success: true, msg: 'institution removed' };
+            }
+
+            // ---------- CDACC ----------
+            function updateCdaccScore(username, score) {
+                if (score < 0 || score > 100) return { success: false, msg: 'score must be 0-100' };
+                STATE.cdaccScores[username] = score;
+                saveState();
+                return { success: true, msg: `CDACC score updated for ${username}` };
+            }
+
+            function getCdaccScore(username) {
+                return STATE.cdaccScores[username] || 0;
+            }
+
+            // ---------- admin ----------
             function adminGetAllUsers() {
                 if (!isAdmin()) return [];
-                return STATE.users.map(u => ({ username: u.username, unitCount: u.units.length, totalItems: u.units.reduce((acc,
-                        unit) => acc + unit.items.length, 0) }));
+                return STATE.users.map(u => ({
+                    username: u.username,
+                    role: u.role || 'student',
+                    unitCount: u.units.length,
+                    totalItems: u.units.reduce((acc, unit) => acc + unit.items.length, 0),
+                    cdacc: getCdaccScore(u.username)
+                }));
             }
 
             // ---------- render ----------
@@ -809,23 +991,51 @@
                 document.getElementById('authSection').classList.toggle('hidden', isLoggedIn);
                 document.getElementById('userArea').classList.toggle('hidden', !isLoggedIn);
                 document.getElementById('logoutBtn').style.display = isLoggedIn ? 'inline-flex' : 'none';
-                document.getElementById('userDisplay').innerHTML = isLoggedIn ? `<i class="fas fa-user-circle"></i> ${STATE.currentUser}` :
+                document.getElementById('userDisplay').innerHTML = isLoggedIn ?
+                    `<i class="fas fa-user-circle"></i> ${STATE.currentUser} (${STATE.currentRole})` :
                     '<i class="fas fa-user-circle"></i> guest';
 
-                const adminPanel = document.getElementById('adminPanel');
-                if (isLoggedIn && isAdmin()) {
-                    adminPanel.classList.remove('hidden');
-                    renderAdminPanel();
-                } else {
-                    adminPanel.classList.add('hidden');
-                }
+                if (isLoggedIn) {
+                    // Role badge
+                    const badge = document.getElementById('roleBadge');
+                    badge.textContent = STATE.currentRole.charAt(0).toUpperCase() + STATE.currentRole.slice(1);
+                    badge.className = `role-badge role-${STATE.currentRole}`;
+                    document.getElementById('userNameDisplay').textContent = STATE.currentUser;
 
-                if (isLoggedIn && user) {
-                    document.getElementById('unitCounter').textContent = `${user.units.length} / ${STATE.maxUnits}`;
-                    const totalItems = user.units.reduce((acc, u) => acc + u.items.length, 0);
-                    document.getElementById('totalItemsCount').textContent = totalItems;
-                    renderUnits(user);
+                    // CDACC score
+                    const score = getCdaccScore(STATE.currentUser);
+                    document.getElementById('cdaccScoreDisplay').textContent = score;
+                    const scoreEl = document.getElementById('cdaccScoreDisplay');
+                    scoreEl.className = score >= 70 ? 'cdacc-score high' : score >= 40 ? 'cdacc-score medium' :
+                        'cdacc-score low';
+
+                    // Teacher view
+                    const teacherView = document.getElementById('teacherView');
+                    if (isTeacher()) {
+                        teacherView.classList.remove('hidden');
+                        renderTeacherView();
+                    } else {
+                        teacherView.classList.add('hidden');
+                    }
+
+                    // Admin panel
+                    const adminPanel = document.getElementById('adminPanel');
+                    if (isAdmin()) {
+                        adminPanel.classList.remove('hidden');
+                        renderAdminPanel();
+                    } else {
+                        adminPanel.classList.add('hidden');
+                    }
+
+                    if (user) {
+                        document.getElementById('unitCounter').textContent = `${user.units.length} / ${STATE.maxUnits}`;
+                        const totalItems = user.units.reduce((acc, u) => acc + u.items.length, 0);
+                        document.getElementById('totalItemsCount').textContent = totalItems;
+                        renderUnits(user);
+                    }
+
                     renderAdmissions();
+                    renderTvet();
                 }
 
                 // item panel
@@ -838,7 +1048,8 @@
                         document.getElementById('addItemPanel').classList.add('hidden'); } else {
                         document.getElementById('addItemPanel').classList.remove('hidden');
                         document.getElementById('itemUnitNameDisplay').textContent = unit.unitName;
-                        document.getElementById('itemCountDisplay').textContent = `${unit.items.length}/${STATE.maxItemsPerUnit}`;
+                        document.getElementById('itemCountDisplay').textContent =
+                        `${unit.items.length}/${STATE.maxItemsPerUnit}`;
                         updateFilePreview();
                     }
                 }
@@ -860,7 +1071,7 @@
                             const isVideo = item.file.type && item.file.type.startsWith('video/');
                             if (isImage) {
                                 preview =
-                                    `<img src="${item.file.dataURL}" alt="file">`;
+                                `<img src="${item.file.dataURL}" alt="file">`;
                             } else if (isVideo) {
                                 preview =
                                     `<video src="${item.file.dataURL}" muted></video>`;
@@ -924,25 +1135,74 @@
                 });
             }
 
+            function renderTeacherView() {
+                const container = document.getElementById('studentSubmissionsContainer');
+                const students = STATE.users.filter(u => (u.role || 'student') === 'student');
+                document.getElementById('studentCount').textContent = students.length;
+
+                if (students.length === 0) {
+                    container.innerHTML = '<div class="muted">no students registered</div>';
+                    return;
+                }
+
+                container.innerHTML = students.map(student => {
+                    const totalUnits = student.units.length;
+                    const totalItems = student.units.reduce((acc, u) => acc + u.items.length, 0);
+                    const score = getCdaccScore(student.username);
+                    const scoreClass = score >= 70 ? 'high' : score >= 40 ? 'medium' : 'low';
+                    return `
+                            <div class="student-list-item">
+                                <div>
+                                    <strong><i class="fas fa-user"></i> ${student.username}</strong>
+                                    <span class="badge-light" style="margin-left:0.5rem;">${totalUnits} units · ${totalItems} items</span>
+                                </div>
+                                <div class="flex-row">
+                                    <span class="cdacc-score ${scoreClass}">CDACC: ${score}</span>
+                                    <button class="btn btn-primary btn-sm" onclick="viewStudentSubmissions('${student.username}')"><i class="fas fa-eye"></i> view</button>
+                                </div>
+                            </div>
+                        `;
+                }).join('');
+            }
+
+            window.viewStudentSubmissions = function(username) {
+                const student = findUser(username);
+                if (!student) { showGlobalMessage('student not found', 'error'); return; }
+                let message = `📚 ${username}'s Portfolio:\n\n`;
+                student.units.forEach(unit => {
+                    message += `📁 ${unit.unitName} (${unit.items.length} items):\n`;
+                    unit.items.forEach(item => {
+                        message += `   • ${item.name}${item.file ? ' 📎' : ''}\n`;
+                    });
+                    message += '\n';
+                });
+                message += `\n📊 CDACC Score: ${getCdaccScore(username)}`;
+                alert(message);
+            };
+
             function renderAdmissions() {
                 const container = document.getElementById('admissionsContainer');
                 if (STATE.admissions.length === 0) {
                     container.innerHTML = `<div class="muted" style="padding:0.8rem 0;">no admissions yet</div>`;
                     return;
                 }
-                container.innerHTML = STATE.admissions.map(a => `
-                        <div class="admission-card">
-                            <div class="flex-between">
-                                <div>
-                                    <strong>${a.title}</strong>
-                                    <span class="badge-light" style="margin-left:0.5rem;">${a.status}</span>
-                                    <div class="muted" style="font-size:0.8rem; margin-top:0.2rem;">${a.description || 'No description'}</div>
-                                    <div class="muted" style="font-size:0.7rem;">${a.date}</div>
+                container.innerHTML = STATE.admissions.map(a => {
+                    const statusClass = a.status === 'open' ? 'badge-success' : a.status === 'pending' ?
+                        'badge-warning' : 'badge-danger';
+                    return `
+                            <div class="admission-card">
+                                <div class="flex-between">
+                                    <div>
+                                        <strong>${a.title}</strong>
+                                        <span class="${statusClass}" style="margin-left:0.5rem;padding:0.1rem 0.8rem;border-radius:60px;font-size:0.7rem;">${a.status}</span>
+                                        <div class="muted" style="font-size:0.8rem; margin-top:0.2rem;">${a.description || 'No description'}</div>
+                                        <div class="muted" style="font-size:0.7rem;">${a.date}</div>
+                                    </div>
+                                    <button class="btn btn-danger btn-sm" data-admission-id="${a.id}"><i class="fas fa-trash-alt"></i></button>
                                 </div>
-                                <button class="btn btn-danger btn-sm" data-admission-id="${a.id}"><i class="fas fa-trash-alt"></i></button>
                             </div>
-                        </div>
-                    `).join('');
+                        `;
+                }).join('');
 
                 container.querySelectorAll('[data-admission-id]').forEach(btn => {
                     btn.addEventListener('click', (e) => {
@@ -956,20 +1216,77 @@
                 });
             }
 
+            function renderTvet() {
+                const container = document.getElementById('tvetContainer');
+                // Pre-populate with Kenyan TVET institutions if empty
+                if (STATE.tvetInstitutions.length === 0) {
+                    const defaultTvets = [
+                        { name: 'Nairobi Technical Training Institute', county: 'Nairobi', type: 'Public' },
+                        { name: 'Kiambu Institute of Science and Technology', county: 'Kiambu', type: 'Public' },
+                        { name: 'Mombasa Technical Training Institute', county: 'Mombasa', type: 'Public' },
+                        { name: 'Kisumu National Polytechnic', county: 'Kisumu', type: 'Public' },
+                        { name: 'Eldoret Technical Training Institute', county: 'Uasin Gishu', type: 'Public' },
+                        { name: 'Nakuru Technical Training Institute', county: 'Nakuru', type: 'Public' },
+                        { name: 'Machakos Technical Training Institute', county: 'Machakos', type: 'Public' },
+                        { name: 'Meru National Polytechnic', county: 'Meru', type: 'Public' },
+                        { name: 'Thika Technical Training Institute', county: 'Kiambu', type: 'Public' },
+                        { name: 'Rift Valley Technical Training Institute', county: 'Nakuru', type: 'Public' },
+                        { name: 'Bungoma Technical Training Institute', county: 'Bungoma', type: 'Public' },
+                        { name: 'Embu Technical Training Institute', county: 'Embu', type: 'Public' },
+                        { name: 'Kakamega Technical Training Institute', county: 'Kakamega', type: 'Public' },
+                        { name: 'Kericho Technical Training Institute', county: 'Kericho', type: 'Public' },
+                        { name: 'Kilifi Technical Training Institute', county: 'Kilifi', type: 'Public' },
+                        { name: 'Kitale Technical Training Institute', county: 'Trans Nzoia', type: 'Public' },
+                        { name: 'Kitui Technical Training Institute', county: 'Kitui', type: 'Public' },
+                        { name: 'Lodwar Technical Training Institute', county: 'Turkana', type: 'Public' },
+                        { name: 'Malindi Technical Training Institute', county: 'Kilifi', type: 'Public' },
+                        { name: 'Marsabit Technical Training Institute', county: 'Marsabit', type: 'Public' },
+                    ];
+                    defaultTvets.forEach(t => {
+                        STATE.tvetInstitutions.push({ id: genId(), ...t });
+                    });
+                    saveState();
+                }
+
+                container.innerHTML = STATE.tvetInstitutions.map(t => `
+                        <div class="tvet-item">
+                            <i class="fas fa-university"></i>
+                            <div>
+                                <div style="font-weight:500;">${t.name}</div>
+                                <div class="muted" style="font-size:0.7rem;">${t.county} · ${t.type}</div>
+                            </div>
+                            ${isAdmin() ? `<button class="btn btn-danger btn-sm" style="padding:0.05rem 0.5rem;font-size:0.6rem;" data-tvet-id="${t.id}"><i class="fas fa-times"></i></button>` : ''}
+                        </div>
+                    `).join('');
+
+                if (isAdmin()) {
+                    container.querySelectorAll('[data-tvet-id]').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const id = e.currentTarget.dataset.tvetId;
+                            if (confirm('remove this institution?')) {
+                                const res = removeTvet(id);
+                                showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                                renderAll();
+                            }
+                        });
+                    });
+                }
+            }
+
             function renderAdminPanel() {
                 const container = document.getElementById('adminUserList');
                 const all = adminGetAllUsers();
                 document.getElementById('adminUserCount').textContent = all.length;
                 if (all.length === 0) { container.innerHTML = '<div class="muted">no users</div>'; return; }
                 container.innerHTML = all.map(u => `
-                        <div style="background:white; border-radius:2.5rem; padding:0.4rem 1.2rem; margin-bottom:0.3rem; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 6px rgba(0,0,0,0.02); flex-wrap:wrap; gap:0.3rem;">
-                            <span><i class="fas fa-user-astronaut"></i> ${u.username}</span>
-                            <span class="badge-light">${u.unitCount} units · ${u.totalItems} items</span>
+                        <div style="background:white; border-radius:2.5rem; padding:0.4rem 1.2rem; margin-bottom:0.3rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.3rem; border:1px solid #ecf2f9;">
+                            <span><i class="fas fa-user-astronaut"></i> ${u.username} <span class="badge-light">${u.role}</span></span>
+                            <span class="badge-light">${u.unitCount} units · ${u.totalItems} items · CDACC: ${u.cdacc}</span>
                         </div>
                     `).join('');
             }
 
-            // ----- file preview with video support -----
+            // ----- file preview -----
             function updateFilePreview() {
                 const container = document.getElementById('filePreviewContainer');
                 if (!STATE.pendingFile) {
@@ -1034,19 +1351,21 @@
                 if (isImage) {
                     content = `<img src="${f.dataURL}" alt="${f.name}">`;
                 } else if (isVideo) {
-                    content = `<video src="${f.dataURL}" controls autoplay style="max-width:100%;max-height:75vh;border-radius:1.5rem;"></video>`;
+                    content =
+                        `<video src="${f.dataURL}" controls autoplay style="max-width:100%;max-height:75vh;border-radius:1.5rem;"></video>`;
                 } else if (isPDF) {
                     content = `<iframe src="${f.dataURL}" style="width:100%;height:600px;border:none;"></iframe>`;
                 } else {
-                    // For text files, documents, etc. - show as embed or download
-                    const isText = f.type && (f.type.includes('text') || f.type.includes('json') || f.type.includes('javascript'));
+                    const isText = f.type && (f.type.includes('text') || f.type.includes('json') || f.type.includes(
+                    'javascript'));
                     if (isText) {
                         try {
                             const text = atob(f.dataURL.split(',')[1] || '');
                             content =
                                 `<pre style="max-width:100%;max-height:70vh;overflow:auto;padding:1rem;background:#f5f8fc;border-radius:1rem;font-size:0.85rem;white-space:pre-wrap;word-break:break-all;">${text.substring(0, 50000)}${text.length > 50000 ? '\n... (truncated)' : ''}</pre>`;
                         } catch (e) {
-                            content = `<div style="padding:2rem;text-align:center;"><i class="fas fa-file" style="font-size:3rem;color:#3b5a78;"></i><p>${f.name}</p><p class="muted">preview not available</p></div>`;
+                            content =
+                                `<div style="padding:2rem;text-align:center;"><i class="fas fa-file" style="font-size:3rem;color:#3b5a78;"></i><p>${f.name}</p><p class="muted">preview not available</p></div>`;
                         }
                     } else {
                         content =
@@ -1065,7 +1384,6 @@
                 if (video) video.pause();
             };
 
-            // close modal with escape key
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeModal();
             });
@@ -1092,14 +1410,16 @@
                 document.getElementById('loginBtn').addEventListener('click', () => {
                     const user = document.getElementById('authUsername').value.trim();
                     const pass = document.getElementById('authPassword').value.trim();
-                    const res = loginUser(user, pass);
+                    const role = document.getElementById('authRole').value;
+                    const res = loginUser(user, pass, role);
                     if (res.success) { showAuthMessage(res.msg, 'success');
                         renderAll(); } else showAuthMessage(res.msg, 'error');
                 });
                 document.getElementById('signupBtn').addEventListener('click', () => {
                     const user = document.getElementById('authUsername').value.trim();
                     const pass = document.getElementById('authPassword').value.trim();
-                    const res = signupUser(user, pass);
+                    const role = document.getElementById('authRole').value;
+                    const res = signupUser(user, pass, role);
                     if (res.success) { showAuthMessage(res.msg, 'success');
                         renderAll(); } else showAuthMessage(res.msg, 'error');
                 });
@@ -1144,7 +1464,6 @@
                     } else renderAll();
                 });
 
-                // file upload - 10MB limit
                 document.getElementById('fileUploadInput').addEventListener('change', function(e) {
                     const file = this.files[0];
                     if (!file) { STATE.pendingFile = null;
@@ -1174,9 +1493,34 @@
                     if (!title) return;
                     const description = prompt('Description (optional):') || '';
                     const date = prompt('Date (YYYY-MM-DD):') || new Date().toISOString().split('T')[0];
-                    const statuses = ['pending', 'accepted', 'rejected', 'waitlist'];
-                    const status = prompt(`Status (${statuses.join(', ')}):`) || 'pending';
+                    const status = prompt('Status (open/pending/closed):') || 'pending';
                     const res = addAdmission(title, description, date, status);
+                    showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                    renderAll();
+                });
+
+                // TVET
+                document.getElementById('addTvetBtn').addEventListener('click', () => {
+                    if (!isAdmin()) { showGlobalMessage('only admins can add institutions', 'error'); return; }
+                    const name = prompt('Institution name:');
+                    if (!name) return;
+                    const county = prompt('County:') || 'Nairobi';
+                    const type = prompt('Type (Public/Private):') || 'Public';
+                    const res = addTvet(name, county, type);
+                    showGlobalMessage(res.msg, res.success ? 'success' : 'error');
+                    renderAll();
+                });
+
+                // CDACC update
+                document.getElementById('updateCdaccBtn').addEventListener('click', () => {
+                    const score = prompt('Enter CDACC score (0-100):', getCdaccScore(STATE.currentUser));
+                    if (score === null) return;
+                    const numScore = parseInt(score);
+                    if (isNaN(numScore) || numScore < 0 || numScore > 100) {
+                        showGlobalMessage('score must be 0-100', 'error');
+                        return;
+                    }
+                    const res = updateCdaccScore(STATE.currentUser, numScore);
                     showGlobalMessage(res.msg, res.success ? 'success' : 'error');
                     renderAll();
                 });
@@ -1194,16 +1538,25 @@
             function init() {
                 loadState();
                 if (!findUser(STATE.adminUser)) {
-                    STATE.users.push({ username: STATE.adminUser, password: STATE.adminPass, units: [] });
+                    STATE.users.push({ username: STATE.adminUser, password: STATE.adminPass, role: 'admin', units: [] });
                     saveState();
                 }
-                // Sample admissions if empty
+                // Add default teacher and student
+                if (!findUser('teacher')) {
+                    STATE.users.push({ username: 'teacher', password: 'teacher123', role: 'teacher', units: [] });
+                    saveState();
+                }
+                if (!findUser('student')) {
+                    STATE.users.push({ username: 'student', password: 'student123', role: 'student', units: [] });
+                    saveState();
+                }
+                // Sample admissions
                 if (STATE.admissions.length === 0) {
                     STATE.admissions.push({
                         id: genId(),
-                        title: 'Fall 2026 Intake',
-                        description: 'Applications open for all programs',
-                        date: '2026-08-15',
+                        title: 'TVET CDACC Assessment 2026',
+                        description: 'Competency Based Assessment for all TVET programs',
+                        date: '2026-06-30',
                         status: 'open'
                     });
                     saveState();
